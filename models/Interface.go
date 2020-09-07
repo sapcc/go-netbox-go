@@ -18,8 +18,8 @@ type Interface struct {
 	ConnectionStatus interface{}   `json:"connection_status"`
 	Cable            interface{}   `json:"cable"`
 	Mode             interface{}   `json:"mode"`
-	UntaggedVlan     interface{}   `json:"untagged_vlan"`
-	TaggedVlans interface{} `json:"tagged_vlans"`
+	UntaggedVlan     NestedVLAN   `json:"untagged_vlan"`
+	TaggedVlans 	[]NestedVLAN `json:"tagged_vlans"`
 	Tags interface{} `json:"tags"`
 	CountIpAddresses int `json:"count_ipaddresses"`
 }

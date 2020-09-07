@@ -7,6 +7,7 @@ import (
 type Site struct {
 	Id int `json:"id"`
 	Url string `json:"url"`
+	Name string `json:"name"`
 	Slug string `json:"slug"`
 	Status interface{} `json:"status"`
 	Region interface{} `json:"region"`

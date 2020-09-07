@@ -12,7 +12,7 @@ type Prefix struct {
 	Site         Site    `json:"site"`
 	Vrf          interface{}    `json:"vrf"`
 	Tenant       Tenant `json:"tenant"`
-	Vlan         interface{}    `json:"vlan"`
+	Vlan         NestedVLAN    `json:"vlan"`
 	Status       interface{}    `json:"status"`
 	Role         Role           `json:"role"`
 	IsPool       bool           `json:"is_pool"`
