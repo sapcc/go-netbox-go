@@ -35,11 +35,39 @@ func (c *Client) ListIpAddresses(opts ListIpAddressesRequest) (ListIpAddressesRe
 	return resObj, nil
 }
 
+func (c *Client) GetIpAdress(id int) (IpAddress, error) {
+	request, err := http.NewRequest("GET", c.BaseUrl.String() + basePath + "ip-addresses/" + strconv.Itoa(id) + "/", nil)
+	if err != nil {
+		return IpAddress{}, err
+	}
+	c.SetAuthToken(&request.Header)
+	response, err := c.HttpClient.Do(request)
+	if err != nil {
+		return IpAddress{}, nil
+	}
+	if response.StatusCode != 200 {
+		return IpAddress{}, fmt.Errorf("unexpected return code of %d", response.StatusCode)
+	}
+	resObj := IpAddress{}
+	bytes, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		return IpAddress{}, nil
+	}
+	err = json.Unmarshal(bytes, &resObj)
+	if err != nil {
+		return IpAddress{}, nil
+	}
+	return resObj, nil
+}
+
 func setListIpAddressesParams(req *http.Request, opts ListIpAddressesRequest) {
 	q := req.URL.Query()
 	opts.SetListParams(&q)
 	if opts.InterfaceId != 0 {
 		q.Set("interface_id", strconv.Itoa(opts.InterfaceId))
+	}
+	if opts.DeviceId != 0 {
+		q.Set("device_id", strconv.Itoa(opts.DeviceId))
 	}
 	req.URL.RawQuery = q.Encode()
 }

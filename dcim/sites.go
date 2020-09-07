@@ -56,5 +56,8 @@ func (c *Client) GetSite (id int) (Site, error) {
 		return Site{}, err
 	}
 	err = json.Unmarshal(bytes, &resObj)
+	if err != nil {
+		return Site{}, err
+	}
 	return resObj, nil
 }

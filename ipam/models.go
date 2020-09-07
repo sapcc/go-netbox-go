@@ -32,6 +32,7 @@ type IpAddress struct {
 type ListIpAddressesRequest struct {
 	common.ListParams
 	InterfaceId int
+	DeviceId int
 }
 
 type ListIpAddressesResponse struct {
