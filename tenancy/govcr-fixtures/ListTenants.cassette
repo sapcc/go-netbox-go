@@ -1,0 +1,74 @@
+{
+  "Name": "ListTenants",
+  "Tracks": [
+    {
+      "Request": {
+        "Method": "GET",
+        "URL": {
+          "Scheme": "http",
+          "Opaque": "",
+          "User": null,
+          "Host": "localhost:8000",
+          "Path": "/api/tenancy/tenants/",
+          "RawPath": "",
+          "ForceQuery": false,
+          "RawQuery": "",
+          "Fragment": "",
+          "RawFragment": ""
+        },
+        "Header": {
+          "Authorization": [
+            "Token 0037d0838f8e5ba8b1276b529885221853c2725a"
+          ]
+        },
+        "Body": ""
+      },
+      "Response": {
+        "Status": "200 OK",
+        "StatusCode": 200,
+        "Proto": "HTTP/1.1",
+        "ProtoMajor": 1,
+        "ProtoMinor": 1,
+        "Header": {
+          "Allow": [
+            "GET, POST, HEAD, OPTIONS"
+          ],
+          "Api-Version": [
+            "2.9"
+          ],
+          "Content-Length": [
+            "477"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Mon, 07 Sep 2020 14:04:00 GMT"
+          ],
+          "Referrer-Policy": [
+            "same-origin"
+          ],
+          "Server": [
+            "WSGIServer/0.2 CPython/3.7.8"
+          ],
+          "Vary": [
+            "Accept, Cookie, Origin"
+          ],
+          "X-Content-Type-Options": [
+            "nosniff"
+          ],
+          "X-Frame-Options": [
+            "SAMEORIGIN"
+          ]
+        },
+        "Body": "eyJjb3VudCI6MSwibmV4dCI6bnVsbCwicHJldmlvdXMiOm51bGwsInJlc3VsdHMiOlt7ImlkIjoxLCJ1cmwiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3RlbmFuY3kvdGVuYW50cy8xLyIsIm5hbWUiOiJ0ZXN0dGVuYW50Iiwic2x1ZyI6InRlc3R0ZW5hbnQiLCJncm91cCI6bnVsbCwiZGVzY3JpcHRpb24iOiIiLCJjb21tZW50cyI6IiIsInRhZ3MiOltdLCJjdXN0b21fZmllbGRzIjp7fSwiY3JlYXRlZCI6IjIwMjAtMDktMDciLCJsYXN0X3VwZGF0ZWQiOiIyMDIwLTA5LTA3VDE0OjAyOjM5LjUxNDk5OFoiLCJjaXJjdWl0X2NvdW50IjpudWxsLCJkZXZpY2VfY291bnQiOm51bGwsImlwYWRkcmVzc19jb3VudCI6bnVsbCwicHJlZml4X2NvdW50IjpudWxsLCJyYWNrX2NvdW50IjpudWxsLCJzaXRlX2NvdW50IjpudWxsLCJ2aXJ0dWFsbWFjaGluZV9jb3VudCI6bnVsbCwidmxhbl9jb3VudCI6bnVsbCwidnJmX2NvdW50IjpudWxsfV19",
+        "ContentLength": 477,
+        "TransferEncoding": null,
+        "Trailer": null,
+        "TLS": null
+      },
+      "ErrType": "",
+      "ErrMsg": ""
+    }
+  ]
+}

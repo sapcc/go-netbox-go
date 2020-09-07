@@ -1,0 +1,74 @@
+{
+  "Name": "ListPrefixes",
+  "Tracks": [
+    {
+      "Request": {
+        "Method": "GET",
+        "URL": {
+          "Scheme": "http",
+          "Opaque": "",
+          "User": null,
+          "Host": "localhost:8000",
+          "Path": "/api/ipam/prefixes/",
+          "RawPath": "",
+          "ForceQuery": false,
+          "RawQuery": "",
+          "Fragment": "",
+          "RawFragment": ""
+        },
+        "Header": {
+          "Authorization": [
+            "Token 0037d0838f8e5ba8b1276b529885221853c2725a"
+          ]
+        },
+        "Body": ""
+      },
+      "Response": {
+        "Status": "200 OK",
+        "StatusCode": 200,
+        "Proto": "HTTP/1.1",
+        "ProtoMajor": 1,
+        "ProtoMinor": 1,
+        "Header": {
+          "Allow": [
+            "GET, POST, HEAD, OPTIONS"
+          ],
+          "Api-Version": [
+            "2.9"
+          ],
+          "Content-Length": [
+            "406"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Mon, 07 Sep 2020 14:04:00 GMT"
+          ],
+          "Referrer-Policy": [
+            "same-origin"
+          ],
+          "Server": [
+            "WSGIServer/0.2 CPython/3.7.8"
+          ],
+          "Vary": [
+            "Accept, Cookie, Origin"
+          ],
+          "X-Content-Type-Options": [
+            "nosniff"
+          ],
+          "X-Frame-Options": [
+            "SAMEORIGIN"
+          ]
+        },
+        "Body": "eyJjb3VudCI6MSwibmV4dCI6bnVsbCwicHJldmlvdXMiOm51bGwsInJlc3VsdHMiOlt7ImlkIjoxLCJ1cmwiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2lwYW0vcHJlZml4ZXMvMS8iLCJmYW1pbHkiOnsidmFsdWUiOjQsImxhYmVsIjoiSVB2NCJ9LCJwcmVmaXgiOiIxMC4wLjAuMC8yNCIsInNpdGUiOm51bGwsInZyZiI6bnVsbCwidGVuYW50IjpudWxsLCJ2bGFuIjpudWxsLCJzdGF0dXMiOnsidmFsdWUiOiJhY3RpdmUiLCJsYWJlbCI6IkFjdGl2ZSJ9LCJyb2xlIjpudWxsLCJpc19wb29sIjpmYWxzZSwiZGVzY3JpcHRpb24iOiIiLCJ0YWdzIjpbXSwiY3VzdG9tX2ZpZWxkcyI6e30sImNyZWF0ZWQiOiIyMDIwLTA5LTA3IiwibGFzdF91cGRhdGVkIjoiMjAyMC0wOS0wN1QxNDowMTo1Mi42NzM4MzVaIn1dfQ==",
+        "ContentLength": 406,
+        "TransferEncoding": null,
+        "Trailer": null,
+        "TLS": null
+      },
+      "ErrType": "",
+      "ErrMsg": ""
+    }
+  ]
+}

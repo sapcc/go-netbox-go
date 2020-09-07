@@ -1,0 +1,74 @@
+{
+  "Name": "ListVirtualMachines",
+  "Tracks": [
+    {
+      "Request": {
+        "Method": "GET",
+        "URL": {
+          "Scheme": "http",
+          "Opaque": "",
+          "User": null,
+          "Host": "localhost:8000",
+          "Path": "/api/virtualization/virtual-machines/",
+          "RawPath": "",
+          "ForceQuery": false,
+          "RawQuery": "",
+          "Fragment": "",
+          "RawFragment": ""
+        },
+        "Header": {
+          "Authorization": [
+            "Token 0037d0838f8e5ba8b1276b529885221853c2725a"
+          ]
+        },
+        "Body": ""
+      },
+      "Response": {
+        "Status": "200 OK",
+        "StatusCode": 200,
+        "Proto": "HTTP/1.1",
+        "ProtoMajor": 1,
+        "ProtoMinor": 1,
+        "Header": {
+          "Allow": [
+            "GET, POST, HEAD, OPTIONS"
+          ],
+          "Api-Version": [
+            "2.9"
+          ],
+          "Content-Length": [
+            "613"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Mon, 07 Sep 2020 14:04:00 GMT"
+          ],
+          "Referrer-Policy": [
+            "same-origin"
+          ],
+          "Server": [
+            "WSGIServer/0.2 CPython/3.7.8"
+          ],
+          "Vary": [
+            "Accept, Cookie, Origin"
+          ],
+          "X-Content-Type-Options": [
+            "nosniff"
+          ],
+          "X-Frame-Options": [
+            "SAMEORIGIN"
+          ]
+        },
+        "Body": "eyJjb3VudCI6MSwibmV4dCI6bnVsbCwicHJldmlvdXMiOm51bGwsInJlc3VsdHMiOlt7ImlkIjoxLCJ1cmwiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3ZpcnR1YWxpemF0aW9uL3ZpcnR1YWwtbWFjaGluZXMvMS8iLCJuYW1lIjoidGVzdC5xYS1kZS0xLmNsb3VkLnNhcCIsInN0YXR1cyI6eyJ2YWx1ZSI6ImFjdGl2ZSIsImxhYmVsIjoiQWN0aXZlIn0sInNpdGUiOm51bGwsImNsdXN0ZXIiOnsiaWQiOjEsInVybCI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hcGkvdmlydHVhbGl6YXRpb24vY2x1c3RlcnMvMS8iLCJuYW1lIjoidGVzdENsdXN0ZXIifSwicm9sZSI6bnVsbCwidGVuYW50IjpudWxsLCJwbGF0Zm9ybSI6bnVsbCwicHJpbWFyeV9pcCI6bnVsbCwicHJpbWFyeV9pcDQiOm51bGwsInByaW1hcnlfaXA2IjpudWxsLCJ2Y3B1cyI6bnVsbCwibWVtb3J5IjpudWxsLCJkaXNrIjpudWxsLCJjb21tZW50cyI6IiIsImxvY2FsX2NvbnRleHRfZGF0YSI6bnVsbCwidGFncyI6W10sImN1c3RvbV9maWVsZHMiOnt9LCJjb25maWdfY29udGV4dCI6e30sImNyZWF0ZWQiOiIyMDIwLTA5LTA3IiwibGFzdF91cGRhdGVkIjoiMjAyMC0wOS0wN1QxNDowMzo1Mi4yODkzNDVaIn1dfQ==",
+        "ContentLength": 613,
+        "TransferEncoding": null,
+        "Trailer": null,
+        "TLS": null
+      },
+      "ErrType": "",
+      "ErrMsg": ""
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "Name": "ListSites",
+  "Tracks": [
+    {
+      "Request": {
+        "Method": "GET",
+        "URL": {
+          "Scheme": "http",
+          "Opaque": "",
+          "User": null,
+          "Host": "localhost:8000",
+          "Path": "/api/dcim/sites/",
+          "RawPath": "",
+          "ForceQuery": false,
+          "RawQuery": "",
+          "Fragment": "",
+          "RawFragment": ""
+        },
+        "Header": {
+          "Authorization": [
+            "Token 0037d0838f8e5ba8b1276b529885221853c2725a"
+          ]
+        },
+        "Body": ""
+      },
+      "Response": {
+        "Status": "200 OK",
+        "StatusCode": 200,
+        "Proto": "HTTP/1.1",
+        "ProtoMajor": 1,
+        "ProtoMinor": 1,
+        "Header": {
+          "Allow": [
+            "GET, POST, HEAD, OPTIONS"
+          ],
+          "Api-Version": [
+            "2.9"
+          ],
+          "Content-Length": [
+            "640"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Mon, 07 Sep 2020 14:04:01 GMT"
+          ],
+          "Referrer-Policy": [
+            "same-origin"
+          ],
+          "Server": [
+            "WSGIServer/0.2 CPython/3.7.8"
+          ],
+          "Vary": [
+            "Accept, Cookie, Origin"
+          ],
+          "X-Content-Type-Options": [
+            "nosniff"
+          ],
+          "X-Frame-Options": [
+            "SAMEORIGIN"
+          ]
+        },
+        "Body": "eyJjb3VudCI6MSwibmV4dCI6bnVsbCwicHJldmlvdXMiOm51bGwsInJlc3VsdHMiOlt7ImlkIjoxLCJ1cmwiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2RjaW0vc2l0ZXMvMS8iLCJuYW1lIjoiUUEtREUtMSIsInNsdWciOiJxYS1kZS0xIiwic3RhdHVzIjp7InZhbHVlIjoiYWN0aXZlIiwibGFiZWwiOiJBY3RpdmUifSwicmVnaW9uIjpudWxsLCJ0ZW5hbnQiOm51bGwsImZhY2lsaXR5IjoiIiwiYXNuIjpudWxsLCJ0aW1lX3pvbmUiOm51bGwsImRlc2NyaXB0aW9uIjoiIiwicGh5c2ljYWxfYWRkcmVzcyI6IiIsInNoaXBwaW5nX2FkZHJlc3MiOiIiLCJsYXRpdHVkZSI6bnVsbCwibG9uZ2l0dWRlIjpudWxsLCJjb250YWN0X25hbWUiOiIiLCJjb250YWN0X3Bob25lIjoiIiwiY29udGFjdF9lbWFpbCI6IiIsImNvbW1lbnRzIjoiIiwidGFncyI6W10sImN1c3RvbV9maWVsZHMiOnt9LCJjcmVhdGVkIjoiMjAyMC0wOS0wNyIsImxhc3RfdXBkYXRlZCI6IjIwMjAtMDktMDdUMTI6NDk6MjcuMjExNjE0WiIsImNpcmN1aXRfY291bnQiOm51bGwsImRldmljZV9jb3VudCI6MSwicHJlZml4X2NvdW50IjpudWxsLCJyYWNrX2NvdW50IjpudWxsLCJ2aXJ0dWFsbWFjaGluZV9jb3VudCI6bnVsbCwidmxhbl9jb3VudCI6bnVsbH1dfQ==",
+        "ContentLength": 640,
+        "TransferEncoding": null,
+        "Trailer": null,
+        "TLS": null
+      },
+      "ErrType": "",
+      "ErrMsg": ""
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "Name": "ListInterfaces",
+  "Tracks": [
+    {
+      "Request": {
+        "Method": "Get",
+        "URL": {
+          "Scheme": "http",
+          "Opaque": "",
+          "User": null,
+          "Host": "localhost:8000",
+          "Path": "/api/dcim/interfaces/",
+          "RawPath": "",
+          "ForceQuery": false,
+          "RawQuery": "",
+          "Fragment": "",
+          "RawFragment": ""
+        },
+        "Header": {
+          "Authorization": [
+            "Token 0037d0838f8e5ba8b1276b529885221853c2725a"
+          ]
+        },
+        "Body": ""
+      },
+      "Response": {
+        "Status": "200 OK",
+        "StatusCode": 200,
+        "Proto": "HTTP/1.1",
+        "ProtoMajor": 1,
+        "ProtoMinor": 1,
+        "Header": {
+          "Allow": [
+            "GET, POST, HEAD, OPTIONS, TRACE"
+          ],
+          "Api-Version": [
+            "2.9"
+          ],
+          "Content-Length": [
+            "562"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "Date": [
+            "Mon, 07 Sep 2020 14:04:00 GMT"
+          ],
+          "Referrer-Policy": [
+            "same-origin"
+          ],
+          "Server": [
+            "WSGIServer/0.2 CPython/3.7.8"
+          ],
+          "Vary": [
+            "Accept, Cookie, Origin"
+          ],
+          "X-Content-Type-Options": [
+            "nosniff"
+          ],
+          "X-Frame-Options": [
+            "SAMEORIGIN"
+          ]
+        },
+        "Body": "eyJjb3VudCI6MSwibmV4dCI6bnVsbCwicHJldmlvdXMiOm51bGwsInJlc3VsdHMiOlt7ImlkIjoxLCJ1cmwiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2RjaW0vaW50ZXJmYWNlcy8xLyIsImRldmljZSI6eyJpZCI6MSwidXJsIjoiaHR0cDovL2xvY2FsaG9zdDo4MDAwL2FwaS9kY2ltL2RldmljZXMvMS8iLCJuYW1lIjoicWEtZGUtMSIsImRpc3BsYXlfbmFtZSI6InFhLWRlLTEifSwibmFtZSI6InAwczAiLCJsYWJlbCI6IiIsInR5cGUiOnsidmFsdWUiOiJ2aXJ0dWFsIiwibGFiZWwiOiJWaXJ0dWFsIn0sImVuYWJsZWQiOnRydWUsImxhZyI6bnVsbCwibXR1IjpudWxsLCJtYWNfYWRkcmVzcyI6bnVsbCwibWdtdF9vbmx5IjpmYWxzZSwiZGVzY3JpcHRpb24iOiIiLCJjb25uZWN0ZWRfZW5kcG9pbnRfdHlwZSI6bnVsbCwiY29ubmVjdGVkX2VuZHBvaW50IjpudWxsLCJjb25uZWN0aW9uX3N0YXR1cyI6bnVsbCwiY2FibGUiOm51bGwsIm1vZGUiOm51bGwsInVudGFnZ2VkX3ZsYW4iOm51bGwsInRhZ2dlZF92bGFucyI6W10sInRhZ3MiOltdLCJjb3VudF9pcGFkZHJlc3NlcyI6MH1dfQ==",
+        "ContentLength": 562,
+        "TransferEncoding": null,
+        "Trailer": null,
+        "TLS": null
+      },
+      "ErrType": "",
+      "ErrMsg": ""
+    }
+  ]
+}
