@@ -38,6 +38,7 @@ type Device struct {
 	Name string `json:"name"`
 	DisplayName string `json:"display_name"`
 	DeviceType interface{} `json:"device_type"`
+	Site Site `json:"site"`
 }
 
 type ListInterfacesRequest struct {
