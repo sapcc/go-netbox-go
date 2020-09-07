@@ -1,6 +1,7 @@
 package virtualization
 
 import (
+	"github.com/sapcc/go-netbox-go/models"
 	"github.com/seborama/govcr"
 	"github.com/stretchr/testify/assert"
 	"os"
@@ -16,7 +17,7 @@ func TestClient_ListVirtualMachines(t *testing.T) {
 	vcrConf.Client = client.HttpClient
 	vcr := govcr.NewVCR("ListVirtualMachines", vcrConf)
 	client.HttpClient = vcr.Client
-	opts := ListVirtualMachinesRequest{}
+	opts := models.ListVirtualMachinesRequest{}
 	res, err := client.ListVirtualMachines(opts)
 	if err != nil {
 		t.Error(err)

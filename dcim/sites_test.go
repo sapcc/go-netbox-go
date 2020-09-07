@@ -1,6 +1,7 @@
 package dcim
 
 import (
+	"github.com/sapcc/go-netbox-go/models"
 	"github.com/seborama/govcr"
 	"github.com/stretchr/testify/assert"
 	"os"
@@ -16,7 +17,7 @@ func TestClient_ListSites(t *testing.T) {
 	vcrConf.Client = client.HttpClient
 	vcr := govcr.NewVCR("ListSites", vcrConf)
 	client.HttpClient = vcr.Client
-	opts := ListSitesRequest{}
+	opts := models.ListSitesRequest{}
 	res, err := client.ListSites(opts)
 	if err != nil {
 		t.Error(err)

@@ -4,63 +4,64 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/sapcc/go-netbox-go/models"
 	"io/ioutil"
 	"net/http"
 	"strconv"
 )
 
-func (c *Client) ListIpAddresses(opts ListIpAddressesRequest) (ListIpAddressesResponse, error) {
+func (c *Client) ListIpAddresses(opts models.ListIpAddressesRequest) (*models.ListIpAddressesResponse, error) {
 	request, err := http.NewRequest("GET", c.BaseUrl.String() + basePath + "ip-addresses/", nil)
 	if err != nil {
-		return ListIpAddressesResponse{}, err
+		return nil, err
 	}
 	c.SetAuthToken(&request.Header)
 	setListIpAddressesParams(request, opts)
 	response, err := c.HttpClient.Do(request)
 	if err != nil {
-		return ListIpAddressesResponse{}, err
+		return nil, err
 	}
 	if response.StatusCode != 200 {
-		return ListIpAddressesResponse{}, fmt.Errorf("unexpected return code of %d", response.StatusCode)
+		return nil, fmt.Errorf("unexpected return code of %d", response.StatusCode)
 	}
-	resObj := ListIpAddressesResponse{}
+	resObj := models.ListIpAddressesResponse{}
 	byteses, err := ioutil.ReadAll(response.Body)
 	if err != nil {
-		return ListIpAddressesResponse{}, err
+		return nil, err
 	}
 	err = json.Unmarshal(byteses, &resObj)
 	if err != nil {
-		return ListIpAddressesResponse{}, err
+		return nil, err
 	}
-	return resObj, nil
+	return &resObj, nil
 }
 
-func (c *Client) GetIpAdress(id int) (IpAddress, error) {
+func (c *Client) GetIpAdress(id int) (*models.IpAddress, error) {
 	request, err := http.NewRequest("GET", c.BaseUrl.String() + basePath + "ip-addresses/" + strconv.Itoa(id) + "/", nil)
 	if err != nil {
-		return IpAddress{}, err
+		return nil, err
 	}
 	c.SetAuthToken(&request.Header)
 	response, err := c.HttpClient.Do(request)
 	if err != nil {
-		return IpAddress{}, nil
+		return nil, nil
 	}
 	if response.StatusCode != 200 {
-		return IpAddress{}, fmt.Errorf("unexpected return code of %d", response.StatusCode)
+		return nil, fmt.Errorf("unexpected return code of %d", response.StatusCode)
 	}
-	resObj := IpAddress{}
+	resObj := models.IpAddress{}
 	bytes, err := ioutil.ReadAll(response.Body)
 	if err != nil {
-		return IpAddress{}, nil
+		return nil, nil
 	}
 	err = json.Unmarshal(bytes, &resObj)
 	if err != nil {
-		return IpAddress{}, nil
+		return nil, nil
 	}
-	return resObj, nil
+	return &resObj, nil
 }
 
-func setListIpAddressesParams(req *http.Request, opts ListIpAddressesRequest) {
+func setListIpAddressesParams(req *http.Request, opts models.ListIpAddressesRequest) {
 	q := req.URL.Query()
 	opts.SetListParams(&q)
 	if opts.InterfaceId != 0 {
@@ -72,7 +73,7 @@ func setListIpAddressesParams(req *http.Request, opts ListIpAddressesRequest) {
 	req.URL.RawQuery = q.Encode()
 }
 
-func (c *Client) CreateIpAddress(address IpAddress) error {
+func (c *Client) CreateIpAddress(address models.IpAddress) error {
 	body, err := json.Marshal(address)
 	if err != nil {
 		return err

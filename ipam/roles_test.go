@@ -1,6 +1,7 @@
 package ipam
 
 import (
+	"github.com/sapcc/go-netbox-go/models"
 	"github.com/seborama/govcr"
 	"github.com/stretchr/testify/assert"
 	"os"
@@ -16,7 +17,7 @@ func TestClient_ListRoles(t *testing.T) {
 	vcrConf.Client = client.HttpClient
 	vcr := govcr.NewVCR("ListRoles", vcrConf)
 	client.HttpClient = vcr.Client
-	opts := ListRolesRequest{}
+	opts := models.ListRolesRequest{}
 	res, err := client.ListRoles(opts)
 	if err != nil {
 		t.Error(err)

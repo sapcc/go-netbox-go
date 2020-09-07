@@ -1,32 +1,34 @@
-package ipam
+package models
 
 import (
 	"encoding/json"
 	"fmt"
 	"github.com/sapcc/go-netbox-go/common"
-	"github.com/sapcc/go-netbox-go/dcim"
-	"github.com/sapcc/go-netbox-go/tenancy"
 )
 
-// TODO: Refactor out NestedIP for VM
-type IpAddress struct {
+type NestedIpAddress struct {
 	Id int `json:"id"`
 	Url string `json:"url"`
 	Family interface{} `json:"family"`
 	Address string `json:"address"`
+}
+
+
+type IpAddress struct {
+	NestedIpAddress
 	Vrf interface{} `json:"vrf"`
-	Tenant tenancy.Tenant `json:"tenant"`
-	Status interface{} `json:"status"`
-	Role interface{} `json:"role"`
-	NatInside interface{} `json:"nat_inside"`
-	NatOutside interface{} `json:"nat_outside"`
-	DnsName string `json:"dns_name"`
-	Description string `json:"description"`
-	Tags interface{} `json:"tags"`
-	CustomFields interface{} `json:"custom_fields"`
-	Created string `json:"created"`
-	LastUpdated string `json:"last_updated"`
-	AssignedInterface dcim.Interface
+	Tenant Tenant `json:"tenant"`
+	Status            interface{} `json:"status"`
+	Role              interface{} `json:"role"`
+	NatInside         interface{} `json:"nat_inside"`
+	NatOutside        interface{} `json:"nat_outside"`
+	DnsName           string `json:"dns_name"`
+	Description       string `json:"description"`
+	Tags              interface{} `json:"tags"`
+	CustomFields      interface{} `json:"custom_fields"`
+	Created           string `json:"created"`
+	LastUpdated       string `json:"last_updated"`
+	AssignedInterface Interface
 }
 
 type ListIpAddressesRequest struct {
@@ -51,7 +53,7 @@ func (ip *IpAddress) UnmarshalJSON(b []byte) error {
 	}
 	switch s {
 	case "dcim.interface":
-		var inter dcim.Interface
+		var inter Interface
 		if err := json.Unmarshal(tmp["assigned_object"], &inter); err != nil {
 			return err
 		}
@@ -74,7 +76,7 @@ func (ip *IpAddress) UnmarshalJSON(b []byte) error {
 		return err
 	}
 	ip.Address = addr
-	var tenant tenancy.Tenant
+	var tenant Tenant
 	if err := json.Unmarshal(tmp["tenant"], &tenant); err != nil {
 		return err
 	}
@@ -100,53 +102,4 @@ func (ip *IpAddress) UnmarshalJSON(b []byte) error {
 	}
 	ip.LastUpdated = lastUpdated
 	return nil
-}
-
-type Role struct {
-	Id int `json:"id"`
-	Url string `json:"url"`
-	Name string `json:"name"`
-	Slug string `json:"slug"`
-	Weight int `json:"weight"`
-	Description string `json:"description"`
-	PrefixCount int `json:"prefix_count"`
-	VlanCount int `json:"vlan_count"`
-}
-
-type ListRolesRequest struct {
-	common.ListParams
-}
-
-type ListRolesResponse struct {
-	common.ReturnValues
-	Results []Role `json:"results"`
-}
-
-
-type Prefix struct {
-	Id int `json:"id"`
-	Url string `json:"url"`
-	Family interface{} `json:"family"`
-	Prefix string `json:"prefix"`
-	Site dcim.Site `json:"site"`
-	Vrf interface{} `json:"vrf"`
-	Tenant tenancy.Tenant `json:"tenant"`
-	Vlan interface{} `json:"vlan"`
-	Status interface{} `json:"status"`
-	Role Role `json:"role"`
-	IsPool bool `json:"is_pool"`
-	Description string `json:"description"`
-	Tags interface{} `json:"tags"`
-	CustomFields interface{} `json:"custom_fields"`
-	Created string `json:"created"`
-	LastUpdated string `json:"last_updated"`
-}
-
-type ListPrefixesRequest struct {
-	common.ListParams
-}
-
-type ListPrefixesReponse struct {
-	common.ReturnValues
-	Results []Prefix `json:"results"`
 }

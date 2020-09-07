@@ -1,6 +1,7 @@
 package ipam
 
 import (
+	"github.com/sapcc/go-netbox-go/models"
 	"github.com/seborama/govcr"
 	"github.com/stretchr/testify/assert"
 	"os"
@@ -16,7 +17,7 @@ func TestClient_ListPrefixes(t *testing.T) {
 	vcrConf.Client = client.HttpClient
 	vcr := govcr.NewVCR("ListPrefixes", vcrConf)
 	client.HttpClient = vcr.Client
-	opts := ListPrefixesRequest{}
+	opts := models.ListPrefixesRequest{}
 	res, err := client.ListPrefixes(opts)
 	if err != nil {
 		t.Error(err)

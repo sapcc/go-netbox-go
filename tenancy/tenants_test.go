@@ -1,6 +1,7 @@
 package tenancy
 
 import (
+	"github.com/sapcc/go-netbox-go/models"
 	"github.com/seborama/govcr"
 	"github.com/stretchr/testify/assert"
 	"os"
@@ -16,7 +17,7 @@ func TestClient_ListTenants(t *testing.T) {
 	vcrConf.Client = client.HttpClient
 	vcr := govcr.NewVCR("ListTenants", vcrConf)
 	client.HttpClient = vcr.Client
-	opts := ListTenantsRequest{}
+	opts := models.ListTenantsRequest{}
 	res, err := client.ListTenants(opts)
 	if err != nil {
 		t.Error(err)

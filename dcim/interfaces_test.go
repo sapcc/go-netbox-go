@@ -1,8 +1,9 @@
 package dcim
 
 import (
-	"github.com/stretchr/testify/assert"
+	"github.com/sapcc/go-netbox-go/models"
 	"github.com/seborama/govcr"
+	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"
 )
@@ -16,7 +17,7 @@ func TestClient_ListInterfaces(t *testing.T) {
 	vcrConf.Client = client.HttpClient
 	vcr := govcr.NewVCR("ListInterfaces", vcrConf)
 	client.HttpClient = vcr.Client
-	opts := ListInterfacesRequest{}
+	opts := models.ListInterfacesRequest{}
 	res, err := client.ListInterfaces(opts)
 	if err != nil {
 		t.Error(err)

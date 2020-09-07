@@ -1,4 +1,4 @@
-package tenancy
+package models
 
 import "github.com/sapcc/go-netbox-go/common"
 
