@@ -1,7 +1,7 @@
 package tenancy
 
 import (
-	"github.com/sapcc/go-netbox-go/common"
+	"github.com/sapcc/go-netbox-go/v2.9.1/common"
 	"net/http"
 	"net/url"
 )

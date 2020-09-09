@@ -1,6 +1,6 @@
 package models
 
-import "github.com/sapcc/go-netbox-go/common"
+import "github.com/sapcc/go-netbox-go/v2.9.1/common"
 
 type NestedInterface struct {
 	Id               int           `json:"id"`
