@@ -1,7 +1,7 @@
 package ipam
 
 import (
-	"github.com/sapcc/go-netbox-go/v2.9.1/common"
+	"github.com/sapcc/go-netbox-go/v2/common"
 	"net/http"
 	"net/url"
 )

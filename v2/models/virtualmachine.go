@@ -1,6 +1,6 @@
 package models
 
-import "github.com/sapcc/go-netbox-go/v2.9.1/common"
+import "github.com/sapcc/go-netbox-go/v2/common"
 
 type VirtualMachine struct {
 	Id         int            `json:"id"`

@@ -3,7 +3,7 @@ package ipam
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/sapcc/go-netbox-go/v2.9.1/models"
+	"github.com/sapcc/go-netbox-go/v2/models"
 	"io/ioutil"
 	"net/http"
 )

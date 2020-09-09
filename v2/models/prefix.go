@@ -1,7 +1,7 @@
 package models
 
 import (
-	"github.com/sapcc/go-netbox-go/v2.9.1/common"
+	"github.com/sapcc/go-netbox-go/v2/common"
 )
 
 type Prefix struct {
