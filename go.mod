@@ -1,4 +1,4 @@
-module github.com/sapcc/go-netbox-go/v2.9.1
+module github.com/sapcc/go-netbox-go/v2
 
 go 1.15
 
