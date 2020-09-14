@@ -1,6 +1,7 @@
 package dcim
 
 import (
+	bytes2 "bytes"
 	"encoding/json"
 	"fmt"
 	"github.com/sapcc/go-netbox-go/models"
@@ -10,7 +11,7 @@ import (
 )
 
 func (c *Client) ListInterfaces (opts models.ListInterfacesRequest) (*models.ListInterfacesResponse, error) {
-	request, err := http.NewRequest("Get", c.BaseUrl.String() + basePath + "interfaces/", nil)
+	request, err := http.NewRequest("GET", c.BaseUrl.String() + basePath + "interfaces/", bytes2.NewBuffer([]byte{'a'}))
 	if err != nil {
 		return nil, err
 	}

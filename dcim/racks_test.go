@@ -11,7 +11,7 @@ import (
 func TestClient_ListRacks(t *testing.T) {
 	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"))
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
 	vcrConf.Client = client.HttpClient
@@ -20,7 +20,7 @@ func TestClient_ListRacks(t *testing.T) {
 	opts := models.ListRacksRequest{}
 	res, err := client.ListRacks(opts)
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 	t.Log(res)
 	assert.NotEqual(t, 0, res.Count)

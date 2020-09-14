@@ -11,7 +11,7 @@ import (
 func TestClient_ListIpAddresses(t *testing.T) {
 	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"))
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
 	vcrConf.Client = client.HttpClient
@@ -20,7 +20,7 @@ func TestClient_ListIpAddresses(t *testing.T) {
 	opts := models.ListIpAddressesRequest{}
 	res, err := client.ListIpAddresses(opts)
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 	t.Log(res)
 	assert.NotEqual(t, 0, res.Count)

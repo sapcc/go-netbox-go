@@ -11,7 +11,7 @@ import (
 func TestClient_ListSites(t *testing.T) {
 	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"))
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
 	vcrConf.Client = client.HttpClient
@@ -20,7 +20,7 @@ func TestClient_ListSites(t *testing.T) {
 	opts := models.ListSitesRequest{}
 	res, err := client.ListSites(opts)
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 	t.Log(res)
 	assert.NotEqual(t, 0, res.Count)
@@ -29,7 +29,7 @@ func TestClient_ListSites(t *testing.T) {
 func TestClient_GetSite(t *testing.T) {
 	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"))
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
 	vcrConf.Client = client.HttpClient
@@ -37,7 +37,7 @@ func TestClient_GetSite(t *testing.T) {
 	client.HttpClient = vcr.Client
 	res, err := client.GetSite(1)
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 	t.Log(res)
 }

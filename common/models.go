@@ -46,4 +46,5 @@ func (p *ListParams) SetListParams(values *url.Values) {
 
 func (c *Client) SetAuthToken(header *http.Header) {
 	header.Add("Authorization", "Token "+ c.AuthToken)
+	header.Set("Content-Type", "application/json")
 }

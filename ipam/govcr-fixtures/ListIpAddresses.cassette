@@ -19,6 +19,9 @@
         "Header": {
           "Authorization": [
             "Token 0037d0838f8e5ba8b1276b529885221853c2725a"
+          ],
+          "Content-Type": [
+            "application/json"
           ]
         },
         "Body": ""
@@ -37,13 +40,13 @@
             "2.9"
           ],
           "Content-Length": [
-            "499"
+            "1182"
           ],
           "Content-Type": [
             "application/json"
           ],
           "Date": [
-            "Mon, 07 Sep 2020 16:29:43 GMT"
+            "Mon, 14 Sep 2020 12:58:00 GMT"
           ],
           "Referrer-Policy": [
             "same-origin"
@@ -61,8 +64,8 @@
             "SAMEORIGIN"
           ]
         },
-        "Body": "eyJjb3VudCI6MSwibmV4dCI6bnVsbCwicHJldmlvdXMiOm51bGwsInJlc3VsdHMiOlt7ImlkIjoxLCJ1cmwiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2lwYW0vaXAtYWRkcmVzc2VzLzEvIiwiZmFtaWx5Ijp7InZhbHVlIjo0LCJsYWJlbCI6IklQdjQifSwiYWRkcmVzcyI6IjEwLjAuMC4xLzI0IiwidnJmIjpudWxsLCJ0ZW5hbnQiOm51bGwsInN0YXR1cyI6eyJ2YWx1ZSI6ImFjdGl2ZSIsImxhYmVsIjoiQWN0aXZlIn0sInJvbGUiOm51bGwsImFzc2lnbmVkX29iamVjdF90eXBlIjpudWxsLCJhc3NpZ25lZF9vYmplY3RfaWQiOm51bGwsImFzc2lnbmVkX29iamVjdCI6bnVsbCwibmF0X2luc2lkZSI6bnVsbCwibmF0X291dHNpZGUiOm51bGwsImRuc19uYW1lIjoiIiwiZGVzY3JpcHRpb24iOiIiLCJ0YWdzIjpbXSwiY3VzdG9tX2ZpZWxkcyI6e30sImNyZWF0ZWQiOiIyMDIwLTA5LTA3IiwibGFzdF91cGRhdGVkIjoiMjAyMC0wOS0wN1QxMjo0NzozMC4wNDczMDlaIn1dfQ==",
-        "ContentLength": 499,
+        "Body": "eyJjb3VudCI6MiwibmV4dCI6bnVsbCwicHJldmlvdXMiOm51bGwsInJlc3VsdHMiOlt7ImlkIjoxLCJ1cmwiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2lwYW0vaXAtYWRkcmVzc2VzLzEvIiwiZmFtaWx5Ijp7InZhbHVlIjo0LCJsYWJlbCI6IklQdjQifSwiYWRkcmVzcyI6IjEwLjAuMC4xLzI0IiwidnJmIjpudWxsLCJ0ZW5hbnQiOm51bGwsInN0YXR1cyI6eyJ2YWx1ZSI6ImFjdGl2ZSIsImxhYmVsIjoiQWN0aXZlIn0sInJvbGUiOm51bGwsImFzc2lnbmVkX29iamVjdF90eXBlIjpudWxsLCJhc3NpZ25lZF9vYmplY3RfaWQiOm51bGwsImFzc2lnbmVkX29iamVjdCI6bnVsbCwibmF0X2luc2lkZSI6bnVsbCwibmF0X291dHNpZGUiOm51bGwsImRuc19uYW1lIjoiIiwiZGVzY3JpcHRpb24iOiIiLCJ0YWdzIjpbXSwiY3VzdG9tX2ZpZWxkcyI6e30sImNyZWF0ZWQiOiIyMDIwLTA5LTA3IiwibGFzdF91cGRhdGVkIjoiMjAyMC0wOS0wN1QxMjo0NzozMC4wNDczMDlaIn0seyJpZCI6MiwidXJsIjoiaHR0cDovL2xvY2FsaG9zdDo4MDAwL2FwaS9pcGFtL2lwLWFkZHJlc3Nlcy8yLyIsImZhbWlseSI6eyJ2YWx1ZSI6NCwibGFiZWwiOiJJUHY0In0sImFkZHJlc3MiOiIxMC4wLjAuMi8yNCIsInZyZiI6bnVsbCwidGVuYW50IjpudWxsLCJzdGF0dXMiOnsidmFsdWUiOiJhY3RpdmUiLCJsYWJlbCI6IkFjdGl2ZSJ9LCJyb2xlIjpudWxsLCJhc3NpZ25lZF9vYmplY3RfdHlwZSI6ImRjaW0uaW50ZXJmYWNlIiwiYXNzaWduZWRfb2JqZWN0X2lkIjoxLCJhc3NpZ25lZF9vYmplY3QiOnsiaWQiOjEsInVybCI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hcGkvZGNpbS9pbnRlcmZhY2VzLzEvIiwiZGV2aWNlIjp7ImlkIjoxLCJ1cmwiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2RjaW0vZGV2aWNlcy8xLyIsIm5hbWUiOiJxYS1kZS0xIiwiZGlzcGxheV9uYW1lIjoicWEtZGUtMSJ9LCJuYW1lIjoicDBzMCIsImNhYmxlIjpudWxsLCJjb25uZWN0aW9uX3N0YXR1cyI6bnVsbH0sIm5hdF9pbnNpZGUiOm51bGwsIm5hdF9vdXRzaWRlIjpudWxsLCJkbnNfbmFtZSI6IiIsImRlc2NyaXB0aW9uIjoicWEtZGUtMSIsInRhZ3MiOltdLCJjdXN0b21fZmllbGRzIjp7fSwiY3JlYXRlZCI6IjIwMjAtMDktMDkiLCJsYXN0X3VwZGF0ZWQiOiIyMDIwLTA5LTA5VDEwOjA5OjAyLjM1NDE5MVoifV19",
+        "ContentLength": 1182,
         "TransferEncoding": null,
         "Trailer": null,
         "TLS": null
