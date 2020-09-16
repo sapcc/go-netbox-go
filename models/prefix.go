@@ -26,6 +26,7 @@ type Prefix struct {
 type ListPrefixesRequest struct {
 	common.ListParams
 	Role string
+	Region string
 }
 
 type ListPrefixesReponse struct {

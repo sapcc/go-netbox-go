@@ -40,5 +40,8 @@ func setListPrefixesParams(req *http.Request, opts models.ListPrefixesRequest) {
 	if opts.Role != "" {
 		q.Set("role", opts.Role)
 	}
+	if opts.Region != "" {
+		q.Set("region", opts.Region)
+	}
 	req.URL.RawQuery = q.Encode()
 }

@@ -31,4 +31,11 @@ func TestClient_ListPrefixes(t *testing.T) {
 	}
 	t.Log(res)
 	assert.NotEqual(t, 0, res.Count)
+	opts.Region = "europe"
+	res, err = client.ListPrefixes(opts)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(res)
+	assert.NotEqual(t, 0, res.Count)
 }
