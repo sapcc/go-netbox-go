@@ -37,5 +37,8 @@ func (c *Client) ListPrefixes (opts models.ListPrefixesRequest) (*models.ListPre
 func setListPrefixesParams(req *http.Request, opts models.ListPrefixesRequest) {
 	q := req.URL.Query()
 	opts.SetListParams(&q)
+	if opts.Role != "" {
+		q.Set("role", opts.Role)
+	}
 	req.URL.RawQuery = q.Encode()
 }

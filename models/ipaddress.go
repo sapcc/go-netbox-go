@@ -13,13 +13,17 @@ type NestedIpAddress struct {
 	Address string `json:"address"`
 }
 
+type IpamRole struct {
+	Label string `json:"label"`
+	Value string `json:"value"`
+}
 
 type IpAddress struct {
 	NestedIpAddress
 	Vrf interface{} `json:"vrf"`
 	Tenant Tenant `json:"tenant"`
 	Status            interface{} `json:"status"`
-	Role              interface{} `json:"role"`
+	Role              IpamRole    `json:"role"`
 	NatInside         interface{} `json:"nat_inside"`
 	NatOutside        interface{} `json:"nat_outside"`
 	DnsName           string `json:"dns_name"`
@@ -35,6 +39,7 @@ type ListIpAddressesRequest struct {
 	common.ListParams
 	InterfaceId int
 	DeviceId int
+	Role string
 }
 
 type ListIpAddressesResponse struct {
@@ -61,6 +66,11 @@ func (ip *IpAddress) UnmarshalJSON(b []byte) error {
 	default:
 		_ = fmt.Errorf("unknown assigned object type %v", s)
 	}
+	var role IpamRole
+	if err := json.Unmarshal(tmp["role"], &role); err != nil {
+		return err
+	}
+	ip.Role = role
 	var id int
 	if err := json.Unmarshal(tmp["id"], &id); err != nil {
 		return err

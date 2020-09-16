@@ -70,6 +70,9 @@ func setListIpAddressesParams(req *http.Request, opts models.ListIpAddressesRequ
 	if opts.DeviceId != 0 {
 		q.Set("device_id", strconv.Itoa(opts.DeviceId))
 	}
+	if opts.Role != "" {
+		q.Set("role", opts.Role)
+	}
 	req.URL.RawQuery = q.Encode()
 }
 
