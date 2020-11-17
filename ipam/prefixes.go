@@ -40,6 +40,9 @@ func setListPrefixesParams(req *http.Request, opts models.ListPrefixesRequest) {
 	if opts.Role != "" {
 		q.Set("role", opts.Role)
 	}
+	if opts.Tag != "" {
+		q.Set("tag", opts.Tag)
+	}
 	if opts.Region != "" {
 		q.Set("region", opts.Region)
 	}
