@@ -1,14 +1,21 @@
 package models
 
-import "github.com/sapcc/go-netbox-go/common"
+import (
+	"encoding/json"
+	"github.com/sapcc/go-netbox-go/common"
+)
+
+type NestedVirtualMachine struct {
+	Id         int            `json:"id"`
+	Url        string         `json:"url"`
+	Name       string         `json:"name"`
+}
 
 type VirtualMachine struct {
 	Id         int            `json:"id"`
 	Url        string         `json:"url"`
 	Name       string         `json:"name"`
 	Status     interface{}    `json:"status"`
-	Site       Site    `json:"site"`
-	Cluster    interface{}    `json:"cluster"`
 	Role       interface{}    `json:"role"`
 	Tenant     Tenant `json:"tenant"`
 	Platform   interface{}    `json:"platform"`
@@ -25,6 +32,8 @@ type VirtualMachine struct {
 	ConfigContext interface{} `json:"config_context"`
 	Created string `json:"created"`
 	LastUpdated string `json:"last_updated"`
+	Cluster    NestedCluster
+	Site	   NestedSite
 }
 
 type ListVirtualMachinesRequest struct {
@@ -36,3 +45,50 @@ type ListVirtualMachinesResponse struct {
 	Results []VirtualMachine `json:"results"`
 }
 
+func (vm *VirtualMachine) UnmarshalJSON(b []byte) error {
+	var tmp map[string]json.RawMessage
+	if err := json.Unmarshal(b, &tmp); err != nil {
+		return err
+	}
+	var cl NestedCluster
+	if err := json.Unmarshal(tmp["cluster"], &cl); err != nil {
+		return err
+	}
+	vm.Cluster = cl
+	var st NestedSite
+	if err := json.Unmarshal(tmp["site"], &st); err != nil {
+		return err
+	}
+	vm.Site = st
+	var id int
+	if err := json.Unmarshal(tmp["id"], &id); err != nil {
+		return err
+	}
+	vm.Id = id
+	var url string
+	if err := json.Unmarshal(tmp["url"], &url); err != nil {
+		return err
+	}
+	vm.Url = url
+	var Name string
+	if err := json.Unmarshal(tmp["name"], &Name); err != nil {
+		return err
+	}
+	vm.Name = Name
+	var tenant Tenant
+	if err := json.Unmarshal(tmp["tenant"], &tenant); err != nil {
+		return err
+	}
+	vm.Tenant = tenant
+	var created string
+	if err := json.Unmarshal(tmp["created"], &created); err != nil {
+		return err
+	}
+	vm.Created = created
+	var lastUpdated string
+	if err := json.Unmarshal(tmp["last_updated"], &lastUpdated); err != nil {
+		return err
+	}
+	vm.LastUpdated = lastUpdated
+	return nil
+}

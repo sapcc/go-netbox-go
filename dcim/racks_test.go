@@ -22,6 +22,6 @@ func TestClient_ListRacks(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Log(res)
+	//t.Log(res)
 	assert.NotEqual(t, 0, res.Count)
 }

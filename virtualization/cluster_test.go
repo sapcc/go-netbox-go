@@ -1,4 +1,4 @@
-package ipam
+package virtualization
 
 import (
 	"github.com/sapcc/go-netbox-go/models"
@@ -8,20 +8,23 @@ import (
 	"testing"
 )
 
-func TestClient_ListRoles(t *testing.T) {
+func TestClient_ListClusters(t *testing.T) {
 	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"))
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
 	vcrConf.Client = client.HttpClient
-	vcr := govcr.NewVCR("ListRoles", vcrConf)
+	vcr := govcr.NewVCR("ListClusters", vcrConf)
 	client.HttpClient = vcr.Client
-	opts := models.ListRolesRequest{}
-	res, err := client.ListRoles(opts)
+	opts := models.ListClusterRequest{}
+	//opts.VmId = 1060
+	opts.Id = 632
+	res, err := client.ListClusters(opts)
 	if err != nil {
 		t.Fatal(err)
 	}
 	//t.Log(res)
+	t.Log(res.Results[0].Name)
 	assert.NotEqual(t, 0, res.Count)
 }

@@ -18,12 +18,12 @@ func TestClient_ListInterfaces(t *testing.T) {
 	vcr := govcr.NewVCR("ListInterfaces", vcrConf)
 	client.HttpClient = vcr.Client
 	opts := models.ListInterfacesRequest{}
-	opts.DeviceId = 1
-	opts.Name = "p0s0"
+	opts.DeviceId = 10867
+	opts.Name = "bond2"
 	res, err := client.ListInterfaces(opts)
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Log(res)
+	//t.Log(res)
 	assert.NotEqual(t, 0, res.Count)
 }

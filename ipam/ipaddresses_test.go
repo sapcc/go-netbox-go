@@ -22,13 +22,13 @@ func TestClient_ListIpAddresses(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Log(res)
+	//t.Log(res)
 	assert.NotEqual(t, 0, res.Count)
 	opts.Role = "vip"
 	res, err = client.ListIpAddresses(opts)
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Log(res)
+	//t.Log(res)
 	assert.NotEqual(t, 0, res.Count)
 }

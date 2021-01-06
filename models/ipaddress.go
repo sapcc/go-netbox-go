@@ -63,6 +63,12 @@ func (ip *IpAddress) UnmarshalJSON(b []byte) error {
 			return err
 		}
 		ip.AssignedInterface = inter
+	case "virtualization.vminterface":
+		var inter Interface
+		if err := json.Unmarshal(tmp["assigned_object"], &inter); err != nil {
+			return err
+		}
+		ip.AssignedInterface = inter
 	default:
 		_ = fmt.Errorf("unknown assigned object type %v", s)
 	}

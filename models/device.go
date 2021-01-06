@@ -1,5 +1,7 @@
 package models
 
+import "github.com/sapcc/go-netbox-go/common"
+
 type DeviceType struct {
 	Id int `json:"id"`
 	Url string `json:"url"`
@@ -41,4 +43,14 @@ type Device struct {
 	ConfigContext interface{} `json:"config_context"`
 	Created string `json:"created"`
 	LastUpdated string `json:"last_updated"`
+}
+
+type ListDevicesRequest struct {
+	common.ListParams
+	ClusterId   int
+}
+
+type ListDevicesResponse struct {
+	common.ReturnValues
+	Results []Device `json:"results"`
 }

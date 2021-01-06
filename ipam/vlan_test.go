@@ -8,20 +8,22 @@ import (
 	"testing"
 )
 
-func TestClient_ListRoles(t *testing.T) {
+func TestClient_ListVlans(t *testing.T) {
 	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"))
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
 	vcrConf.Client = client.HttpClient
-	vcr := govcr.NewVCR("ListRoles", vcrConf)
+	vcr := govcr.NewVCR("ListVlans", vcrConf)
 	client.HttpClient = vcr.Client
-	opts := models.ListRolesRequest{}
-	res, err := client.ListRoles(opts)
+	opts := models.ListVlanRequest{}
+	opts.Id = 1661
+	res, err := client.ListVlans(opts)
 	if err != nil {
 		t.Fatal(err)
 	}
 	//t.Log(res)
+	t.Log(res.Results[0].Name)
 	assert.NotEqual(t, 0, res.Count)
 }

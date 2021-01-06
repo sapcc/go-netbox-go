@@ -22,7 +22,7 @@ func TestClient_ListSites(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Log(res)
+	//t.Log(res)
 	assert.NotEqual(t, 0, res.Count)
 }
 
@@ -39,5 +39,5 @@ func TestClient_GetSite(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Log(res)
+	t.Log(res.Name)
 }

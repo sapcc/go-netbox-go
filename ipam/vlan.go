@@ -1,4 +1,4 @@
-package virtualization
+package ipam
 
 import (
 	"encoding/json"
@@ -6,15 +6,16 @@ import (
 	"github.com/sapcc/go-netbox-go/models"
 	"io/ioutil"
 	"net/http"
+	"strconv"
 )
 
-func (c *Client) ListVirtualMachines (opts models.ListVirtualMachinesRequest) (*models.ListVirtualMachinesResponse, error) {
-	request, err := http.NewRequest("GET", c.BaseUrl.String() + basePath + "virtual-machines/", nil)
+func (c *Client) ListVlans (opts models.ListVlanRequest) (*models.ListVlanResponse, error) {
+	request, err := http.NewRequest("GET", c.BaseUrl.String() + basePath + "vlans/", nil)
 	if err != nil {
 		return nil, err
 	}
 	c.SetAuthToken(&request.Header)
-	setListVirtualMachinesParams(request, opts)
+	setVlanParams(request, opts)
 	response, err := c.HttpClient.Do(request)
 	if err != nil {
 		return nil, err
@@ -22,7 +23,7 @@ func (c *Client) ListVirtualMachines (opts models.ListVirtualMachinesRequest) (*
 	if response.StatusCode != 200 {
 		return nil, fmt.Errorf("unexpected return code of %d", response.StatusCode)
 	}
-	resObj := models.ListVirtualMachinesResponse{}
+	resObj := models.ListVlanResponse{}
 	bytes, err := ioutil.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
@@ -34,8 +35,11 @@ func (c *Client) ListVirtualMachines (opts models.ListVirtualMachinesRequest) (*
 	return &resObj, nil
 }
 
-	func setListVirtualMachinesParams(req *http.Request, opts models.ListVirtualMachinesRequest) {
-		q := req.URL.Query()
-		opts.SetListParams(&q)
-		req.URL.RawQuery = q.Encode()
+func setVlanParams(req *http.Request, opts models.ListVlanRequest) {
+	q := req.URL.Query()
+	opts.SetListParams(&q)
+	if opts.Id != 0 {
+		q.Set("id", strconv.Itoa(opts.Id))
 	}
+	req.URL.RawQuery = q.Encode()
+}

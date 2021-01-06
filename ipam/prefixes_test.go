@@ -22,20 +22,20 @@ func TestClient_ListPrefixes(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Log(res)
+	//t.Log(res)
 	assert.NotEqual(t, 0, res.Count)
-	opts.Role = "testrole"
+	opts.Role = "cc-transit"
 	res, err = client.ListPrefixes(opts)
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Log(res)
+	//t.Log(res)
 	assert.NotEqual(t, 0, res.Count)
-	opts.Region = "europe"
+	opts.Region = "qa-de-1"
 	res, err = client.ListPrefixes(opts)
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Log(res)
+	//t.Log(res)
 	assert.NotEqual(t, 0, res.Count)
 }

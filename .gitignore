@@ -1,0 +1,6 @@
+*.dll
+*.exe
+.DS_Store
+
+# Test exclusions
+*.cassette

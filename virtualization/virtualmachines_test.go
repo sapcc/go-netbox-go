@@ -18,10 +18,13 @@ func TestClient_ListVirtualMachines(t *testing.T) {
 	vcr := govcr.NewVCR("ListVirtualMachines", vcrConf)
 	client.HttpClient = vcr.Client
 	opts := models.ListVirtualMachinesRequest{}
+	opts.Id = 1060
 	res, err := client.ListVirtualMachines(opts)
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Log(res)
+	//t.Log(res)
+	t.Log(res.Results[0].Name)
+	t.Log(res.Results[0].Cluster.Name)
 	assert.NotEqual(t, 0, res.Count)
 }

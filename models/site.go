@@ -4,6 +4,13 @@ import (
 	"github.com/sapcc/go-netbox-go/common"
 )
 
+type NestedSite struct {
+	Id int `json:"id"`
+	Url string `json:"url"`
+	Slug string `json:"slug"`
+	Name string `json:"name"`
+}
+
 type Site struct {
 	Id int `json:"id"`
 	Url string `json:"url"`
