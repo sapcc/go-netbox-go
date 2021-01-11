@@ -67,6 +67,9 @@ func setListIpAddressesParams(req *http.Request, opts models.ListIpAddressesRequ
 	if opts.InterfaceId != 0 {
 		q.Set("interface_id", strconv.Itoa(opts.InterfaceId))
 	}
+	if opts.VmInterfaceId != 0 {
+		q.Set("vminterface_id", strconv.Itoa(opts.VmInterfaceId))
+	}
 	if opts.DeviceId != 0 {
 		q.Set("device_id", strconv.Itoa(opts.DeviceId))
 	}

@@ -38,6 +38,7 @@ type IpAddress struct {
 type ListIpAddressesRequest struct {
 	common.ListParams
 	InterfaceId int
+	VmInterfaceId int
 	DeviceId int
 	Role string
 }
