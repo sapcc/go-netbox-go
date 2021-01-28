@@ -72,6 +72,7 @@ func (c *Client) GetDevice(id int) (*models.Device, error) {
 	return &resObj, nil
 }
 
+/*
 func (c *Client) ListDevicesByCluster(id int) (*models.ListDevicesResponse, error) {
 	request, err := http.NewRequest("GET", c.BaseUrl.String() + basePath + "devices/?cluster_id=" + strconv.Itoa(id), nil )
 	if err != nil {
@@ -96,3 +97,4 @@ func (c *Client) ListDevicesByCluster(id int) (*models.ListDevicesResponse, erro
 	}
 	return &resObj, nil
 }
+*/

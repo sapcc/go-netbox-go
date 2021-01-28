@@ -1,6 +1,7 @@
 package ipam
 
 import (
+	"crypto/tls"
 	"net/http"
 	"net/url"
 
@@ -13,19 +14,20 @@ type Client struct {
 	common.Client
 }
 
-func New(baseUrl string, authToken string) (*Client, error) {
+func New(baseUrl string, authToken string, insecureSkipVerify bool) (*Client, error) {
 	u, err := url.Parse(baseUrl)
 	if err != nil {
 		return nil, err
 	}
+	tr := http.DefaultTransport.(*http.Transport)
+	tr.TLSClientConfig = &tls.Config{
+		InsecureSkipVerify: insecureSkipVerify,
+	}
 	res := &Client{}
 	res.BaseUrl = *u
-	res.HttpClient = &http.Client{}
-	// leave here for staging tests
-	//	tr := &http.Transport{
-	//		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-	//	}
-	//	res.HttpClient = &http.Client{Transport: tr}
+	res.HttpClient = &http.Client{
+		Transport: tr,
+	}
 	res.AuthToken = authToken
 	return res, nil
 }

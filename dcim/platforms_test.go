@@ -1,4 +1,4 @@
-package virtualization
+package dcim
 
 import (
 	"github.com/sapcc/go-netbox-go/models"
@@ -8,23 +8,20 @@ import (
 	"testing"
 )
 
-func TestClient_ListClusters(t *testing.T) {
+func TestClient_ListPlatforms(t *testing.T) {
 	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
 	vcrConf.Client = client.HttpClient
-	vcr := govcr.NewVCR("ListClusters", vcrConf)
+	vcr := govcr.NewVCR("ListPlatforms", vcrConf)
 	client.HttpClient = vcr.Client
-	opts := models.ListClusterRequest{}
-	//opts.VmId = 1060
-	opts.Id = 632
-	res, err := client.ListClusters(opts)
+	opts := models.ListPlatformsRequest{}
+	res, err := client.ListPlatforms(opts)
 	if err != nil {
 		t.Fatal(err)
 	}
-	//t.Log(res)
-	t.Log(res.Results[0].Name)
 	assert.NotEqual(t, 0, res.Count)
+	t.Log(res.Results[0].Name)
 }

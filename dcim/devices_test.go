@@ -3,12 +3,13 @@ package dcim
 import (
 	"github.com/sapcc/go-netbox-go/models"
 	"github.com/seborama/govcr"
+	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"
 )
 
 func TestClient_GetDevice(t *testing.T) {
-	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"))
+	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -25,7 +26,7 @@ func TestClient_GetDevice(t *testing.T) {
 }
 
 func TestClient_ListDevices(t *testing.T) {
-	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"))
+	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -43,18 +44,22 @@ func TestClient_ListDevices(t *testing.T) {
 }
 
 func TestClient_ListDevicesByCluster(t *testing.T) {
-	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"))
+	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
 	vcrConf.Client = client.HttpClient
-	vcr := govcr.NewVCR("ListDevices", vcrConf)
+	vcr := govcr.NewVCR("ListDevicesByCluster", vcrConf)
 	client.HttpClient = vcr.Client
-	res, err := client.ListDevicesByCluster(632)
+	opts := models.ListDevicesRequest{
+		ClusterId: 632,
+	}
+	res, err := client.ListDevices(opts)
 	if err != nil {
 		t.Fatal(err)
 	}
 	//t.Log(res)
-	t.Log(res.Results[0].Rack.Name)
+	assert.NotEqual(t, 0, res.Count)
+	t.Log(res.Results[0])
 }

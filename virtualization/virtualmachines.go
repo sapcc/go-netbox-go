@@ -1,12 +1,33 @@
 package virtualization
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"github.com/sapcc/go-netbox-go/models"
 	"io/ioutil"
 	"net/http"
 )
+
+func (c *Client) CreateVirtualMachine (vm models.WriteableVirtualMachine) error {
+	body, err := json.Marshal(vm)
+	if err != nil {
+		return err
+	}
+	request, err := http.NewRequest("POST", c.BaseUrl.String() + basePath + "virtual-machines/", bytes.NewBuffer(body))
+	if err != nil {
+		return err
+	}
+	c.SetAuthToken(&request.Header)
+	response, err := c.HttpClient.Do(request)
+	if err != nil {
+		return err
+	}
+	if response.StatusCode != 201 {
+		return fmt.Errorf("unexpected response code of %d", response.StatusCode)
+	}
+	return nil
+}
 
 func (c *Client) ListVirtualMachines (opts models.ListVirtualMachinesRequest) (*models.ListVirtualMachinesResponse, error) {
 	request, err := http.NewRequest("GET", c.BaseUrl.String() + basePath + "virtual-machines/", nil)

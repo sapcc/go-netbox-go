@@ -1,5 +1,5 @@
 test:
-	go test ./...
+	go test ./... -v
 
 clean:
 	rm -rf dcim/govcr-fixtures
