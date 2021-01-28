@@ -75,7 +75,7 @@ func TestClient_CreateVirtualMachine(t *testing.T) {
 		t.Fatal(err)
 	}
 	vm := models.WriteableVirtualMachine{
-		Name: "test-d062260.cc.qa-de-1.cloud.sap",
+		Name: "test.cc.qa-de-1.cloud.sap",
 		Cluster: res.Results[0].Id,
 		Status: "active",
 		Role: roles.Results[0].Id,
