@@ -20,9 +20,23 @@ type VMInterface struct {
 	TaggedVlans 	 []NestedVLAN
 }
 
+type WritableVMInterface struct {
+	Id 				int				`json:"id"`
+	Url 			string			`json:"url"`
+	VirtualMachine 	int				`json:"virtual_machine"`
+	Name 			string			`json:"name"`
+	Enabled 		bool			`json:"enabled"`
+	MTU 			int				`json:"mtu"`
+	MacAddress 		*string			`json:"mac_address"`
+	Description 	string			`json:"description"`
+	Mode 			string			`json:"mode"`
+	UntaggedVlan 	*int			`json:"untagged_vlan"`
+	TaggedVlans 	[]NestedVLAN
+	Tags        	[]NestedTag
+}
+
 type ListVMInterfacesRequest struct {
 	common.ListParams
-	Id   int
 	VmId int
 }
 

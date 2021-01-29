@@ -59,6 +59,7 @@ type WriteableVirtualMachine struct {
 
 type ListVirtualMachinesRequest struct {
 	common.ListParams
+	Name string `json:"name"`
 }
 
 type ListVirtualMachinesResponse struct {

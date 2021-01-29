@@ -11,6 +11,22 @@ import (
 	"testing"
 )
 
+func TestClient_GetVirtualMachine(t *testing.T) {
+	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	if err != nil {
+		t.Fatal(err)
+	}
+	vcrConf := &govcr.VCRConfig{}
+	vcrConf.Client = client.HttpClient
+	vcr := govcr.NewVCR("GetVirtualMachine", vcrConf)
+	client.HttpClient = vcr.Client
+	vm, err := client.GetVirtualMachine(10)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(vm.Name)
+}
+
 func TestClient_ListVirtualMachines(t *testing.T) {
 	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
@@ -21,19 +37,19 @@ func TestClient_ListVirtualMachines(t *testing.T) {
 	vcr := govcr.NewVCR("ListVirtualMachines", vcrConf)
 	client.HttpClient = vcr.Client
 	opts := models.ListVirtualMachinesRequest{}
-	opts.Id = 1060
+	opts.Id = 10
 	res, err := client.ListVirtualMachines(opts)
 	if err != nil {
 		t.Fatal(err)
 	}
-	//t.Log(res)
+	assert.NotEqual(t, 0, res.Count)
 	t.Log(res.Results[0].Name)
 	t.Log(res.Results[0].Cluster.Name)
 	t.Log(res.Results[0].Status)
-	assert.NotEqual(t, 0, res.Count)
+
 }
 
-func TestClient_CreateVirtualMachine(t *testing.T) {
+func TestClient_CreateDeleteVirtualMachine(t *testing.T) {
 	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
@@ -75,14 +91,18 @@ func TestClient_CreateVirtualMachine(t *testing.T) {
 		t.Fatal(err)
 	}
 	vm := models.WriteableVirtualMachine{
-		Name: "test.cc.qa-de-1.cloud.sap",
-		Cluster: res.Results[0].Id,
-		Status: "active",
-		Role: roles.Results[0].Id,
-		Tenant: tenants.Results[0].Id,
+		Name:     "test.cc.qa-de-1.cloud.sap",
+		Cluster:  res.Results[0].Id,
+		Status:   "active",
+		Role:     roles.Results[0].Id,
+		Tenant:   tenants.Results[0].Id,
 		Platform: platforms.Results[0].Id,
 	}
-	err = client.CreateVirtualMachine(vm)
+	vm2, err := client.CreateVirtualMachine(vm)
+	if err != nil {
+		t.Fatal(err)
+	}
+	err = client.DeleteVirtualMachine(vm2.Id)
 	if err != nil {
 		t.Fatal(err)
 	}

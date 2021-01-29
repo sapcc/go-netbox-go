@@ -44,7 +44,7 @@ func (c *Client) GetIpAdress(id int) (*models.IpAddress, error) {
 	c.SetAuthToken(&request.Header)
 	response, err := c.HttpClient.Do(request)
 	if err != nil {
-		return nil, nil
+		return nil, err
 	}
 	if response.StatusCode != 200 {
 		return nil, fmt.Errorf("unexpected return code of %d", response.StatusCode)
@@ -79,22 +79,32 @@ func setListIpAddressesParams(req *http.Request, opts models.ListIpAddressesRequ
 	req.URL.RawQuery = q.Encode()
 }
 
-func (c *Client) CreateIpAddress(address models.IpAddress) error {
+func (c *Client) CreateIpAddress(address models.IpAddress) (*models.IpAddress, error) {
 	body, err := json.Marshal(address)
 	if err != nil {
-		return err
+		return nil,err
 	}
 	request, err := http.NewRequest("POST", c.BaseUrl.String() + basePath + "ip-addresses/", bytes.NewBuffer(body))
 	if err != nil {
-		return err
+		return nil,err
 	}
 	c.SetAuthToken(&request.Header)
 	response, err := c.HttpClient.Do(request)
 	if err != nil {
-		return err
+		return nil,err
 	}
 	if response.StatusCode != 201 {
-		return fmt.Errorf("unexpected response code of %d", response.StatusCode)
+		errBody, _ := ioutil.ReadAll(response.Body)
+		return nil,fmt.Errorf("unexpected response code of %d:%s", response.StatusCode, errBody)
 	}
-	return nil
+	resObj := models.IpAddress{}
+	byteses, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		return nil, err
+	}
+	err = json.Unmarshal(byteses, &resObj)
+	if err != nil {
+		return nil, err
+	}
+	return &resObj, nil
 }
