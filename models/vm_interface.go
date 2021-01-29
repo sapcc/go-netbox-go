@@ -13,26 +13,26 @@ type VMInterface struct {
 	MTU              int           `json:"mtu"`
 	MacAddress       string        `json:"mac_address"`
 	Description      string        `json:"description"`
-	Mode             interface{}   `json:"mode"`
-	Tags             interface{}   `json:"tags"`
+	Mode             string		   `json:"mode"`
+	Tags             []NestedTag   `json:"tags"`
 	VirtualMachine 	 NestedVirtualMachine
 	UntaggedVlan     NestedVLAN
 	TaggedVlans 	 []NestedVLAN
 }
 
 type WritableVMInterface struct {
-	Id 				int				`json:"id"`
-	Url 			string			`json:"url"`
-	VirtualMachine 	int				`json:"virtual_machine"`
+	Id 				int				`json:"id,omitempty"`
+	Url 			string			`json:"url,omitempty"`
+	VirtualMachine 	int				`json:"virtual_machine,omitempty"`
 	Name 			string			`json:"name"`
-	Enabled 		bool			`json:"enabled"`
-	MTU 			int				`json:"mtu"`
-	MacAddress 		*string			`json:"mac_address"`
-	Description 	string			`json:"description"`
-	Mode 			string			`json:"mode"`
-	UntaggedVlan 	*int			`json:"untagged_vlan"`
-	TaggedVlans 	[]NestedVLAN
-	Tags        	[]NestedTag
+	Enabled 		bool			`json:"enabled,omitempty"`
+	MTU 			int				`json:"mtu,omitempty"`
+	MacAddress 		*string			`json:"mac_address,omitempty"`
+	Description 	string			`json:"description,omitempty"`
+	Mode 			string			`json:"mode,omitempty"`
+	UntaggedVlan 	*int			`json:"untagged_vlan,omitempty"`
+	TaggedVlans 	[]NestedVLAN	`json:"tagged_vlans,omitempty"`
+	Tags        	[]NestedTag		`json:"tags,omitempty"`
 }
 
 type ListVMInterfacesRequest struct {
@@ -50,10 +50,15 @@ func (vmIf *VMInterface) UnmarshalJSON(b []byte) error {
 	if err := json.Unmarshal(b, &tmp); err != nil {
 		return err
 	}
+	var tags []NestedTag
+	if err := json.Unmarshal(tmp["tags"], &tags); err != nil {
+		return err
+	}
+	vmIf.Tags = tags
 	var vm NestedVirtualMachine
 	if err := json.Unmarshal(tmp["virtual_machine"], &vm); err != nil {
 			return err
-		}
+	}
 	vmIf.VirtualMachine = vm
 	var tagVlan []NestedVLAN
 	if err := json.Unmarshal(tmp["tagged_vlans"],&tagVlan); err != nil {

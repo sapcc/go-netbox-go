@@ -9,11 +9,11 @@ type Tag struct {
 }
 
 type NestedTag struct {
-	Id 		int		`json:"id"'`
-	Url 	string	`json:"url"`
-	Name	string	`json:"name"`
-	Slug 	string	`json:"slug"`
-	Color 	string	`json:"color"`
+	Id 		int			`json:"id,omitempty"'`
+	Url 	string		`json:"url,omitempty"`
+	Name	string		`json:"name"`
+	Slug 	string		`json:"slug"`
+	Color 	string		`json:"color,omitempty"`
 }
 
 type ListTagsRequest struct {

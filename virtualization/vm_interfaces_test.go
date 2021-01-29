@@ -8,6 +8,47 @@ import (
 	"testing"
 )
 
+func TestClient_CreateDeleteTaggedVMInterface(t *testing.T) {
+	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	if err != nil {
+		t.Fatal(err)
+	}
+	vcrConf := &govcr.VCRConfig{}
+	vcrConf.Client = client.HttpClient
+	vcr := govcr.NewVCR("CreateTaggedVMInterface", vcrConf)
+	client.HttpClient = vcr.Client
+	tag1 := models.NestedTag{
+		Name: "101",
+		Slug: "101",
+	}
+	tag2 := models.NestedTag{
+		Name: "128",
+		Slug: "128",
+	}
+	tags := []models.NestedTag{
+		tag1, tag2,
+	}
+	vmi := models.WritableVMInterface{
+		VirtualMachine: 1107,
+		Name: "test-tagged-interface",
+		Enabled: true,
+		MTU: 9000,
+		Description: "this is a test tagged interface",
+		Tags: tags,
+		TaggedVlans: []models.NestedVLAN{},
+	}
+	vmi2, err := client.CreateVMInterface(vmi)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(vmi2)
+	assert.Equal(t, 2, len(vmi2.Tags))
+	err = client.DeleteVMInterface(vmi2.Id)
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestClient_CreateDeleteVMInterface(t *testing.T) {
 	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
