@@ -59,7 +59,8 @@ type WriteableVirtualMachine struct {
 
 type ListVirtualMachinesRequest struct {
 	common.ListParams
-	Name string `json:"name"`
+	Name 		string	`json:"name"`
+	ClusterId 	int 	`json:"cluster_id"`
 }
 
 type ListVirtualMachinesResponse struct {

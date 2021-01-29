@@ -116,5 +116,8 @@ func setListVirtualMachinesParams(req *http.Request, opts models.ListVirtualMach
 	if opts.Name != "" {
 		q.Set("name", opts.Name)
 	}
+	if opts.ClusterId != 0 {
+		q.Set("cluster_id", strconv.Itoa(opts.ClusterId))
+	}
 	req.URL.RawQuery = q.Encode()
 }
