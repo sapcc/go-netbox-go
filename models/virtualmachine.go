@@ -40,21 +40,21 @@ type VirtualMachineStatus struct {
 }
 
 type WriteableVirtualMachine struct {
-	Id         	int		`json:"id"`
-	Url        	string	`json:"url"`
+	Id         	int		`json:"id,omitempty"`
+	Url        	string	`json:"url,omitempty"`
 	Name       	string	`json:"name"`
-	Status 		string	`json:"status"`
-	Site 		string	`json:"site"`
+	Status 		string	`json:"status,omitempty"`
+	Site 		string	`json:"site,omitempty"`
 	Cluster 	int		`json:"cluster"`
-	Role 		int		`json:"role"`
-	Tenant 		int		`json:"tenant"`
-	Platform 	int		`json:"platform"`
-	PrimaryIp 	string 	`json:"primary_ip"`
-	PrimaryIp4 	string	`json:"primary_ipv4"`
-	Comments 	string	`json:"comments"`
-	VCPUs 		int		`json:"vcpus"`
-	Memory 		int		`json:"memory"`
-	Disk		int		`json:"disk"`
+	Role 		int		`json:"role,omitempty"`
+	Tenant 		int		`json:"tenant,omitempty"`
+	Platform 	int		`json:"platform,omitempty"`
+	PrimaryIp 	string 	`json:"primary_ip,omitempty"`
+	PrimaryIp4 	string	`json:"primary_ipv4,omitempty"`
+	Comments 	string	`json:"comments,omitempty"`
+	VCPUs 		int		`json:"vcpus,omitempty"`
+	Memory 		int		`json:"memory,omitempty"`
+	Disk		int		`json:"disk,omitempty"`
 }
 
 type ListVirtualMachinesRequest struct {
