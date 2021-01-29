@@ -128,5 +128,20 @@ func (vm *VirtualMachine) UnmarshalJSON(b []byte) error {
 		return err
 	}
 	vm.LastUpdated = lastUpdated
+	var vcpus int
+	if err := json.Unmarshal(tmp["vcpus"], &vcpus); err != nil {
+		return err
+	}
+	vm.VCPUs = vcpus
+	var memory int
+	if err := json.Unmarshal(tmp["memory"], &memory); err != nil {
+		return err
+	}
+	vm.Memory = memory
+	var disk int
+	if err := json.Unmarshal(tmp["disk"], &disk); err != nil {
+		return err
+	}
+	vm.Disk = disk
 	return nil
 }
