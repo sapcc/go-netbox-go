@@ -20,7 +20,8 @@ func (c *Client) ListPrefixes (opts models.ListPrefixesRequest) (*models.ListPre
 		return nil, err
 	}
 	if response.StatusCode != 200 {
-		return nil, fmt.Errorf("unexpected return code of %d", response.StatusCode)
+		errBody, _ := ioutil.ReadAll(response.Body)
+		return nil, fmt.Errorf("unexpected return code of %d: %s", response.StatusCode, errBody)
 	}
 	resObj := models.ListPrefixesReponse{}
 	bytes, err := ioutil.ReadAll(response.Body)
