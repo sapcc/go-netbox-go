@@ -35,7 +35,6 @@ func TestClient_CreateDeleteTaggedVMInterface(t *testing.T) {
 		MTU: 9000,
 		Description: "this is a test tagged interface",
 		Tags: tags,
-		TaggedVlans: []models.NestedVLAN{},
 	}
 	vmi2, err := client.CreateVMInterface(vmi)
 	if err != nil {
