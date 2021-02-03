@@ -3,10 +3,7 @@ package models
 import "github.com/sapcc/go-netbox-go/common"
 
 type Tenant struct {
-	Id int `json:"id"`
-	Url string `json:"url"`
-	Name string `json:"name"`
-	Slug string	`json:"slug"`
+	NestedTenant
 	Group interface{} `json:"group"`
 	Description string `json:"description"`
 	Comments string `json:"comments"`
@@ -24,6 +21,13 @@ type Tenant struct {
 	VlanCount int `json:"vlan_count"`
 	VrfCount int `json:"vrf_count"`
 	ClusterCount int `json:"cluster_count"`
+}
+
+type NestedTenant struct {
+	Id int `json:"id"`
+	Url string `json:"url"`
+	Name string `json:"name"`
+	Slug string	`json:"slug"`
 }
 
 type ListTenantsRequest struct {

@@ -113,9 +113,6 @@ func (c *Client) ListVirtualMachines (opts models.ListVirtualMachinesRequest) (*
 func setListVirtualMachinesParams(req *http.Request, opts models.ListVirtualMachinesRequest) {
 	q := req.URL.Query()
 	opts.SetListParams(&q)
-	if opts.Name != "" {
-		q.Set("name", opts.Name)
-	}
 	if opts.ClusterId != 0 {
 		q.Set("cluster_id", strconv.Itoa(opts.ClusterId))
 	}

@@ -14,9 +14,9 @@ type NestedVirtualMachine struct {
 type VirtualMachine struct {
 	NestedVirtualMachine
 	Status     			VirtualMachineStatus	`json:"status"`
-	Role       			interface{}				`json:"role"`
-	Tenant     			Tenant					`json:"tenant"`
-	Platform   			interface{}    			`json:"platform"`
+	Role       			NestedDeviceRole		`json:"role"`
+	Tenant     			NestedTenant			`json:"tenant"`
+	Platform   			NestedPlatform    		`json:"platform"`
 	PrimaryIp  			NestedIpAddress  		`json:"primary_ip"`
 	PrimaryIp4 			NestedIpAddress    		`json:"primary_ip4"`
 	PrimaryIp6 			interface{}    			`json:"primary_ip6"`
@@ -59,7 +59,6 @@ type WriteableVirtualMachine struct {
 
 type ListVirtualMachinesRequest struct {
 	common.ListParams
-	Name 		string	`json:"name"`
 	ClusterId 	int 	`json:"cluster_id"`
 }
 
@@ -73,6 +72,16 @@ func (vm *VirtualMachine) UnmarshalJSON(b []byte) error {
 	if err := json.Unmarshal(b, &tmp); err != nil {
 		return err
 	}
+	var platform NestedPlatform
+	if err := json.Unmarshal(tmp["platform"], &platform); err != nil {
+		return err
+	}
+	vm.Platform = platform
+	var role NestedDeviceRole
+	if err := json.Unmarshal(tmp["role"], &role); err != nil {
+		return err
+	}
+	vm.Role = role
 	var pIp NestedIpAddress
 	if err := json.Unmarshal(tmp["primary_ip"], &pIp); err != nil {
 		return err
@@ -113,7 +122,7 @@ func (vm *VirtualMachine) UnmarshalJSON(b []byte) error {
 		return err
 	}
 	vm.Name = Name
-	var tenant Tenant
+	var tenant NestedTenant
 	if err := json.Unmarshal(tmp["tenant"], &tenant); err != nil {
 		return err
 	}
