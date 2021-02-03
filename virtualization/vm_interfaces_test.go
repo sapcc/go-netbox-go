@@ -8,6 +8,36 @@ import (
 	"testing"
 )
 
+func TestClient_CreateDeleteVLANVMInterface(t *testing.T) {
+	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	if err != nil {
+		t.Fatal(err)
+	}
+	vcrConf := &govcr.VCRConfig{}
+	vcrConf.Client = client.HttpClient
+	vcr := govcr.NewVCR("CreateVLANVMInterface", vcrConf)
+	client.HttpClient = vcr.Client
+	vlans := []int{1410,1408,1409}
+	vmi := models.WritableVMInterface{
+		VirtualMachine: 1107,
+		Name: "test-vlan-interface",
+		Enabled: true,
+		MTU: 9000,
+		Description: "this is a test vlan interface",
+		TaggedVlans: vlans,
+	}
+	vmi2, err := client.CreateVMInterface(vmi)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(vmi2)
+	assert.Equal(t, 3, len(vmi2.TaggedVlans))
+	err = client.DeleteVMInterface(vmi2.Id)
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestClient_CreateDeleteTaggedVMInterface(t *testing.T) {
 	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {

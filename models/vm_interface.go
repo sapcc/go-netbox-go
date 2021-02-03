@@ -31,7 +31,7 @@ type WritableVMInterface struct {
 	Description 	string			`json:"description,omitempty"`
 	Mode 			string			`json:"mode,omitempty"`
 	UntaggedVlan 	*int			`json:"untagged_vlan,omitempty"`
-	TaggedVlans 	[]NestedVLAN	`json:"tagged_vlans,omitempty"`
+	TaggedVlans 	[]int			`json:"tagged_vlans,omitempty"`
 	Tags        	[]NestedTag		`json:"tags,omitempty"`
 }
 
