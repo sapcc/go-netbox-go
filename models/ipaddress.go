@@ -18,6 +18,24 @@ type IpamRole struct {
 	Value string `json:"value"`
 }
 
+type WriteableIpAddress struct {
+	NestedIpAddress
+	Vrf 				int 		`json:"vrf"`
+	Tenant 				int 		`json:"tenant"`
+	Status 				string 		`json:"status"`
+	Role 				string 		`json:"role"`
+	AssignedObjectType	string 		`json:"assigned_object_type"`
+	AssignedObjectId 	int 		`json:"assigned_object_id"`
+	NatInside 			int 		`json:"nat_inside"`
+	NatOutside 			int 		`json:"nat_outside"`
+	DnsName 			string 		`json:"dns_name"`
+	Description 		string 		`json:"description"`
+	Tags 				interface{} `json:"tags"`
+	CustomFields 		interface{} `json:"custom_fields"`
+	Created 			string 		`json:"created"`
+	LastUpdated 		string 		`json:"last_updated"`
+}
+
 type IpAddress struct {
 	NestedIpAddress
 	Vrf interface{} `json:"vrf"`
