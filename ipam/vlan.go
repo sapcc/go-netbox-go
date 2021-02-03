@@ -6,7 +6,6 @@ import (
 	"github.com/sapcc/go-netbox-go/models"
 	"io/ioutil"
 	"net/http"
-	"strconv"
 )
 
 func (c *Client) ListVlans (opts models.ListVlanRequest) (*models.ListVlanResponse, error) {
@@ -38,8 +37,8 @@ func (c *Client) ListVlans (opts models.ListVlanRequest) (*models.ListVlanRespon
 func setVlanParams(req *http.Request, opts models.ListVlanRequest) {
 	q := req.URL.Query()
 	opts.SetListParams(&q)
-	if opts.Id != 0 {
-		q.Set("id", strconv.Itoa(opts.Id))
+	if opts.Group != "" {
+		q.Set("group", opts.Group)
 	}
 	req.URL.RawQuery = q.Encode()
 }

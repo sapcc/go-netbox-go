@@ -29,6 +29,7 @@ type Vlan struct {
 
 type ListVlanRequest struct {
 	common.ListParams
+	Group string `json:"group"`
 }
 
 type ListVlanResponse struct {
