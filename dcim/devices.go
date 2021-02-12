@@ -38,13 +38,14 @@ func (c *Client) ListDevices(opts models.ListDevicesRequest) (*models.ListDevice
 func setListDevicesParams(req *http.Request, opts models.ListDevicesRequest) {
 	q := req.URL.Query()
 	opts.SetListParams(&q)
-	req.URL.RawQuery = q.Encode()
+
 	if opts.Id != 0 {
 		q.Set("id", strconv.Itoa(opts.Id))
 	}
 	if opts.ClusterId != 0 {
 		q.Set("cluster_id", strconv.Itoa(opts.ClusterId))
 	}
+	req.URL.RawQuery = q.Encode()
 }
 
 func (c *Client) GetDevice(id int) (*models.Device, error) {
