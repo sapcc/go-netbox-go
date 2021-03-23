@@ -99,8 +99,10 @@ func TestClient_CreateDeleteVMInterface(t *testing.T) {
 		t.Fatal(err)
 	}
 	assert.Equal(t, "test-interface", vmi2.Name)
-	assert.Equal(t, 9000, vmi2.MTU)
-	assert.Equal(t, true, vmi2.Enabled)
+	mtu := *vmi2.MTU
+	en := *vmi2.Enabled
+	assert.Equal(t, 9000, mtu)
+	assert.Equal(t, true, en)
 	assert.Equal(t, 1107, vmi2.VirtualMachine.Id)
 	t.Log(vmi2)
 	err = client.DeleteVMInterface(vmi2.Id)

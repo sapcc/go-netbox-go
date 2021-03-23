@@ -51,6 +51,8 @@ type IpAddress struct {
 	Created           string `json:"created"`
 	LastUpdated       string `json:"last_updated"`
 	AssignedInterface Interface
+	AssignedVMInterface VMInterface
+	AssignedObjectType string
 }
 
 type ListIpAddressesRequest struct {
@@ -82,14 +84,20 @@ func (ip *IpAddress) UnmarshalJSON(b []byte) error {
 			return err
 		}
 		ip.AssignedInterface = inter
+		ip.AssignedObjectType = s
 	case "virtualization.vminterface":
-		var inter Interface
+		var inter VMInterface
 		if err := json.Unmarshal(tmp["assigned_object"], &inter); err != nil {
+			fmt.Println("unable to unmarshal vminterface")
+			fmt.Println(string(tmp["assigned_object"]))
 			return err
 		}
-		ip.AssignedInterface = inter
+		ip.AssignedVMInterface = inter
+		ip.AssignedObjectType = s
+	case "":
+
 	default:
-		_ = fmt.Errorf("unknown assigned object type %v", s)
+		return fmt.Errorf("unknown assigned object type %v", s)
 	}
 	var role IpamRole
 	if err := json.Unmarshal(tmp["role"], &role); err != nil {
