@@ -60,6 +60,7 @@ type WriteableVirtualMachine struct {
 type ListVirtualMachinesRequest struct {
 	common.ListParams
 	ClusterId 	int 	`json:"cluster_id"`
+	RoleId int `json:"role_id"`
 }
 
 type ListVirtualMachinesResponse struct {
