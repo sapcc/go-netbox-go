@@ -11,9 +11,7 @@ type NestedVLAN struct {
 }
 
 type Vlan struct {
-	Id int `json:"id"`
-	Url string `json:"url"`
-	Name string `json:"name"`
+	NestedVLAN
 	Group interface{} `json:"group"`
 	Description string `json:"description"`
 	Tags interface{} `json:"tags"`
