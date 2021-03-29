@@ -57,6 +57,27 @@ type WriteableVirtualMachine struct {
 	Disk		int		`json:"disk,omitempty"`
 }
 
+func (vm *VirtualMachine) Writeable() WriteableVirtualMachine {
+	res := WriteableVirtualMachine{
+		Id: vm.Id,
+		Url: vm.Url,
+		Name: vm.Name,
+		Status: vm.Status.Value,
+		Site: vm.Site.Slug,
+		Cluster: vm.Cluster.Id,
+		Role: vm.Role.Id,
+		Tenant: vm.Tenant.Id,
+		Platform: vm.Platform.Id,
+		PrimaryIp: vm.PrimaryIp.Address,
+		PrimaryIp4: vm.PrimaryIp4.Address,
+		Comments: vm.Comments,
+		VCPUs: vm.VCPUs,
+		Memory: vm.Memory,
+		Disk: vm.Disk,
+	}
+	return res
+}
+
 type ListVirtualMachinesRequest struct {
 	common.ListParams
 	ClusterId 	int 	`json:"cluster_id"`

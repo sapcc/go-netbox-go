@@ -35,6 +35,40 @@ type WritableVMInterface struct {
 	Tags        	[]NestedTag		`json:"tags,omitempty"`
 }
 
+func (vmi *VMInterface) Writeable() WritableVMInterface {
+
+	res := WritableVMInterface{
+		Id:             vmi.Id,
+		Url:            vmi.Url,
+		VirtualMachine: vmi.VirtualMachine.Id,
+		Name:           vmi.Name,
+		MacAddress:     vmi.MacAddress,
+	}
+	if vmi.Enabled != nil {
+		res.Enabled = *vmi.Enabled
+	}
+	if vmi.MTU != nil {
+		res.MTU = *vmi.MTU
+	}
+	if vmi.Description != nil {
+		res.Description = *vmi.Description
+	}
+	if vmi.Mode != nil {
+		res.Mode = *vmi.Mode
+	}
+	if vmi.UntaggedVlan != nil {
+		res.UntaggedVlan = &vmi.UntaggedVlan.Id
+	}
+	var taggedVlans = make([]int, len(vmi.TaggedVlans))
+	for _, vlan := range vmi.TaggedVlans{
+		taggedVlans = append(taggedVlans, vlan.Id)
+	}
+	res.TaggedVlans = taggedVlans
+	res.Tags = vmi.Tags
+
+	return res
+}
+
 type ListVMInterfacesRequest struct {
 	common.ListParams
 	VmId int

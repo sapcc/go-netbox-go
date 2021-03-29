@@ -40,6 +40,36 @@ func (c *Client) CreateVirtualMachine (vm models.WriteableVirtualMachine) (*mode
 	return &resObj,nil
 }
 
+func (c *Client) UpdateVirtualMachine(vm models.WriteableVirtualMachine) (*models.VirtualMachine, error) {
+	body, err := json.Marshal(vm)
+	if err != nil {
+		return nil, err
+	}
+	request, err := http.NewRequest("PATCH", c.BaseUrl.String() + basePath + "virtual-machines/" + strconv.Itoa(vm.Id) + "/", bytes.NewBuffer(body))
+	if err != nil {
+		return nil, err
+	}
+	c.SetAuthToken(&request.Header)
+	response, err := c.HttpClient.Do(request)
+	if err != nil {
+		return nil, err
+	}
+	if response.StatusCode != 200 {
+		errBody, _ := ioutil.ReadAll(response.Body)
+		return nil, fmt.Errorf("unexpected return code of %d: %s", response.StatusCode, errBody)
+	}
+	resObj := models.VirtualMachine{}
+	byteses, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		return nil, err
+	}
+	err = json.Unmarshal(byteses, &resObj)
+	if err != nil {
+		return nil, err
+	}
+	return &resObj, nil
+}
+
 func (c *Client) DeleteVirtualMachine (id int) error {
 	request, err := http.NewRequest("DELETE", c.BaseUrl.String() + basePath + "virtual-machines/" + strconv.Itoa(id) + "/", nil)
 	if err != nil {

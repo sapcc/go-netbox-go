@@ -40,6 +40,36 @@ func (c *Client) CreateVMInterface (vmni models.WritableVMInterface) (*models.VM
 	return &resObj, nil
 }
 
+func (c *Client) UpdateVMInterface(vmi models.WritableVMInterface) (*models.VMInterface, error) {
+	body, err := json.Marshal(vmi)
+	if err != nil {
+		return nil, err
+	}
+	request, err := http.NewRequest("PATCH", c.BaseUrl.String() + basePath + "interfaces/" + strconv.Itoa(vmi.Id) + "/", bytes.NewBuffer(body))
+	if err != nil {
+		return nil, err
+	}
+	c.SetAuthToken(&request.Header)
+	response, err := c.HttpClient.Do(request)
+	if err != nil {
+		return nil, err
+	}
+	if response.StatusCode != 200 {
+		errBody, _ := ioutil.ReadAll(response.Body)
+		return nil, fmt.Errorf("unexpected return code of %d: %s", response.StatusCode, errBody)
+	}
+	resObj := models.VMInterface{}
+	byteses, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		return nil, err
+	}
+	err = json.Unmarshal(byteses, &resObj)
+	if err != nil {
+		return nil, err
+	}
+	return &resObj, nil
+}
+
 func (c *Client) DeleteVMInterface(id int) error {
 	request, err := http.NewRequest("DELETE", c.BaseUrl.String() + basePath + "interfaces/" + strconv.Itoa(id) + "/", nil)
 	if err != nil {
