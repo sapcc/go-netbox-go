@@ -1,0 +1,26 @@
+package ipam
+
+import (
+	"github.com/sapcc/go-netbox-go/models"
+	"github.com/seborama/govcr"
+	"github.com/stretchr/testify/assert"
+	"os"
+	"testing"
+)
+
+func TestClient_ListVRFs(t *testing.T) {
+	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	if err != nil {
+		t.Fatal(err)
+	}
+	vcrConf := &govcr.VCRConfig{}
+	vcrConf.Client = client.HttpClient
+	vcr := govcr.NewVCR("ListVRFs", vcrConf)
+	client.HttpClient = vcr.Client
+	opts := models.ListVRFsRequest{}
+	res, err := client.ListVRFs(opts)
+	if err != nil {
+		t.Fatal(err)
+	}
+	assert.NotEqual(t, 0, res.Count)
+}
