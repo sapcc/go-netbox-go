@@ -22,7 +22,8 @@ func (c *Client) ListIpAddresses(opts models.ListIpAddressesRequest) (*models.Li
 		return nil, err
 	}
 	if response.StatusCode != 200 {
-		return nil, fmt.Errorf("unexpected return code of %d", response.StatusCode)
+		errBody, _ := ioutil.ReadAll(response.Body)
+		return nil, fmt.Errorf("unexpected return code of %d: %s", response.StatusCode, errBody)
 	}
 	resObj := models.ListIpAddressesResponse{}
 	byteses, err := ioutil.ReadAll(response.Body)
