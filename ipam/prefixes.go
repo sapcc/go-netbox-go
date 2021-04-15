@@ -126,5 +126,8 @@ func setListPrefixesParams(req *http.Request, opts models.ListPrefixesRequest) {
 	if opts.Region != "" {
 		q.Set("region", opts.Region)
 	}
+	if opts.VrfId != 0 {
+		q.Set("vrf_id", strconv.Itoa(opts.VrfId))
+	}
 	req.URL.RawQuery = q.Encode()
 }
