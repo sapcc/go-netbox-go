@@ -39,3 +39,25 @@ func TestClient_ListPrefixes(t *testing.T) {
 	//t.Log(res)
 	assert.NotEqual(t, 0, res.Count)
 }
+
+func TestClient_CreateDeletePrefix(t *testing.T) {
+	wPre := models.WriteablePrefix{}
+	wPre.Prefix = "10.0.0.0/8"
+	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	if err != nil {
+		t.Fatal(err)
+	}
+	vcrConf := &govcr.VCRConfig{}
+	vcrConf.Client = client.HttpClient
+	vcr := govcr.NewVCR("CreateDeletePrefix", vcrConf)
+	client.HttpClient = vcr.Client
+	res, err := client.CreatePrefix(wPre)
+	if err != nil {
+		t.Fatal(err)
+	}
+	assert.NotEqual(t, 0, res.Id)
+	err = client.DeletePrefix(res.Id)
+	if err != nil {
+		t.Fatal(err)
+	}
+}

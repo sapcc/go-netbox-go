@@ -24,18 +24,18 @@ type Prefix struct {
 }
 
 type WriteablePrefix struct {
-	Id           int         `json:"id"`
+	Id           int         `json:"id,omitempty"`
 	Url          string      `json:"url"`
 	Prefix       string      `json:"prefix"`
 	Site         int         `json:"site,omitempty"`
 	Vrf          int         `json:"vrf,omitempty"`
 	Tenant       int         `json:"tenant,omitempty"`
 	Vlan         int         `json:"vlan,omitempty"`
-	Status       string      `json:"status"`
-	Role         int         `json:"role"`
+	Status       string      `json:"status,omitempty"`
+	Role         int         `json:"role,omitempty"`
 	IsPool       bool        `json:"is_pool"`
 	Description  string      `json:"description"`
-	Tags         []NestedTag `json:"tags"`
+	Tags         []NestedTag `json:"tags,omitempty"`
 	CustomFields interface{} `json:"custom_fields,omitempty"`
 	Created      string      `json:"created"`
 	LastUpdated  string      `json:"last_updated"`
