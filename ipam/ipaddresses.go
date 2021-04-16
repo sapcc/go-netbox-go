@@ -80,6 +80,9 @@ func setListIpAddressesParams(req *http.Request, opts models.ListIpAddressesRequ
 	if opts.Address != "" {
 		q.Set("address", opts.Address)
 	}
+	if opts.VrfId != 0 {
+		q.Set("vrf_id", strconv.Itoa(opts.VrfId))
+	}
 	req.URL.RawQuery = q.Encode()
 }
 

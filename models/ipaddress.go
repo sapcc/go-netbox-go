@@ -62,6 +62,7 @@ type ListIpAddressesRequest struct {
 	DeviceId int
 	Role string
 	Address string
+	VrfId int
 }
 
 type ListIpAddressesResponse struct {
