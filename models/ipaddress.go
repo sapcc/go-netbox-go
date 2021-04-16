@@ -7,9 +7,9 @@ import (
 )
 
 type NestedIpAddress struct {
-	Id int `json:"id"`
-	Url string `json:"url"`
-	Family interface{} `json:"family"`
+	Id int `json:"id,omitempty"`
+	Url string `json:"url,omitempty"`
+	Family interface{} `json:"family,omitempty"`
 	Address string `json:"address"`
 }
 
@@ -20,20 +20,20 @@ type IpamRole struct {
 
 type WriteableIpAddress struct {
 	NestedIpAddress
-	Vrf 				int 		`json:"vrf"`
-	Tenant 				int 		`json:"tenant"`
-	Status 				string 		`json:"status"`
-	Role 				string 		`json:"role"`
-	AssignedObjectType	string 		`json:"assigned_object_type"`
-	AssignedObjectId 	int 		`json:"assigned_object_id"`
-	NatInside 			int 		`json:"nat_inside"`
-	NatOutside 			int 		`json:"nat_outside"`
-	DnsName 			string 		`json:"dns_name"`
-	Description 		string 		`json:"description"`
-	Tags 				interface{} `json:"tags"`
-	CustomFields 		interface{} `json:"custom_fields"`
-	Created 			string 		`json:"created"`
-	LastUpdated 		string 		`json:"last_updated"`
+	Vrf 				int 		`json:"vrf,omitempty"`
+	Tenant 				int 		`json:"tenant,omitempty"`
+	Status 				string 		`json:"status,omitempty"`
+	Role 				string 		`json:"role,omitempty"`
+	AssignedObjectType	string 		`json:"assigned_object_type,omitempty"`
+	AssignedObjectId 	int 		`json:"assigned_object_id,omitempty"`
+	NatInside 			int 		`json:"nat_inside,omitempty"`
+	NatOutside 			int 		`json:"nat_outside,omitempty"`
+	DnsName 			string 		`json:"dns_name,omitempty"`
+	Description 		string 		`json:"description,omitempty"`
+	Tags 				interface{} `json:"tags,omitempty"`
+	CustomFields 		interface{} `json:"custom_fields,omitempty"`
+	Created 			string 		`json:"created,omitempty"`
+	LastUpdated 		string 		`json:"last_updated,omitempty"`
 }
 
 type IpAddress struct {
