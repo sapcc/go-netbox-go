@@ -47,6 +47,7 @@ type ListPrefixesRequest struct {
 	Region string
 	Tag    string
 	VrfId  int
+	Prefix string
 }
 
 type ListPrefixesReponse struct {
