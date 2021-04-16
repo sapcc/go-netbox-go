@@ -77,6 +77,9 @@ func setListIpAddressesParams(req *http.Request, opts models.ListIpAddressesRequ
 	if opts.Role != "" {
 		q.Set("role", opts.Role)
 	}
+	if opts.Address != "" {
+		q.Set("address", opts.Address)
+	}
 	req.URL.RawQuery = q.Encode()
 }
 

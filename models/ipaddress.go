@@ -61,6 +61,7 @@ type ListIpAddressesRequest struct {
 	VmInterfaceId int
 	DeviceId int
 	Role string
+	Address string
 }
 
 type ListIpAddressesResponse struct {
