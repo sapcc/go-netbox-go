@@ -86,7 +86,7 @@ func setListIpAddressesParams(req *http.Request, opts models.ListIpAddressesRequ
 	req.URL.RawQuery = q.Encode()
 }
 
-func (c *Client) CreateIpAddress(address models.IpAddress) (*models.IpAddress, error) {
+func (c *Client) CreateIpAddress(address models.WriteableIpAddress) (*models.IpAddress, error) {
 	body, err := json.Marshal(address)
 	if err != nil {
 		return nil,err
