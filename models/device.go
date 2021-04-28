@@ -35,9 +35,9 @@ type Device struct {
 	Cluster        interface{}    `json:"cluster"`
 	VirtualChassis interface{}    `json:"virtual_chassis"`
 	VCPosition     int            `json:"vc_position"`
-	VCPriority int `json:"vc_priority"`
-	Comments string `json:"comments"`
-	LocalContextData string `json:"local_context_data"`
+	VCPriority     int            `json:"vc_priority"`
+	Comments       string         `json:"comments"`
+	LocalContextData interface{} `json:"local_context_data"`
 	Tags interface{} `json:"tags"`
 	CustomFields interface{} `json:"custom_fields"`
 	ConfigContext interface{} `json:"config_context"`
