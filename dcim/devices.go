@@ -45,6 +45,18 @@ func setListDevicesParams(req *http.Request, opts models.ListDevicesRequest) {
 	if opts.ClusterId != 0 {
 		q.Set("cluster_id", strconv.Itoa(opts.ClusterId))
 	}
+	if opts.DeviceTypeId != 0 {
+		q.Set("device_type_id", strconv.Itoa(opts.DeviceTypeId))
+	}
+	if opts.Site != "" {
+		q.Set("site", opts.Site)
+	}
+	if opts.Region != "" {
+		q.Set("region", opts.Region)
+	}
+	if opts.RackId != 0 {
+		q.Set("rack_id", strconv.Itoa(opts.RackId))
+	}
 	req.URL.RawQuery = q.Encode()
 }
 

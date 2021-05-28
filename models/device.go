@@ -48,6 +48,10 @@ type Device struct {
 type ListDevicesRequest struct {
 	common.ListParams
 	ClusterId   int
+	DeviceTypeId int
+	Region string
+	Site string
+	RackId int
 }
 
 type ListDevicesResponse struct {
