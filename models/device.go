@@ -12,6 +12,11 @@ type DeviceType struct {
 	DeviceCount int `json:"device_count"`
 }
 
+type DeviceStatus struct {
+	Label string `json:"label"`
+	Value string `json:"value"`
+}
+
 type Device struct {
 	Id             int            `json:"id"`
 	Url            string         `json:"url"`
@@ -28,7 +33,7 @@ type Device struct {
 	Position       int            `json:"position"`
 	Face           interface{}    `json:"face"`
 	ParentDevice   interface{}    `json:"parent_device"`
-	Status         interface{}    `json:"status"`
+	Status         DeviceStatus    `json:"status"`
 	PrimaryIp      NestedIpAddress `json:"primary_ip"`
 	PrimaryIp4     NestedIpAddress `json:"primary_ip4"`
 	PrimaryIp6     NestedIpAddress `json:"primary_ip6"`
