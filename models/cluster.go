@@ -28,6 +28,8 @@ type Cluster struct {
 
 type ListClusterRequest struct {
 	common.ListParams
+	Type	string
+	Region	string
 }
 
 type ListClusterResponse struct {
