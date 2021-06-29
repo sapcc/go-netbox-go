@@ -9,6 +9,14 @@ type NestedCluster struct {
 	VirtualMachineCount     int         `json:"virtualmachine_count"`
 }
 
+type NestedClusterType struct {
+	Id           int	`json:"id"`
+	Url          string `json:"url"`
+	Name         string `json:"name"`
+	Slug         string `json:"slug"`
+	ClusterCount int    `json:"cluster_count"`
+}
+
 type Cluster struct {
 		Id                  int         `json:"id"`
 		Url                 string      `json:"url"`
@@ -21,7 +29,7 @@ type Cluster struct {
 		LastUpdated         string      `json:"last_updated"`
 		DeviceCount         int         `json:"device_count"`
 		Tenant              Tenant      `json:"tenant"`
-		Type                interface{} `json:"type"`
+		Type                NestedClusterType `json:"type"`
 		VirtualMachineCount int         `json:"virtualmachine_count"`
 		VlanCount           int         `json:"vlan_count"`
 }

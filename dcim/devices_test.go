@@ -53,7 +53,7 @@ func TestClient_ListDevicesByCluster(t *testing.T) {
 	vcr := govcr.NewVCR("ListDevicesByCluster", vcrConf)
 	client.HttpClient = vcr.Client
 	opts := models.ListDevicesRequest{
-		ClusterId: 632,
+		ClusterId: 831,
 	}
 	res, err := client.ListDevices(opts)
 	if err != nil {
