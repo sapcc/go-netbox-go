@@ -37,7 +37,7 @@ type Device struct {
 	PrimaryIp      NestedIpAddress `json:"primary_ip"`
 	PrimaryIp4     NestedIpAddress `json:"primary_ip4"`
 	PrimaryIp6     NestedIpAddress `json:"primary_ip6"`
-	Cluster        interface{}    `json:"cluster"`
+	Cluster        Cluster        `json:"cluster"`
 	VirtualChassis interface{}    `json:"virtual_chassis"`
 	VCPosition     int            `json:"vc_position"`
 	VCPriority     int            `json:"vc_priority"`
