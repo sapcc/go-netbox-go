@@ -17,9 +17,9 @@ func TestClient_CreateDeleteVLANVMInterface(t *testing.T) {
 	vcrConf.Client = client.HttpClient
 	vcr := govcr.NewVCR("CreateVLANVMInterface", vcrConf)
 	client.HttpClient = vcr.Client
-	vlans := []int{1410,1408,1409}
+	vlans := []int{1266,1267,1268}
 	vmi := models.WritableVMInterface{
-		VirtualMachine: 1107,
+		VirtualMachine: 740,
 		Name: "test-vlan-interface",
 		Enabled: true,
 		MTU: 9000,

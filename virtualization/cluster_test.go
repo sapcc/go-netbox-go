@@ -28,3 +28,24 @@ func TestClient_ListClusters(t *testing.T) {
 	t.Log(res.Results[0].Name)
 	assert.NotEqual(t, 0, res.Count)
 }
+
+func TestClient_listClusterByType(t *testing.T) {
+	clint, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	if err != nil {
+		t.Fatal(err)
+	}
+	vcrConf := &govcr.VCRConfig{}
+	vcrConf.Client = clint.HttpClient
+	vcr := govcr.NewVCR("ListClusterByType", vcrConf)
+	clint.HttpClient = vcr.Client
+	opts := models.ListClusterRequest{
+		Region: "ap-ae-1",
+		Type: "cc-k8s-controlplane-swift",
+	}
+	res, err := clint.ListClusters(opts)
+	if err != nil {
+		t.Fatal(err)
+	}
+	assert.NotEqual(t, 0, res.Count)
+	t.Log(res.Results[0].Name)
+}
