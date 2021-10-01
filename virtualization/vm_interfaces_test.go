@@ -1,11 +1,12 @@
 package virtualization
 
 import (
+	"os"
+	"testing"
+
 	"github.com/sapcc/go-netbox-go/models"
 	"github.com/seborama/govcr"
 	"github.com/stretchr/testify/assert"
-	"os"
-	"testing"
 )
 
 func TestClient_CreateDeleteVLANVMInterface(t *testing.T) {
@@ -17,14 +18,14 @@ func TestClient_CreateDeleteVLANVMInterface(t *testing.T) {
 	vcrConf.Client = client.HttpClient
 	vcr := govcr.NewVCR("CreateVLANVMInterface", vcrConf)
 	client.HttpClient = vcr.Client
-	vlans := []int{1678,1679,1680}
+	vlans := []int{1678, 1679, 1680}
 	vmi := models.WritableVMInterface{
-		VirtualMachine: 1107,
-		Name: "test-vlan-interface",
-		Enabled: true,
-		MTU: 9000,
-		Description: "this is a test vlan interface",
-		TaggedVlans: vlans,
+		VirtualMachine: 740,
+		Name:           "test-vlan-interface",
+		Enabled:        true,
+		MTU:            9000,
+		Description:    "this is a test vlan interface",
+		TaggedVlans:    vlans,
 	}
 	vmi2, err := client.CreateVMInterface(vmi)
 	if err != nil {
@@ -60,11 +61,11 @@ func TestClient_CreateDeleteTaggedVMInterface(t *testing.T) {
 	}
 	vmi := models.WritableVMInterface{
 		VirtualMachine: 1107,
-		Name: "test-tagged-interface",
-		Enabled: true,
-		MTU: 9000,
-		Description: "this is a test tagged interface",
-		Tags: tags,
+		Name:           "test-tagged-interface",
+		Enabled:        true,
+		MTU:            9000,
+		Description:    "this is a test tagged interface",
+		Tags:           tags,
 	}
 	vmi2, err := client.CreateVMInterface(vmi)
 	if err != nil {
@@ -89,10 +90,10 @@ func TestClient_CreateDeleteVMInterface(t *testing.T) {
 	client.HttpClient = vcr.Client
 	vmi := models.WritableVMInterface{
 		VirtualMachine: 1107,
-		Name: "test-interface",
-		Enabled: true,
-		MTU: 9000,
-		Description: "this is a test interface",
+		Name:           "test-interface",
+		Enabled:        true,
+		MTU:            9000,
+		Description:    "this is a test interface",
 	}
 	vmi2, err := client.CreateVMInterface(vmi)
 	if err != nil {

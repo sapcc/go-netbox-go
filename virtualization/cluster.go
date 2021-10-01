@@ -22,7 +22,8 @@ func (c *Client) ListClusters (opts models.ListClusterRequest) (*models.ListClus
 		return nil, err
 	}
 	if response.StatusCode != 200 {
-		return nil, fmt.Errorf("unexpected return code of %d", response.StatusCode)
+		errorBody,_ := ioutil.ReadAll(response.Body)
+		return nil, fmt.Errorf("unexpected return code of %d: %s", response.StatusCode, errorBody)
 	}
 	resObj := models.ListClusterResponse{}
 	bytes, err := ioutil.ReadAll(response.Body)

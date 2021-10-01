@@ -2,36 +2,37 @@ package models
 
 import (
 	"encoding/json"
+
 	"github.com/sapcc/go-netbox-go/common"
 )
 
 type NestedVirtualMachine struct {
-	Id         int            `json:"id"`
-	Url        string         `json:"url"`
-	Name       string         `json:"name"`
+	Id   int    `json:"id"`
+	Url  string `json:"url"`
+	Name string `json:"name"`
 }
 
 type VirtualMachine struct {
 	NestedVirtualMachine
-	Status     			VirtualMachineStatus	`json:"status"`
-	Role       			NestedDeviceRole		`json:"role"`
-	Tenant     			NestedTenant			`json:"tenant"`
-	Platform   			NestedPlatform    		`json:"platform"`
-	PrimaryIp  			NestedIpAddress  		`json:"primary_ip"`
-	PrimaryIp4 			NestedIpAddress    		`json:"primary_ip4"`
-	PrimaryIp6 			interface{}    			`json:"primary_ip6"`
-	VCPUs      			string            			`json:"vcpus"`
-	Memory     			int            			`json:"memory"`
-	Disk       			int            			`json:"disk"`
-	Comments 			string 					`json:"comments"`
-	LocalContextData 	string 					`json:"local_context_data"`
-	Tags 				interface{} 			`json:"tags"`
-	CustomFields 		interface{} 			`json:"custom_fields"`
-	ConfigContext 		interface{} 			`json:"config_context"`
-	Created 			string 					`json:"created"`
-	LastUpdated 		string 					`json:"last_updated"`
-	Cluster    NestedCluster
-	Site	   NestedSite
+	Status           VirtualMachineStatus `json:"status"`
+	Role             NestedDeviceRole     `json:"role"`
+	Tenant           NestedTenant         `json:"tenant"`
+	Platform         NestedPlatform       `json:"platform"`
+	PrimaryIp        NestedIpAddress      `json:"primary_ip"`
+	PrimaryIp4       NestedIpAddress      `json:"primary_ip4"`
+	PrimaryIp6       interface{}          `json:"primary_ip6"`
+	VCPUs            string               `json:"vcpus"`
+	Memory           int                  `json:"memory"`
+	Disk             int                  `json:"disk"`
+	Comments         string               `json:"comments"`
+	LocalContextData string               `json:"local_context_data"`
+	Tags             interface{}          `json:"tags"`
+	CustomFields     interface{}          `json:"custom_fields"`
+	ConfigContext    interface{}          `json:"config_context"`
+	Created          string               `json:"created"`
+	LastUpdated      string               `json:"last_updated"`
+	Cluster          NestedCluster
+	Site             NestedSite
 }
 
 type VirtualMachineStatus struct {
@@ -40,48 +41,48 @@ type VirtualMachineStatus struct {
 }
 
 type WriteableVirtualMachine struct {
-	Id         	int		`json:"id,omitempty"`
-	Url        	string	`json:"url,omitempty"`
-	Name       	string	`json:"name"`
-	Status 		string	`json:"status,omitempty"`
-	Site 		string	`json:"site,omitempty"`
-	Cluster 	int		`json:"cluster"`
-	Role 		int		`json:"role,omitempty"`
-	Tenant 		int		`json:"tenant,omitempty"`
-	Platform 	int		`json:"platform,omitempty"`
-	PrimaryIp 	string 	`json:"primary_ip,omitempty"`
-	PrimaryIp4 	string	`json:"primary_ipv4,omitempty"`
-	Comments 	string	`json:"comments,omitempty"`
-	VCPUs 		string	`json:"vcpus,omitempty"`
-	Memory 		int		`json:"memory,omitempty"`
-	Disk		int		`json:"disk,omitempty"`
+	Id         int    `json:"id,omitempty"`
+	Url        string `json:"url,omitempty"`
+	Name       string `json:"name"`
+	Status     string `json:"status,omitempty"`
+	Site       string `json:"site,omitempty"`
+	Cluster    int    `json:"cluster"`
+	Role       int    `json:"role,omitempty"`
+	Tenant     int    `json:"tenant,omitempty"`
+	Platform   int    `json:"platform,omitempty"`
+	PrimaryIp  string `json:"primary_ip,omitempty"`
+	PrimaryIp4 string `json:"primary_ipv4,omitempty"`
+	Comments   string `json:"comments,omitempty"`
+	VCPUs      string `json:"vcpus,omitempty"`
+	Memory     int    `json:"memory,omitempty"`
+	Disk       int    `json:"disk,omitempty"`
 }
 
 func (vm *VirtualMachine) Writeable() WriteableVirtualMachine {
 	res := WriteableVirtualMachine{
-		Id: vm.Id,
-		Url: vm.Url,
-		Name: vm.Name,
-		Status: vm.Status.Value,
-		Site: vm.Site.Slug,
-		Cluster: vm.Cluster.Id,
-		Role: vm.Role.Id,
-		Tenant: vm.Tenant.Id,
-		Platform: vm.Platform.Id,
-		PrimaryIp: vm.PrimaryIp.Address,
+		Id:         vm.Id,
+		Url:        vm.Url,
+		Name:       vm.Name,
+		Status:     vm.Status.Value,
+		Site:       vm.Site.Slug,
+		Cluster:    vm.Cluster.Id,
+		Role:       vm.Role.Id,
+		Tenant:     vm.Tenant.Id,
+		Platform:   vm.Platform.Id,
+		PrimaryIp:  vm.PrimaryIp.Address,
 		PrimaryIp4: vm.PrimaryIp4.Address,
-		Comments: vm.Comments,
-		VCPUs: vm.VCPUs,
-		Memory: vm.Memory,
-		Disk: vm.Disk,
+		Comments:   vm.Comments,
+		VCPUs:      vm.VCPUs,
+		Memory:     vm.Memory,
+		Disk:       vm.Disk,
 	}
 	return res
 }
 
 type ListVirtualMachinesRequest struct {
 	common.ListParams
-	ClusterId 	int 	`json:"cluster_id"`
-	RoleId int `json:"role_id"`
+	ClusterId int `json:"cluster_id"`
+	RoleId    int `json:"role_id"`
 }
 
 type ListVirtualMachinesResponse struct {
