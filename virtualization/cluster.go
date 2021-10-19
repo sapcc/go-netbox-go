@@ -1,7 +1,6 @@
 package virtualization
 
 import (
-	bytes2 "bytes"
 	"encoding/json"
 	"fmt"
 	"github.com/sapcc/go-netbox-go/models"
@@ -11,7 +10,8 @@ import (
 )
 
 func (c *Client) ListClusters (opts models.ListClusterRequest) (*models.ListClusterResponse, error) {
-	request, err := http.NewRequest("GET", c.BaseUrl.String() + basePath + "clusters/", bytes2.NewBuffer([]byte{'a'}))
+	//request, err := http.NewRequest("GET", c.BaseUrl.String() + basePath + "clusters/", bytes2.NewBuffer([]byte{'a'}))
+	request, err := http.NewRequest("GET", c.BaseUrl.String() + basePath + "clusters/", nil)
 	if err != nil {
 		return nil, err
 	}
