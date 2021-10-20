@@ -15,9 +15,9 @@ type VMInterface struct {
 	Description      *string        `json:"description,omitempty"`
 	Mode             *string		   `json:"mode,omitempty"`
 	Tags             []NestedTag   `json:"tags,omitempty"`
-	VirtualMachine 	 NestedVirtualMachine `json:virtual_machine`
-	UntaggedVlan     *NestedVLAN		`json:untagged_vlan,omitempty`
-	TaggedVlans 	 []NestedVLAN	`json:tagged_vlans,omitempty`
+	VirtualMachine 	 NestedVirtualMachine `json:"virtual_machine"`
+	UntaggedVlan     *NestedVLAN	`json:"untagged_vlan,omitempty"`
+	TaggedVlans 	 []NestedVLAN	`json:"tagged_vlans,omitempty"`
 }
 
 type WritableVMInterface struct {
