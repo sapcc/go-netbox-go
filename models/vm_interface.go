@@ -42,7 +42,9 @@ func (vmi *VMInterface) Writeable() WritableVMInterface {
 		Url:            vmi.Url,
 		VirtualMachine: vmi.VirtualMachine.Id,
 		Name:           vmi.Name,
-		MacAddress:     vmi.MacAddress,
+	}
+	if vmi.MacAddress != nil {
+		res.MacAddress = vmi.MacAddress
 	}
 	if vmi.Enabled != nil {
 		res.Enabled = *vmi.Enabled
