@@ -48,6 +48,8 @@ type ListPrefixesRequest struct {
 	Tag    string
 	VrfId  int
 	Prefix string
+	MaskLength int
+	Status string
 }
 
 type ListPrefixesReponse struct {

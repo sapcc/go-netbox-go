@@ -132,5 +132,11 @@ func setListPrefixesParams(req *http.Request, opts models.ListPrefixesRequest) {
 	if opts.Prefix != "" {
 		q.Set("prefix", opts.Prefix)
 	}
+	if opts.MaskLength != 0 {
+		q.Set("mask_length", strconv.Itoa(opts.MaskLength))
+	}
+	if opts.Status != "" {
+		q.Set("status", opts.Status)
+	}
 	req.URL.RawQuery = q.Encode()
 }
