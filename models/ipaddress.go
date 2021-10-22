@@ -13,6 +13,12 @@ type NestedIpAddress struct {
 	Address string `json:"address"`
 }
 
+type AvailableIp struct {
+	Family int `json:"family"`
+	Address string `json:"address"`
+	Vrf interface{} `json:"vrf"`
+}
+
 type IpamRole struct {
 	Label string `json:"label"`
 	Value string `json:"value"`

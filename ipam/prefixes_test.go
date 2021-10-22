@@ -40,6 +40,22 @@ func TestClient_ListPrefixes(t *testing.T) {
 	assert.NotEqual(t, 0, res.Count)
 }
 
+func TestClient_ListAvailableIps(t *testing.T) {
+	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	if err != nil {
+		t.Fatal(err)
+	}
+	vcrConf := &govcr.VCRConfig{}
+	vcrConf.Client = client.HttpClient
+	vcr := govcr.NewVCR("ListAvailableIps", vcrConf)
+	client.HttpClient = vcr.Client
+	res, err := client.ListAvailableIps(299)
+	if err != nil {
+		t.Fatal(err)
+	}
+	assert.NotEqual(t, 0, len(res))
+}
+
 func TestClient_CreateDeletePrefix(t *testing.T) {
 	wPre := models.WriteablePrefix{}
 	wPre.Prefix = "10.0.0.0/8"
