@@ -56,3 +56,7 @@ type ListPrefixesReponse struct {
 	common.ReturnValues
 	Results []Prefix `json:"results"`
 }
+
+type CreateAvailablePrefixRequest struct {
+	PrefixLength int `json:"prefix_length"`
+}

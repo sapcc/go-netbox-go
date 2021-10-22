@@ -93,6 +93,36 @@ func (c *Client) ListAvailableIps(id int) ([]models.AvailableIp, error) {
 	return resObj, nil
 }
 
+func (c *Client) CreateAvailablePrefix(id int, opts models.CreateAvailablePrefixRequest) (*models.Prefix, error) {
+	body, err := json.Marshal(opts)
+	if err != nil {
+		return nil, err
+	}
+	request, err := http.NewRequest("POST", c.BaseUrl.String() + basePath + "prefixes/" + strconv.Itoa(id) + "/available-prefixes/", bytes.NewBuffer(body))
+	if err != nil {
+		return nil, err
+	}
+	c.SetAuthToken(&request.Header)
+	response, err := c.HttpClient.Do(request)
+	if err != nil {
+		return nil, err
+	}
+	if response.StatusCode != 201 {
+		errBody, _ := ioutil.ReadAll(response.Body)
+		return nil, fmt.Errorf("unexpected response code of %d: %s", response.StatusCode, errBody)
+	}
+	resObj := models.Prefix{}
+	byteses, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		return nil, err
+	}
+	err = json.Unmarshal(byteses, &resObj)
+	if err != nil {
+		return nil, err
+	}
+	return &resObj, nil
+}
+
 func (c *Client) UpdatePrefix(prefix models.WriteablePrefix) (*models.Prefix, error) {
 	body, err := json.Marshal(prefix)
 	if err != nil {
