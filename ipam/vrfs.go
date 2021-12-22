@@ -3,9 +3,11 @@ package ipam
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/sapcc/go-netbox-go/models"
 	"io/ioutil"
 	"net/http"
+	"strings"
+
+	"github.com/sapcc/go-netbox-go/models"
 )
 
 func (c *Client) ListVRFs (opts models.ListVRFsRequest) (*models.ListVRFsResponse, error) {
@@ -38,5 +40,9 @@ func (c *Client) ListVRFs (opts models.ListVRFsRequest) (*models.ListVRFsRespons
 func setListPrefixParams(req *http.Request, opts models.ListVRFsRequest) {
 	q := req.URL.Query()
 	opts.SetListParams(&q)
+
+	if opts.Name != "" {
+		q.Set("name", strings.ToUpper(opts.Name))
+	}
 	req.URL.RawQuery = q.Encode()
 }

@@ -26,6 +26,7 @@ type VRF struct {
 
 type ListVRFsRequest struct {
 	common.ListParams
+	Name string
 }
 
 type ListVRFsResponse struct {
