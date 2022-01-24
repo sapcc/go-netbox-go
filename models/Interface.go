@@ -11,6 +11,15 @@ type NestedInterface struct {
 	ConnectionStatus interface{}   `json:"connection_status"`
 }
 
+type ConnectedEndpoint struct {
+	Id               int           `json:"id"`
+	Url              string        `json:"url"`
+	Device           Device        `json:"device"`
+	Name             string        `json:"name"`
+	Cable            interface{}   `json:"cable"`
+	ConnectionStatus interface{}   `json:"connection_status"`
+}
+
 type Interface struct {
 	NestedInterface
 	Label            string        `json:"label"`
@@ -26,6 +35,7 @@ type Interface struct {
 	TaggedVlans 	 []NestedVLAN  `json:"tagged_vlans"`
 	Tags             interface{}   `json:"tags"`
 	CountIpAddresses int           `json:"count_ipaddresses"`
+	ConnectedEndpoint ConnectedEndpoint `json:"connected_endpoint"`
 }
 
 type InterfaceType struct {
