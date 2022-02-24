@@ -49,6 +49,8 @@ type ListPrefixesRequest struct {
 	VrfId  int
 	Prefix string
 	MaskLength int
+	MaskLengthGte int
+	MaskLengthLte int
 	Status string
 }
 

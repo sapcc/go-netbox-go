@@ -191,6 +191,12 @@ func setListPrefixesParams(req *http.Request, opts models.ListPrefixesRequest) {
 	if opts.MaskLength != 0 {
 		q.Set("mask_length", strconv.Itoa(opts.MaskLength))
 	}
+	if opts.MaskLengthGte != 0 {
+		q.Set("mask_length__gte", strconv.Itoa(opts.MaskLengthGte))
+	}
+	if opts.MaskLengthLte != 0 {
+		q.Set("mask_length__lte", strconv.Itoa(opts.MaskLengthLte))
+	}
 	if opts.Status != "" {
 		q.Set("status", opts.Status)
 	}
