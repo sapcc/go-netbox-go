@@ -4,6 +4,11 @@ import (
 	"github.com/sapcc/go-netbox-go/common"
 )
 
+type Status struct {
+	Label        string      `json:"label"`
+	Value        string      `json:"value"`
+}
+
 type Prefix struct {
 	Id           int         `json:"id"`
 	Url          string      `json:"url"`
@@ -13,7 +18,7 @@ type Prefix struct {
 	Vrf          NestedVRF   `json:"vrf"`
 	Tenant       Tenant      `json:"tenant"`
 	Vlan         NestedVLAN  `json:"vlan"`
-	Status       interface{} `json:"status"`
+	Status       Status      `json:"status"`
 	Role         Role        `json:"role"`
 	IsPool       bool        `json:"is_pool"`
 	Description  string      `json:"description"`
