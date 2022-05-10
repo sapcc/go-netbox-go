@@ -8,8 +8,8 @@ import (
 	"net/http"
 )
 
-func (c *Client) ListRoles (opts models.ListRolesRequest) (*models.ListRolesResponse, error) {
-	request, err := http.NewRequest("GET", c.BaseUrl.String() + basePath + "roles/", nil)
+func (c *Client) ListRoles(opts models.ListRolesRequest) (*models.ListRolesResponse, error) {
+	request, err := http.NewRequest("GET", c.BaseUrl.String()+basePath+"roles/", nil)
 	if err != nil {
 		return nil, err
 	}
@@ -37,5 +37,11 @@ func (c *Client) ListRoles (opts models.ListRolesRequest) (*models.ListRolesResp
 func setListRolesParams(req *http.Request, opts models.ListRolesRequest) {
 	q := req.URL.Query()
 	opts.SetListParams(&q)
+	if opts.Name != "" {
+		q.Set("name", opts.Name)
+	}
+	if opts.Slug != "" {
+		q.Set("slug", opts.Slug)
+	}
 	req.URL.RawQuery = q.Encode()
 }

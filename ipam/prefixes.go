@@ -10,8 +10,8 @@ import (
 	"strconv"
 )
 
-func (c *Client) ListPrefixes (opts models.ListPrefixesRequest) (*models.ListPrefixesReponse, error) {
-	request, err := http.NewRequest("GET", c.BaseUrl.String() + basePath + "prefixes/", nil)
+func (c *Client) ListPrefixes(opts models.ListPrefixesRequest) (*models.ListPrefixesReponse, error) {
+	request, err := http.NewRequest("GET", c.BaseUrl.String()+basePath+"prefixes/", nil)
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +42,7 @@ func (c *Client) CreatePrefix(prefix models.WriteablePrefix) (*models.Prefix, er
 	if err != nil {
 		return nil, err
 	}
-	request, err := http.NewRequest("POST", c.BaseUrl.String() + basePath + "prefixes/", bytes.NewBuffer(body))
+	request, err := http.NewRequest("POST", c.BaseUrl.String()+basePath+"prefixes/", bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +68,7 @@ func (c *Client) CreatePrefix(prefix models.WriteablePrefix) (*models.Prefix, er
 }
 
 func (c *Client) ListAvailableIps(id int) ([]models.AvailableIp, error) {
-	request, err := http.NewRequest("GET", c.BaseUrl.String() + basePath + "prefixes/" + strconv.Itoa(id) + "/available-ips/", nil)
+	request, err := http.NewRequest("GET", c.BaseUrl.String()+basePath+"prefixes/"+strconv.Itoa(id)+"/available-ips/", nil)
 	if err != nil {
 		return nil, err
 	}
@@ -98,7 +98,7 @@ func (c *Client) CreateAvailablePrefix(id int, opts models.CreateAvailablePrefix
 	if err != nil {
 		return nil, err
 	}
-	request, err := http.NewRequest("POST", c.BaseUrl.String() + basePath + "prefixes/" + strconv.Itoa(id) + "/available-prefixes/", bytes.NewBuffer(body))
+	request, err := http.NewRequest("POST", c.BaseUrl.String()+basePath+"prefixes/"+strconv.Itoa(id)+"/available-prefixes/", bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
@@ -128,7 +128,7 @@ func (c *Client) UpdatePrefix(prefix models.WriteablePrefix) (*models.Prefix, er
 	if err != nil {
 		return nil, err
 	}
-	request, err := http.NewRequest("PUT", c.BaseUrl.String() + basePath + "prefixes/" + strconv.Itoa(prefix.Id) + "/", bytes.NewBuffer(body))
+	request, err := http.NewRequest("PUT", c.BaseUrl.String()+basePath+"prefixes/"+strconv.Itoa(prefix.Id)+"/", bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
@@ -153,8 +153,8 @@ func (c *Client) UpdatePrefix(prefix models.WriteablePrefix) (*models.Prefix, er
 	return &resObj, nil
 }
 
-func (c *Client) DeletePrefix (id int) error {
-	request, err := http.NewRequest("DELETE", c.BaseUrl.String() + basePath + "prefixes/" + strconv.Itoa(id) + "/", nil)
+func (c *Client) DeletePrefix(id int) error {
+	request, err := http.NewRequest("DELETE", c.BaseUrl.String()+basePath+"prefixes/"+strconv.Itoa(id)+"/", nil)
 	if err != nil {
 		return err
 	}
@@ -181,6 +181,9 @@ func setListPrefixesParams(req *http.Request, opts models.ListPrefixesRequest) {
 	}
 	if opts.Region != "" {
 		q.Set("region", opts.Region)
+	}
+	if opts.Site != "" {
+		q.Set("site", opts.Site)
 	}
 	if opts.VrfId != 0 {
 		q.Set("vrf_id", strconv.Itoa(opts.VrfId))

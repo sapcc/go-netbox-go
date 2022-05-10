@@ -9,8 +9,8 @@ import (
 	"strconv"
 )
 
-func (c *Client) ListSites (opts models.ListSitesRequest) (*models.ListSitesResponse, error) {
-	request, err := http.NewRequest("GET", c.BaseUrl.String() + basePath + "sites/", nil)
+func (c *Client) ListSites(opts models.ListSitesRequest) (*models.ListSitesResponse, error) {
+	request, err := http.NewRequest("GET", c.BaseUrl.String()+basePath+"sites/", nil)
 	if err != nil {
 		return nil, err
 	}
@@ -35,11 +35,14 @@ func (c *Client) ListSites (opts models.ListSitesRequest) (*models.ListSitesResp
 func setListSitesParams(req *http.Request, opts models.ListSitesRequest) {
 	q := req.URL.Query()
 	opts.SetListParams(&q)
+	if opts.Region != "" {
+		q.Set("region", opts.Region)
+	}
 	req.URL.RawQuery = q.Encode()
 }
 
-func (c *Client) GetSite (id int) (*models.Site, error) {
-	request, err := http.NewRequest("GET", c.BaseUrl.String() + basePath + "sites/" + strconv.Itoa(id) + "/", nil)
+func (c *Client) GetSite(id int) (*models.Site, error) {
+	request, err := http.NewRequest("GET", c.BaseUrl.String()+basePath+"sites/"+strconv.Itoa(id)+"/", nil)
 	if err != nil {
 		return nil, err
 	}

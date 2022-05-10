@@ -5,8 +5,8 @@ import (
 )
 
 type Status struct {
-	Label        string      `json:"label"`
-	Value        string      `json:"value"`
+	Label string `json:"label"`
+	Value string `json:"value"`
 }
 
 type Prefix struct {
@@ -48,15 +48,16 @@ type WriteablePrefix struct {
 
 type ListPrefixesRequest struct {
 	common.ListParams
-	Role   string
-	Region string
-	Tag    string
-	VrfId  int
-	Prefix string
-	MaskLength int
+	Role          string
+	Region        string
+	Site          string
+	Tag           string
+	VrfId         int
+	Prefix        string
+	MaskLength    int
 	MaskLengthGte int
 	MaskLengthLte int
-	Status string
+	Status        string
 }
 
 type ListPrefixesReponse struct {
