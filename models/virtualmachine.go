@@ -50,7 +50,7 @@ type WriteableVirtualMachine struct {
 	Tenant 		int		`json:"tenant,omitempty"`
 	Platform 	int		`json:"platform,omitempty"`
 	PrimaryIp 	string 	`json:"primary_ip,omitempty"`
-	PrimaryIp4 	NestedIpAddress	`json:"primary_ipv4,omitempty"`
+	PrimaryIp4 	string	`json:"primary_ipv4,omitempty"`
 	Comments 	string	`json:"comments,omitempty"`
 	VCPUs 		string	`json:"vcpus,omitempty"`
 	Memory 		int		`json:"memory,omitempty"`
@@ -69,7 +69,7 @@ func (vm *VirtualMachine) Writeable() WriteableVirtualMachine {
 		Tenant: vm.Tenant.Id,
 		Platform: vm.Platform.Id,
 		PrimaryIp: vm.PrimaryIp.Address,
-		PrimaryIp4: vm.PrimaryIp4,
+		PrimaryIp4: vm.PrimaryIp4.Address,
 		Comments: vm.Comments,
 		VCPUs: vm.VCPUs,
 		Memory: vm.Memory,
