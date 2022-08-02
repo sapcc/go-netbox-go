@@ -1,6 +1,6 @@
 module github.com/sapcc/go-netbox-go
 
-go 1.15
+go 1.19
 
 require (
 	github.com/seborama/govcr v4.5.0+incompatible
