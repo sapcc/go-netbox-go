@@ -11,7 +11,7 @@ import (
 )
 
 func (c *Client) ListIpAddresses(opts models.ListIpAddressesRequest) (*models.ListIpAddressesResponse, error) {
-	request, err := http.NewRequest("GET", c.BaseUrl.String() + basePath + "ip-addresses/", nil)
+	request, err := http.NewRequest("GET", c.BaseUrl.String()+basePath+"ip-addresses/", nil)
 	if err != nil {
 		return nil, err
 	}
@@ -38,7 +38,7 @@ func (c *Client) ListIpAddresses(opts models.ListIpAddressesRequest) (*models.Li
 }
 
 func (c *Client) GetIpAdress(id int) (*models.IpAddress, error) {
-	request, err := http.NewRequest("GET", c.BaseUrl.String() + basePath + "ip-addresses/" + strconv.Itoa(id) + "/", nil)
+	request, err := http.NewRequest("GET", c.BaseUrl.String()+basePath+"ip-addresses/"+strconv.Itoa(id)+"/", nil)
 	if err != nil {
 		return nil, err
 	}
@@ -83,26 +83,29 @@ func setListIpAddressesParams(req *http.Request, opts models.ListIpAddressesRequ
 	if opts.VrfId != 0 {
 		q.Set("vrf_id", strconv.Itoa(opts.VrfId))
 	}
+	if opts.Parent != "" {
+		q.Set("parent", opts.Parent)
+	}
 	req.URL.RawQuery = q.Encode()
 }
 
 func (c *Client) CreateIpAddress(address models.WriteableIpAddress) (*models.IpAddress, error) {
 	body, err := json.Marshal(address)
 	if err != nil {
-		return nil,err
+		return nil, err
 	}
-	request, err := http.NewRequest("POST", c.BaseUrl.String() + basePath + "ip-addresses/", bytes.NewBuffer(body))
+	request, err := http.NewRequest("POST", c.BaseUrl.String()+basePath+"ip-addresses/", bytes.NewBuffer(body))
 	if err != nil {
-		return nil,err
+		return nil, err
 	}
 	c.SetAuthToken(&request.Header)
 	response, err := c.HttpClient.Do(request)
 	if err != nil {
-		return nil,err
+		return nil, err
 	}
 	if response.StatusCode != 201 {
 		errBody, _ := ioutil.ReadAll(response.Body)
-		return nil,fmt.Errorf("unexpected response code of %d:%s", response.StatusCode, errBody)
+		return nil, fmt.Errorf("unexpected response code of %d:%s", response.StatusCode, errBody)
 	}
 	resObj := models.IpAddress{}
 	byteses, err := ioutil.ReadAll(response.Body)
@@ -121,7 +124,7 @@ func (c *Client) UpdateIpAddress(address models.WriteableIpAddress) (*models.IpA
 	if err != nil {
 		return nil, err
 	}
-	request, err := http.NewRequest("PUT", c.BaseUrl.String() + basePath + "ip-addresses/" + strconv.Itoa(address.Id) + "/", bytes.NewBuffer(body))
+	request, err := http.NewRequest("PUT", c.BaseUrl.String()+basePath+"ip-addresses/"+strconv.Itoa(address.Id)+"/", bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}

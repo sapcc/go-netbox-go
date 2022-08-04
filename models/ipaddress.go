@@ -7,16 +7,16 @@ import (
 )
 
 type NestedIpAddress struct {
-	Id int `json:"id,omitempty"`
-	Url string `json:"url,omitempty"`
-	Family interface{} `json:"family,omitempty"`
-	Address string `json:"address"`
+	Id      int         `json:"id,omitempty"`
+	Url     string      `json:"url,omitempty"`
+	Family  interface{} `json:"family,omitempty"`
+	Address string      `json:"address"`
 }
 
 type AvailableIp struct {
-	Family int `json:"family"`
-	Address string `json:"address"`
-	Vrf interface{} `json:"vrf"`
+	Family  int         `json:"family"`
+	Address string      `json:"address"`
+	Vrf     interface{} `json:"vrf"`
 }
 
 type IpamRole struct {
@@ -26,49 +26,50 @@ type IpamRole struct {
 
 type WriteableIpAddress struct {
 	NestedIpAddress
-	Vrf 				int 		`json:"vrf,omitempty"`
-	Tenant 				int 		`json:"tenant,omitempty"`
-	Status 				string 		`json:"status,omitempty"`
-	Role 				string 		`json:"role,omitempty"`
-	AssignedObjectType	string 		`json:"assigned_object_type,omitempty"`
-	AssignedObjectId 	int 		`json:"assigned_object_id,omitempty"`
-	NatInside 			int 		`json:"nat_inside,omitempty"`
-	NatOutside 			int 		`json:"nat_outside,omitempty"`
-	DnsName 			string 		`json:"dns_name,omitempty"`
-	Description 		string 		`json:"description,omitempty"`
-	Tags 				interface{} `json:"tags,omitempty"`
-	CustomFields 		interface{} `json:"custom_fields,omitempty"`
-	Created 			string 		`json:"created,omitempty"`
-	LastUpdated 		string 		`json:"last_updated,omitempty"`
+	Vrf                int         `json:"vrf,omitempty"`
+	Tenant             int         `json:"tenant,omitempty"`
+	Status             string      `json:"status,omitempty"`
+	Role               string      `json:"role,omitempty"`
+	AssignedObjectType string      `json:"assigned_object_type,omitempty"`
+	AssignedObjectId   int         `json:"assigned_object_id,omitempty"`
+	NatInside          int         `json:"nat_inside,omitempty"`
+	NatOutside         int         `json:"nat_outside,omitempty"`
+	DnsName            string      `json:"dns_name,omitempty"`
+	Description        string      `json:"description,omitempty"`
+	Tags               interface{} `json:"tags,omitempty"`
+	CustomFields       interface{} `json:"custom_fields,omitempty"`
+	Created            string      `json:"created,omitempty"`
+	LastUpdated        string      `json:"last_updated,omitempty"`
 }
 
 type IpAddress struct {
 	NestedIpAddress
-	Vrf interface{} `json:"vrf"`
-	Tenant Tenant `json:"tenant"`
-	Status            interface{} `json:"status"`
-	Role              IpamRole    `json:"role"`
-	NatInside         interface{} `json:"nat_inside"`
-	NatOutside        interface{} `json:"nat_outside"`
-	DnsName           string `json:"dns_name"`
-	Description       string `json:"description"`
-	Tags              interface{} `json:"tags"`
-	CustomFields      interface{} `json:"custom_fields"`
-	Created           string `json:"created"`
-	LastUpdated       string `json:"last_updated"`
-	AssignedInterface Interface
+	Vrf                 interface{} `json:"vrf"`
+	Tenant              Tenant      `json:"tenant"`
+	Status              interface{} `json:"status"`
+	Role                IpamRole    `json:"role"`
+	NatInside           interface{} `json:"nat_inside"`
+	NatOutside          interface{} `json:"nat_outside"`
+	DnsName             string      `json:"dns_name"`
+	Description         string      `json:"description"`
+	Tags                interface{} `json:"tags"`
+	CustomFields        interface{} `json:"custom_fields"`
+	Created             string      `json:"created"`
+	LastUpdated         string      `json:"last_updated"`
+	AssignedInterface   Interface
 	AssignedVMInterface VMInterface
-	AssignedObjectType string
+	AssignedObjectType  string
 }
 
 type ListIpAddressesRequest struct {
 	common.ListParams
-	InterfaceId int
+	InterfaceId   int
 	VmInterfaceId int
-	DeviceId int
-	Role string
-	Address string
-	VrfId int
+	DeviceId      int
+	Role          string
+	Address       string
+	VrfId         int
+	Parent        string
 }
 
 type ListIpAddressesResponse struct {
@@ -138,7 +139,7 @@ func (ip *IpAddress) UnmarshalJSON(b []byte) error {
 	}
 	ip.DnsName = dnsName
 	var descr string
-	if err := json.Unmarshal(tmp["description"],&descr); err != nil {
+	if err := json.Unmarshal(tmp["description"], &descr); err != nil {
 		return err
 	}
 	ip.Description = descr
