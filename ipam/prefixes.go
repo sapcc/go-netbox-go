@@ -203,5 +203,8 @@ func setListPrefixesParams(req *http.Request, opts models.ListPrefixesRequest) {
 	if opts.Status != "" {
 		q.Set("status", opts.Status)
 	}
+	if opts.Within != "" {
+		q.Set("within", opts.Within)
+	}
 	req.URL.RawQuery = q.Encode()
 }
