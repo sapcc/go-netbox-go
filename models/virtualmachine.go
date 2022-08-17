@@ -20,7 +20,7 @@ type VirtualMachine struct {
 	PrimaryIp  			NestedIpAddress  		`json:"primary_ip"`
 	PrimaryIp4 			NestedIpAddress    		`json:"primary_ip4"`
 	PrimaryIp6 			interface{}    			`json:"primary_ip6"`
-	VCPUs      			int            			`json:"vcpus"`
+	VCPUs      			string            			`json:"vcpus"`
 	Memory     			int            			`json:"memory"`
 	Disk       			int            			`json:"disk"`
 	Comments 			string 					`json:"comments"`
@@ -52,7 +52,7 @@ type WriteableVirtualMachine struct {
 	PrimaryIp 	string 	`json:"primary_ip,omitempty"`
 	PrimaryIp4 	string	`json:"primary_ipv4,omitempty"`
 	Comments 	string	`json:"comments,omitempty"`
-	VCPUs 		int		`json:"vcpus,omitempty"`
+	VCPUs 		string	`json:"vcpus,omitempty"`
 	Memory 		int		`json:"memory,omitempty"`
 	Disk		int		`json:"disk,omitempty"`
 }
@@ -159,7 +159,7 @@ func (vm *VirtualMachine) UnmarshalJSON(b []byte) error {
 		return err
 	}
 	vm.LastUpdated = lastUpdated
-	var vcpus int
+	var vcpus string
 	if err := json.Unmarshal(tmp["vcpus"], &vcpus); err != nil {
 		return err
 	}

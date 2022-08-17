@@ -17,7 +17,7 @@ func TestClient_CreateDeleteVLANVMInterface(t *testing.T) {
 	vcrConf.Client = client.HttpClient
 	vcr := govcr.NewVCR("CreateVLANVMInterface", vcrConf)
 	client.HttpClient = vcr.Client
-	vlans := []int{1410,1408,1409}
+	vlans := []int{1678,1679,1680}
 	vmi := models.WritableVMInterface{
 		VirtualMachine: 1107,
 		Name: "test-vlan-interface",
@@ -48,12 +48,12 @@ func TestClient_CreateDeleteTaggedVMInterface(t *testing.T) {
 	vcr := govcr.NewVCR("CreateTaggedVMInterface", vcrConf)
 	client.HttpClient = vcr.Client
 	tag1 := models.NestedTag{
-		Name: "101",
-		Slug: "101",
+		Name: "CC-APOD",
+		Slug: "cc-apod",
 	}
 	tag2 := models.NestedTag{
-		Name: "128",
-		Slug: "128",
+		Name: "CC-VPOD",
+		Slug: "cc-vpod",
 	}
 	tags := []models.NestedTag{
 		tag1, tag2,
