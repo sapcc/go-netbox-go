@@ -10,15 +10,15 @@ import (
 	"strconv"
 )
 
-func (c *Client) ListInterfaces (opts models.ListInterfacesRequest) (*models.ListInterfacesResponse, error) {
-	request, err := http.NewRequest("GET", c.BaseUrl.String() + basePath + "interfaces/", bytes2.NewBuffer([]byte{'a'}))
+func (c *Client) ListInterfaces(opts models.ListInterfacesRequest) (*models.ListInterfacesResponse, error) {
+	request, err := http.NewRequest("GET", c.BaseUrl.String()+basePath+"interfaces/", bytes2.NewBuffer([]byte{'a'}))
 	if err != nil {
 		return nil, err
 	}
 	c.SetAuthToken(&request.Header)
 	setListInterfacesParams(request, opts)
 	response, err := c.HttpClient.Do(request)
-	if err != nil{
+	if err != nil {
 		return nil, err
 	}
 	if response.StatusCode != 200 {
@@ -37,13 +37,16 @@ func (c *Client) ListInterfaces (opts models.ListInterfacesRequest) (*models.Lis
 }
 
 func setListInterfacesParams(req *http.Request, opts models.ListInterfacesRequest) {
-	q:= req.URL.Query()
+	q := req.URL.Query()
 	opts.SetListParams(&q)
 	if opts.Type != "" {
 		q.Set("type", opts.Type)
 	}
 	if opts.DeviceId != 0 {
 		q.Set("device_id", strconv.Itoa(opts.DeviceId))
+	}
+	if opts.MacAddress != "" {
+		q.Set("mac_address", opts.MacAddress)
 	}
 	req.URL.RawQuery = q.Encode()
 }
