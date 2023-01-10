@@ -25,6 +25,13 @@ type DeviceStatus struct {
 	Value string `json:"value"`
 }
 
+type NestedDevice struct {
+	Id          int    `json:"id"`
+	Url         string `json:"url"`
+	Name        string `json:"name"`
+	DisplayName string `json:"display_name"`
+}
+
 type Device struct {
 	Id               int             `json:"id"`
 	Url              string          `json:"url"`

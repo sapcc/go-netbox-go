@@ -3,12 +3,12 @@ package models
 import "github.com/sapcc/go-netbox-go/common"
 
 type NestedInterface struct {
-	Id               int         `json:"id"`
-	Url              string      `json:"url"`
-	Device           Device      `json:"device"`
-	Name             string      `json:"name"`
-	Cable            interface{} `json:"cable"`
-	ConnectionStatus interface{} `json:"connection_status"`
+	Id               int          `json:"id"`
+	Url              string       `json:"url"`
+	Device           NestedDevice `json:"device"`
+	Name             string       `json:"name"`
+	Cable            interface{}  `json:"cable"`
+	ConnectionStatus interface{}  `json:"connection_status"`
 }
 
 type ConnectedEndpoint struct {
