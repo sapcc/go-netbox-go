@@ -33,10 +33,7 @@ type NestedDevice struct {
 }
 
 type Device struct {
-	Id               int             `json:"id"`
-	Url              string          `json:"url"`
-	Name             string          `json:"name"`
-	DisplayName      string          `json:"display_name"`
+	NestedDevice
 	DeviceType       DeviceType      `json:"device_type"`
 	DeviceRole       interface{}     `json:"device_role"`
 	Tenant           Tenant          `json:"tenant"`
