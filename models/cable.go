@@ -21,8 +21,8 @@ type Cable struct {
 	TerminationBId   int         `json:"termination_b_id"`
 	//TerminationB     string      `json:"termination_b"`
 	TerminationBInterface NestedInterface
-	TerminationBConsolePort NesterConsolePort
-	TerminationBConsoleServerPort NestedConsoleServerPort
+	//TerminationBConsolePort NesterConsolePort
+	//TerminationBConsoleServerPort NestedConsoleServerPort
 	Type             string      `json:"type"`
 	Status           CableStatus `json:"status"`
 	Color            string      `json:"color"`
@@ -85,17 +85,17 @@ func (cable *Cable) UnmarshalJSON(b []byte) error {
 		return err
 	}
 	switch termBType {
-	case "dcim.consoleport":
-	case "dcim.consoleserverport":
+	//case "dcim.consoleport":
+	//case "dcim.consoleserverport":
 	case "dcim.interface":
-		var inter NestedInterface{}
+		inter := NestedInterface{}
 		if err := json.Unmarshal(tmp["termination_b"], &inter); err != nil {
 			fmt.Println("unable to unmarshal termination b")
 			fmt.Println(string(tmp["termination_b"]))
 			return err
 		}
 		cable.TerminationBInterface = inter
-	case "":
+	//case "":
 	default:
 		return fmt.Errorf("unknown termination type %s", termBType)
 
