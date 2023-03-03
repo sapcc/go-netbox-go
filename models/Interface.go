@@ -7,8 +7,8 @@ type NestedInterface struct {
 	Url              string       `json:"url"`
 	Device           NestedDevice `json:"device"`
 	Name             string       `json:"name"`
-	Cable            interface{}  `json:"cable"`
-	ConnectionStatus interface{}  `json:"connection_status"`
+	Cable            int          `json:"cable"`
+	//ConnectionStatus interface{}  `json:"connection_status"`
 }
 
 type ConnectedEndpoint struct {

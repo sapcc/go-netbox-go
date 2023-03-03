@@ -12,9 +12,9 @@ type Rack struct {
 	DisplayName string         `json:"display_name"`
 	Site        Site           `json:"site"`
 	Group       interface{}    `json:"group"`
-	Tenant      Tenant `json:"tenant"`
+	Tenant      Tenant         `json:"tenant"`
 	Status      interface{}    `json:"status"`
-	Role        interface{}    `json:"role"`
+	Role        RackRole       `json:"role"`
 	Serial      string         `json:"serial"`
 	AssetTag    string         `json:"asset_tag"`
 	Type        interface{}    `json:"type"`
@@ -31,6 +31,20 @@ type Rack struct {
 	LastUpdated string `json:"last_updated"`
 	DeviceCount int `json:"device_count"`
 	PowerfeedCount int `json:"powerfeed_count"`
+}
+
+type RackRole struct {
+	Id int `json:"id"`
+	Url string `json:"url"`
+	Display string `json:"display"`
+	Name string `json:"name"`
+	Slug string `json:"slug"`
+	Color string `json:"color"`
+	Description string `json:"description"`
+	CustomFields interface{} `json:"custom_fields"`
+	Created string `json:"created"`
+	LastUpdated string `json:"last_updated"`
+	RackCount int `json:"rack_count"`
 }
 
 type ListRacksRequest struct {
