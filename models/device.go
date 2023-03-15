@@ -35,7 +35,7 @@ type NestedDevice struct {
 type Device struct {
 	NestedDevice
 	DeviceType       DeviceType      `json:"device_type"`
-	DeviceRole       interface{}     `json:"device_role"`
+	DeviceRole       NestedDeviceRole`json:"device_role"`
 	Tenant           Tenant          `json:"tenant"`
 	Platform         interface{}     `json:"platform"`
 	Serial           string          `json:"serial"`
