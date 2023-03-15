@@ -54,3 +54,24 @@ type ListInterfacesResponse struct {
 	common.ReturnValues
 	Results []Interface `json:"results"`
 }
+
+type WritableInterface struct {
+	Device int `json:"device"`
+	Name string `json:"name"`
+	Label string `json:"label,omitempty"`
+	Type string `json:"type"`
+	Enabled bool `json:"enabled"`
+	Parent int `json:"parent,omitempty"`
+	Lag int `json:"lag,omitempty"`
+	Mtu int `json:"mtu,omitempty"`
+	MacAddress string `json:"mac_address,omitempty"`
+	MgmtOnly string `json:"mgmt_only,omitempty"`
+	Description string `json:"description,omitempty"`
+	Mode string `json:"mode,omitempty"`
+	UntaggedVlan int `json:"untagged_vlan,omitempty"`
+	TaggedVlan []int `json:"tagged_vlan,omitempty"`
+	MarkConnected bool `json:"mark_connected,omitempty"`
+	Cable NestedCable `json:"cable"`
+	Tags []NestedTag `json:"tags"`
+	CustomFields interface{} `json:"custom_fields"`
+}

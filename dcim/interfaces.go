@@ -1,7 +1,7 @@
 package dcim
 
 import (
-	bytes2 "bytes"
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"github.com/sapcc/go-netbox-go/models"
@@ -11,7 +11,7 @@ import (
 )
 
 func (c *Client) ListInterfaces(opts models.ListInterfacesRequest) (*models.ListInterfacesResponse, error) {
-	request, err := http.NewRequest("GET", c.BaseUrl.String()+basePath+"interfaces/", bytes2.NewBuffer([]byte{'a'}))
+	request, err := http.NewRequest("GET", c.BaseUrl.String()+basePath+"interfaces/", bytes.NewBuffer([]byte{'a'}))
 	if err != nil {
 		return nil, err
 	}
@@ -25,11 +25,11 @@ func (c *Client) ListInterfaces(opts models.ListInterfacesRequest) (*models.List
 		return nil, fmt.Errorf("unexpected return code of %d", response.StatusCode)
 	}
 	resObj := models.ListInterfacesResponse{}
-	bytes, err := ioutil.ReadAll(response.Body)
+	byts, err := ioutil.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
 	}
-	err = json.Unmarshal(bytes, &resObj)
+	err = json.Unmarshal(byts, &resObj)
 	if err != nil {
 		return nil, err
 	}
@@ -49,4 +49,34 @@ func setListInterfacesParams(req *http.Request, opts models.ListInterfacesReques
 		q.Set("mac_address", opts.MacAddress)
 	}
 	req.URL.RawQuery = q.Encode()
+}
+
+func (c *Client) CreateInterface (interf models.WritableInterface) (*models.Interface, error) {
+	body, err := json.Marshal(interf)
+	if err != nil {
+		return nil, err
+	}
+	request, err := http.NewRequest("POST", c.BaseUrl.String() + basePath + "interfaces/", bytes.NewBuffer(body))
+	if err != nil {
+		return nil, err
+	}
+	c.SetAuthToken(&request.Header)
+	response, err := c.HttpClient.Do(request)
+	if err != nil {
+		return nil, err
+	}
+	if response.StatusCode != 201 {
+		errBody, _ := ioutil.ReadAll(response.Body)
+		return nil, fmt.Errorf("unexpected response code of %d: %s", response.StatusCode, errBody)
+	}
+	resObj := models.Interface{}
+	byteses, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		return nil, err
+	}
+	err = json.Unmarshal(byteses, &resObj)
+	if err != nil {
+		return nil, err
+	}
+	return &resObj, nil
 }
