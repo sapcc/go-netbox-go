@@ -60,6 +60,9 @@ func setListDevicesParams(req *http.Request, opts models.ListDevicesRequest) {
 	if opts.RackId != 0 {
 		q.Set("rack_id", strconv.Itoa(opts.RackId))
 	}
+	if opts.Serial != "" {
+		q.Set("serial", opts.Serial)
+	}
 	req.URL.RawQuery = q.Encode()
 }
 

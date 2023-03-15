@@ -69,6 +69,7 @@ type ListDevicesRequest struct {
 	Region       string
 	Site         string
 	RackId       int
+	Serial       string
 }
 
 type ListDevicesResponse struct {
