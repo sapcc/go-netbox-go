@@ -59,6 +59,8 @@ type ListPrefixesRequest struct {
 	MaskLengthLte int
 	Status        string
 	Within        string
+	Contains      string
+	Children      int
 }
 
 type ListPrefixesReponse struct {
