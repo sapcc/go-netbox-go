@@ -51,12 +51,12 @@ func setListInterfacesParams(req *http.Request, opts models.ListInterfacesReques
 	req.URL.RawQuery = q.Encode()
 }
 
-func (c *Client) UpdateInterface (interf models.WritableInterface) (*models.Interface, error) {
+func (c *Client) UpdateInterface (interf models.WritableInterface, id int) (*models.Interface, error) {
 	body, err := json.Marshal(interf)
 	if err != nil {
 		return nil, err
 	}
-	request, err := http.NewRequest("PUT", c.BaseUrl.String() + basePath + "interfaces/", bytes.NewBuffer(body) )
+	request, err := http.NewRequest("PUT", c.BaseUrl.String() + basePath + "interfaces/" + strconv.Itoa(id) + "/", bytes.NewBuffer(body) )
 	if err != nil {
 		return nil, err
 	}
