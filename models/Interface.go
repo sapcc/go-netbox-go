@@ -71,7 +71,7 @@ type WritableInterface struct {
 	UntaggedVlan int `json:"untagged_vlan,omitempty"`
 	TaggedVlan []int `json:"tagged_vlan,omitempty"`
 	MarkConnected bool `json:"mark_connected,omitempty"`
-	Cable NestedCable `json:"cable"`
-	Tags []NestedTag `json:"tags"`
-	CustomFields interface{} `json:"custom_fields"`
+	Cable NestedCable `json:"cable,omitempty"`
+	Tags []NestedTag `json:"tags,omitempty"`
+	CustomFields interface{} `json:"custom_fields,omitempty"`
 }
