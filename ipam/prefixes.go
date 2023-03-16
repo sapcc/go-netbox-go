@@ -209,8 +209,8 @@ func setListPrefixesParams(req *http.Request, opts models.ListPrefixesRequest) {
 	if opts.Contains != "" {
 		q.Set("contains", opts.Contains)
 	}
-	if opts.Children != 0 {
-		q.Set("children", strconv.Itoa(opts.Children))
+	if opts.Children != nil {
+		q.Set("children", strconv.Itoa(*opts.Children))
 	}
 	req.URL.RawQuery = q.Encode()
 }

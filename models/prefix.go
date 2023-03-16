@@ -60,7 +60,7 @@ type ListPrefixesRequest struct {
 	Status        string
 	Within        string
 	Contains      string
-	Children      int
+	Children      *int
 }
 
 type ListPrefixesReponse struct {
