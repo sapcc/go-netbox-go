@@ -51,6 +51,36 @@ func setListInterfacesParams(req *http.Request, opts models.ListInterfacesReques
 	req.URL.RawQuery = q.Encode()
 }
 
+func (c *Client) UpdateInterface (interf models.WritableInterface) (*models.Interface, error) {
+	body, err := json.Marshal(interf)
+	if err != nil {
+		return nil, err
+	}
+	request, err := http.NewRequest("PUT", c.BaseUrl.String() + basePath + "interfaces/", bytes.NewBuffer(body) )
+	if err != nil {
+		return nil, err
+	}
+	c.SetAuthToken(&request.Header)
+	response, err := c.HttpClient.Do(request)
+	if err != nil {
+		return nil, err
+	}
+	if response.StatusCode != 200 {
+		errBody, _ := ioutil.ReadAll(response.Body)
+		return nil, fmt.Errorf("unexpected response code of %d: %s", response.StatusCode, errBody)
+	}
+	resObj := models.Interface{}
+	byteses, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		return nil, err
+	}
+	err = json.Unmarshal(byteses, &resObj)
+	if err != nil {
+		return nil, err
+	}
+	return &resObj, nil
+}
+
 func (c *Client) CreateInterface (interf models.WritableInterface) (*models.Interface, error) {
 	body, err := json.Marshal(interf)
 	if err != nil {
