@@ -32,7 +32,7 @@ type VirtualMachine struct {
 	Created          string               `json:"created"`
 	LastUpdated      string               `json:"last_updated"`
 	Cluster          NestedCluster
-	Site             NestedSite
+	Site             Site
 }
 
 type VirtualMachineStatus struct {
@@ -125,7 +125,7 @@ func (vm *VirtualMachine) UnmarshalJSON(b []byte) error {
 		return err
 	}
 	vm.Cluster = cl
-	var st NestedSite
+	var st Site
 	if err := json.Unmarshal(tmp["site"], &st); err != nil {
 		return err
 	}
