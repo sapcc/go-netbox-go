@@ -44,7 +44,7 @@ type Device struct {
 	AssetTag         string           `json:"asset_tag"`
 	Site             Site             `json:"site"`
 	Rack             Rack             `json:"rack"`
-	Position         int              `json:"position"`
+	Position         float64          `json:"position"`
 	Face             interface{}      `json:"face"`
 	ParentDevice     interface{}      `json:"parent_device"`
 	Status           DeviceStatus     `json:"status"`

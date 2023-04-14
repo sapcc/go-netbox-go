@@ -21,7 +21,7 @@ type VirtualMachine struct {
 	PrimaryIp        NestedIpAddress      `json:"primary_ip"`
 	PrimaryIp4       NestedIpAddress      `json:"primary_ip4"`
 	PrimaryIp6       interface{}          `json:"primary_ip6"`
-	VCPUs            string               `json:"vcpus"`
+	VCPUs            float64              `json:"vcpus"`
 	Memory           int                  `json:"memory"`
 	Disk             int                  `json:"disk"`
 	Comments         string               `json:"comments"`
@@ -41,21 +41,21 @@ type VirtualMachineStatus struct {
 }
 
 type WriteableVirtualMachine struct {
-	Id         int    `json:"id,omitempty"`
-	Url        string `json:"url,omitempty"`
-	Name       string `json:"name"`
-	Status     string `json:"status,omitempty"`
-	Site       string `json:"site,omitempty"`
-	Cluster    int    `json:"cluster"`
-	Role       int    `json:"role,omitempty"`
-	Tenant     int    `json:"tenant,omitempty"`
-	Platform   int    `json:"platform,omitempty"`
-	PrimaryIp  string `json:"primary_ip,omitempty"`
-	PrimaryIp4 string `json:"primary_ipv4,omitempty"`
-	Comments   string `json:"comments,omitempty"`
-	VCPUs      string `json:"vcpus,omitempty"`
-	Memory     int    `json:"memory,omitempty"`
-	Disk       int    `json:"disk,omitempty"`
+	Id         int     `json:"id,omitempty"`
+	Url        string  `json:"url,omitempty"`
+	Name       string  `json:"name"`
+	Status     string  `json:"status,omitempty"`
+	Site       string  `json:"site,omitempty"`
+	Cluster    int     `json:"cluster"`
+	Role       int     `json:"role,omitempty"`
+	Tenant     int     `json:"tenant,omitempty"`
+	Platform   int     `json:"platform,omitempty"`
+	PrimaryIp  string  `json:"primary_ip,omitempty"`
+	PrimaryIp4 string  `json:"primary_ipv4,omitempty"`
+	Comments   string  `json:"comments,omitempty"`
+	VCPUs      float64 `json:"vcpus,omitempty"`
+	Memory     int     `json:"memory,omitempty"`
+	Disk       int     `json:"disk,omitempty"`
 }
 
 func (vm *VirtualMachine) Writeable() WriteableVirtualMachine {
@@ -160,7 +160,7 @@ func (vm *VirtualMachine) UnmarshalJSON(b []byte) error {
 		return err
 	}
 	vm.LastUpdated = lastUpdated
-	var vcpus string
+	var vcpus float64
 	if err := json.Unmarshal(tmp["vcpus"], &vcpus); err != nil {
 		return err
 	}
