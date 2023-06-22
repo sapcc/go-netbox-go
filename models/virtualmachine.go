@@ -48,7 +48,7 @@ type WriteableVirtualMachine struct {
 	Status     string  `json:"status,omitempty"`
 	Site       int     `json:"site,omitempty"`
 	Cluster    int     `json:"cluster"`
-	Device     int     `json:"device"`
+	Device     int     `json:"device,omitempty"`
 	Role       int     `json:"role,omitempty"`
 	Tenant     int     `json:"tenant,omitempty"`
 	Platform   int     `json:"platform,omitempty"`
