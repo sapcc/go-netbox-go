@@ -45,7 +45,7 @@ type WriteableVirtualMachine struct {
 	Url        string  `json:"url,omitempty"`
 	Name       string  `json:"name"`
 	Status     string  `json:"status,omitempty"`
-	Site       string  `json:"site,omitempty"`
+	Site       int     `json:"site,omitempty"`
 	Cluster    int     `json:"cluster"`
 	Role       int     `json:"role,omitempty"`
 	Tenant     int     `json:"tenant,omitempty"`
@@ -64,7 +64,7 @@ func (vm *VirtualMachine) Writeable() WriteableVirtualMachine {
 		Url:        vm.Url,
 		Name:       vm.Name,
 		Status:     vm.Status.Value,
-		Site:       vm.Site.Slug,
+		Site:       vm.Site.Id,
 		Cluster:    vm.Cluster.Id,
 		Role:       vm.Role.Id,
 		Tenant:     vm.Tenant.Id,
