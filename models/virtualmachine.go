@@ -33,6 +33,7 @@ type VirtualMachine struct {
 	LastUpdated      string               `json:"last_updated"`
 	Cluster          NestedCluster
 	Site             Site
+	Device           Device
 }
 
 type VirtualMachineStatus struct {
@@ -47,6 +48,7 @@ type WriteableVirtualMachine struct {
 	Status     string  `json:"status,omitempty"`
 	Site       int     `json:"site,omitempty"`
 	Cluster    int     `json:"cluster"`
+	Device     int     `json:"device"`
 	Role       int     `json:"role,omitempty"`
 	Tenant     int     `json:"tenant,omitempty"`
 	Platform   int     `json:"platform,omitempty"`
@@ -66,6 +68,7 @@ func (vm *VirtualMachine) Writeable() WriteableVirtualMachine {
 		Status:     vm.Status.Value,
 		Site:       vm.Site.Id,
 		Cluster:    vm.Cluster.Id,
+		Device:     vm.Device.Id,
 		Role:       vm.Role.Id,
 		Tenant:     vm.Tenant.Id,
 		Platform:   vm.Platform.Id,
