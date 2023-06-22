@@ -53,7 +53,7 @@ type WriteableVirtualMachine struct {
 	Tenant     int     `json:"tenant,omitempty"`
 	Platform   int     `json:"platform,omitempty"`
 	PrimaryIp  string  `json:"primary_ip,omitempty"`
-	PrimaryIp4 int     `json:"primary_ipv4,omitempty"`
+	PrimaryIp4 int     `json:"primary_ip4,omitempty"`
 	Comments   string  `json:"comments,omitempty"`
 	VCPUs      float64 `json:"vcpus,omitempty"`
 	Memory     int     `json:"memory,omitempty"`
