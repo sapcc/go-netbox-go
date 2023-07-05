@@ -1,11 +1,12 @@
 package dcim
 
 import (
+	"os"
+	"testing"
+
 	"github.com/sapcc/go-netbox-go/models"
 	"github.com/seborama/govcr"
 	"github.com/stretchr/testify/assert"
-	"os"
-	"testing"
 )
 
 func TestClient_GetDevice(t *testing.T) {
