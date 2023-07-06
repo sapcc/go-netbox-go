@@ -11,32 +11,30 @@ type NestedInterface struct {
 	//ConnectionStatus interface{}  `json:"connection_status"`
 }
 
-type ConnectedEndpoint struct {
-	Id               int         `json:"id"`
-	Url              string      `json:"url"`
-	Device           Device      `json:"device"`
-	Name             string      `json:"name"`
-	Cable            interface{} `json:"cable"`
-	ConnectionStatus interface{} `json:"connection_status"`
+type InterfaceMode struct {
+	Label *string `json:"label"`
+	Value *string `json:"value"`
 }
 
 type Interface struct {
 	NestedInterface
-	Label             string            `json:"label"`
-	Type              InterfaceType     `json:"type"`
-	Enabled           bool              `json:"enabled"`
-	Lag               NestedInterface   `json:"lag"`
-	MTU               int               `json:"mtu"`
-	MacAddress        string            `json:"mac_address"`
-	ManagementOnly    bool              `json:"mgmt_only"`
-	Description       string            `json:"description"`
-	Mode              interface{}       `json:"mode"`
-	UntaggedVlan      NestedVLAN        `json:"untagged_vlan"`
-	TaggedVlans       []NestedVLAN      `json:"tagged_vlans"`
-	Tags              interface{}       `json:"tags"`
-	CountIpAddresses  int               `json:"count_ipaddresses"`
-	ConnectedEndpoint ConnectedEndpoint `json:"connected_endpoint"`
-	Cable             *NestedCable      `json:"cable,omitempty"`
+	Cable              *NestedCable      `json:"cable,omitempty"`
+	ConnectedEndpoints []NestedInterface `json:"connected_endpoints"`
+	CountIpaddresses   int64             `json:"count_ipaddresses,omitempty"`
+	Description        string            `json:"description,omitempty"`
+	Enabled            bool              `json:"enabled,omitempty"`
+	Label              string            `json:"label,omitempty"`
+	Lag                *NestedInterface  `json:"lag,omitempty"`
+	MacAddress         *string           `json:"mac_address,omitempty"`
+	ManagementOnly     bool              `json:"mgmt_only"`
+	Mode               *InterfaceMode    `json:"mode,omitempty"`
+	Mtu                *int64            `json:"mtu,omitempty"`
+	Name               *string           `json:"name"`
+	Occupied           *bool             `json:"_occupied,omitempty"`
+	TaggedVlans        []*NestedVLAN     `json:"tagged_vlans"`
+	Tags               []*NestedTag      `json:"tags,omitempty"`
+	Type               *InterfaceType    `json:"type"`
+	UntaggedVlan       *NestedVLAN       `json:"untagged_vlan,omitempty"`
 }
 
 type InterfaceType struct {
