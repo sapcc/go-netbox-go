@@ -1,12 +1,16 @@
 package models
 
-import "github.com/sapcc/go-netbox-go/common"
+import (
+	"github.com/go-openapi/strfmt"
+	"github.com/sapcc/go-netbox-go/common"
+)
 
 type NestedCluster struct {
-	Id                  int    `json:"id"`
-	Url                 string `json:"url"`
-	Name                string `json:"name"`
-	VirtualMachineCount int    `json:"virtualmachine_count"`
+	Display             string     `json:"display,omitempty"`
+	Id                  int        `json:"id,omitempty"`
+	Name                string     `json:"name"`
+	Url                 strfmt.URI `json:"url,omitempty"`
+	VirtualmachineCount int        `json:"virtualmachine_count,omitempty"`
 }
 
 type NestedClusterType struct {

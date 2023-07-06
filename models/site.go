@@ -5,10 +5,11 @@ import (
 )
 
 type NestedSite struct {
-	Id   int    `json:"id"`
-	Url  string `json:"url"`
-	Slug string `json:"slug"`
-	Name string `json:"name"`
+	Id      int    `json:"id"`
+	Url     string `json:"url"`
+	Slug    string `json:"slug"`
+	Name    string `json:"name"`
+	Display string `json:"display,omitempty"`
 }
 
 type Site struct {

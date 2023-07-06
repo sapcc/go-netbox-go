@@ -9,7 +9,7 @@ import (
 )
 
 type NestedCable struct {
-	ID      int64      `json:"id,omitempty"`
+	ID      int        `json:"id,omitempty"`
 	URL     strfmt.URI `json:"url,omitempty"`
 	Display string     `json:"display,omitempty"`
 	Label   string     `json:"label,omitempty"`
@@ -21,44 +21,44 @@ type CableLengthUnit struct {
 }
 
 type Cable struct {
-	Color              string           `json:"color,omitempty"`
-	Comments           string           `json:"comments,omitempty"`
-	Created            *strfmt.DateTime `json:"created,omitempty"`
-	CustomFields       interface{}      `json:"custom_fields,omitempty"`
-	Description        string           `json:"description,omitempty"`
-	Display            string           `json:"display,omitempty"`
-	ID                 int64            `json:"id,omitempty"`
-	Label              string           `json:"label,omitempty"`
-	LastUpdated        *strfmt.DateTime `json:"last_updated,omitempty"`
-	Length             *float64         `json:"length,omitempty"`
-	LengthUnit         *CableLengthUnit `json:"length_unit,omitempty"`
-	Status             *CableStatus     `json:"status,omitempty"`
-	Tags               []*NestedTag     `json:"tags,omitempty"`
-	Tenant             *NestedTenant    `json:"tenant,omitempty"`
-	Type               string           `json:"type,omitempty"`
-	URL                strfmt.URI       `json:"url,omitempty"`
+	Color              string          `json:"color,omitempty"`
+	Comments           string          `json:"comments,omitempty"`
+	Created            strfmt.DateTime `json:"created,omitempty"`
+	CustomFields       interface{}     `json:"custom_fields,omitempty"`
+	Description        string          `json:"description,omitempty"`
+	Display            string          `json:"display,omitempty"`
+	ID                 int64           `json:"id,omitempty"`
+	Label              string          `json:"label,omitempty"`
+	LastUpdated        strfmt.DateTime `json:"last_updated,omitempty"`
+	Length             float64         `json:"length,omitempty"`
+	LengthUnit         CableLengthUnit `json:"length_unit,omitempty"`
+	Status             CableStatus     `json:"status,omitempty"`
+	Tags               []NestedTag     `json:"tags,omitempty"`
+	Tenant             NestedTenant    `json:"tenant,omitempty"`
+	Type               string          `json:"type,omitempty"`
+	URL                strfmt.URI      `json:"url,omitempty"`
 	Aterminations      []NestedInterface
 	Bterminations      []NestedInterface
 	AssignedObjectType string
 }
 
 type WriteableCable struct {
-	Color        string           `json:"color,omitempty"`
-	Comments     string           `json:"comments,omitempty"`
-	Created      *strfmt.DateTime `json:"created,omitempty"`
-	CustomFields interface{}      `json:"custom_fields,omitempty"`
-	Description  string           `json:"description,omitempty"`
-	Display      string           `json:"display,omitempty"`
-	ID           int64            `json:"id,omitempty"`
-	Label        string           `json:"label,omitempty"`
-	LastUpdated  *strfmt.DateTime `json:"last_updated,omitempty"`
-	Length       *float64         `json:"length,omitempty"`
-	LengthUnit   string           `json:"length_unit,omitempty"`
-	Status       string           `json:"status,omitempty"`
-	Tags         []*NestedTag     `json:"tags,omitempty"`
-	Tenant       *int64           `json:"tenant,omitempty"`
-	Type         string           `json:"type,omitempty"`
-	URL          strfmt.URI       `json:"url,omitempty"`
+	Color        string          `json:"color,omitempty"`
+	Comments     string          `json:"comments,omitempty"`
+	Created      strfmt.DateTime `json:"created,omitempty"`
+	CustomFields interface{}     `json:"custom_fields,omitempty"`
+	Description  string          `json:"description,omitempty"`
+	Display      string          `json:"display,omitempty"`
+	ID           int64           `json:"id,omitempty"`
+	Label        string          `json:"label,omitempty"`
+	LastUpdated  strfmt.DateTime `json:"last_updated,omitempty"`
+	Length       float64         `json:"length,omitempty"`
+	LengthUnit   string          `json:"length_unit,omitempty"`
+	Status       string          `json:"status,omitempty"`
+	Tags         []NestedTag     `json:"tags,omitempty"`
+	Tenant       int64           `json:"tenant,omitempty"`
+	Type         string          `json:"type,omitempty"`
+	URL          strfmt.URI      `json:"url,omitempty"`
 }
 
 type LengthUnit struct {
@@ -73,12 +73,13 @@ type CableStatus struct {
 
 type Termination struct {
 	Interface  NestedInterface `json:"object,omitempty"`
-	ObjectID   *int64          `json:"object_id"`
+	ObjectID   int             `json:"object_id"`
 	ObjectType string          `json:"object_type"`
 }
 type ListCablesRequest struct {
 	common.ListParams
-	CableID int
+	CableID   int
+	CableType string
 }
 
 type ListCablesResponse struct {
@@ -156,7 +157,7 @@ func (cable *Cable) UnmarshalJSON(b []byte) error {
 	if err := json.Unmarshal(tmp["status"], &status); err != nil {
 		return err
 	}
-	cable.Status = &status
+	cable.Status = status
 
 	var color string
 	if err := json.Unmarshal(tmp["color"], &color); err != nil {
@@ -168,12 +169,12 @@ func (cable *Cable) UnmarshalJSON(b []byte) error {
 	if err := json.Unmarshal(tmp["length"], &length); err != nil {
 		return err
 	}
-	cable.Length = &length
+	cable.Length = length
 
 	var lengthUnit CableLengthUnit
 	if err := json.Unmarshal(tmp["length_unit"], &lengthUnit); err != nil {
 		return err
 	}
-	cable.LengthUnit = &lengthUnit
+	cable.LengthUnit = lengthUnit
 	return nil
 }

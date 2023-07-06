@@ -1,6 +1,9 @@
 package models
 
-import "github.com/sapcc/go-netbox-go/common"
+import (
+	"github.com/go-openapi/strfmt"
+	"github.com/sapcc/go-netbox-go/common"
+)
 
 type Tenant struct {
 	NestedTenant
@@ -24,10 +27,11 @@ type Tenant struct {
 }
 
 type NestedTenant struct {
-	Id   int    `json:"id"`
-	Url  string `json:"url"`
-	Name string `json:"name"`
-	Slug string `json:"slug"`
+	Id      int        `json:"id"`
+	Url     strfmt.URI `json:"url,omitempty"`
+	Name    string     `json:"name"`
+	Slug    string     `json:"slug"`
+	Display string     `json:"display,omitempty"`
 }
 
 type ListTenantsRequest struct {
