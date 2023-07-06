@@ -10,7 +10,7 @@ import (
 )
 
 func (c *Client) ListDevices(opts models.ListDevicesRequest) (*models.ListDevicesResponse, error) {
-	request, err := http.NewRequest("GET", c.BaseUrl.String() + basePath + "devices/", nil )
+	request, err := http.NewRequest("GET", c.BaseUrl.String()+basePath+"devices/", nil)
 	if err != nil {
 		return nil, err
 	}
@@ -67,7 +67,7 @@ func setListDevicesParams(req *http.Request, opts models.ListDevicesRequest) {
 }
 
 func (c *Client) GetDevice(id int) (*models.Device, error) {
-	request, err := http.NewRequest("GET", c.BaseUrl.String() + basePath + "devices/" + strconv.Itoa(id) + "/", nil )
+	request, err := http.NewRequest("GET", c.BaseUrl.String()+basePath+"devices/"+strconv.Itoa(id)+"/", nil)
 	if err != nil {
 		return nil, err
 	}

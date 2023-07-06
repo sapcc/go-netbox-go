@@ -1,6 +1,8 @@
 package models
 
-import "github.com/sapcc/go-netbox-go/common"
+import (
+	"github.com/sapcc/go-netbox-go/common"
+)
 
 type DeviceType struct {
 	Id           int          `json:"id"`
@@ -34,32 +36,32 @@ type NestedDevice struct {
 
 type Device struct {
 	NestedDevice
-	DeviceType       DeviceType      `json:"device_type"`
-	DeviceRole       NestedDeviceRole`json:"device_role"`
-	Tenant           Tenant          `json:"tenant"`
-	Platform         interface{}     `json:"platform"`
-	Serial           string          `json:"serial"`
-	AssetTag         string          `json:"asset_tag"`
-	Site             Site            `json:"site"`
-	Rack             Rack            `json:"rack"`
-	Position         int             `json:"position"`
-	Face             interface{}     `json:"face"`
-	ParentDevice     interface{}     `json:"parent_device"`
-	Status           DeviceStatus    `json:"status"`
-	PrimaryIp        NestedIpAddress `json:"primary_ip"`
-	PrimaryIp4       NestedIpAddress `json:"primary_ip4"`
-	PrimaryIp6       NestedIpAddress `json:"primary_ip6"`
-	Cluster          Cluster         `json:"cluster"`
-	VirtualChassis   interface{}     `json:"virtual_chassis"`
-	VCPosition       int             `json:"vc_position"`
-	VCPriority       int             `json:"vc_priority"`
-	Comments         string          `json:"comments"`
-	LocalContextData interface{}     `json:"local_context_data"`
-	Tags             interface{}     `json:"tags"`
-	CustomFields     interface{}     `json:"custom_fields"`
-	ConfigContext    interface{}     `json:"config_context"`
-	Created          string          `json:"created"`
-	LastUpdated      string          `json:"last_updated"`
+	DeviceType       DeviceType       `json:"device_type"`
+	DeviceRole       NestedDeviceRole `json:"device_role"`
+	Tenant           NestedTenant     `json:"tenant"`
+	Platform         interface{}      `json:"platform"`
+	Serial           string           `json:"serial"`
+	AssetTag         string           `json:"asset_tag"`
+	Site             Site             `json:"site"`
+	Rack             Rack             `json:"rack"`
+	Position         int              `json:"position"`
+	Face             interface{}      `json:"face"`
+	ParentDevice     interface{}      `json:"parent_device"`
+	Status           DeviceStatus     `json:"status"`
+	PrimaryIp        NestedIpAddress  `json:"primary_ip"`
+	PrimaryIp4       NestedIpAddress  `json:"primary_ip4"`
+	PrimaryIp6       NestedIpAddress  `json:"primary_ip6"`
+	Cluster          Cluster          `json:"cluster"`
+	VirtualChassis   interface{}      `json:"virtual_chassis"`
+	VCPosition       int              `json:"vc_position"`
+	VCPriority       int              `json:"vc_priority"`
+	Comments         string           `json:"comments"`
+	LocalContextData interface{}      `json:"local_context_data"`
+	Tags             interface{}      `json:"tags"`
+	CustomFields     interface{}      `json:"custom_fields"`
+	ConfigContext    interface{}      `json:"config_context"`
+	Created          string           `json:"created"`
+	LastUpdated      string           `json:"last_updated"`
 }
 
 type ListDevicesRequest struct {
