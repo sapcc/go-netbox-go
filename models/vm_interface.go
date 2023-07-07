@@ -2,37 +2,46 @@ package models
 
 import (
 	"encoding/json"
+
+	"github.com/go-openapi/strfmt"
 	"github.com/sapcc/go-netbox-go/common"
 )
 
+type NestedVMInterface struct {
+	Display        string                `json:"display,omitempty"`
+	Id             int                   `json:"id,omitempty"`
+	Name           string                `json:"name"`
+	URL            strfmt.URI            `json:"url,omitempty"`
+	VirtualMachine *NestedVirtualMachine `json:"virtual_machine,omitempty"`
+}
 type VMInterface struct {
-	Enabled          *bool          `json:"enabled,omitempty"`
-	Url        		 string        `json:"url"`
-	Id               int           `json:"id"`
-	Name             string        `json:"name"`
-	MTU              *int           `json:"mtu,omitempty"`
-	MacAddress       *string        `json:"mac_address,omitempty"`
-	Description      *string        `json:"description,omitempty"`
-	Mode             *string		   `json:"mode,omitempty"`
-	Tags             []NestedTag   `json:"tags,omitempty"`
-	VirtualMachine 	 NestedVirtualMachine `json:"virtual_machine"`
-	UntaggedVlan     *NestedVLAN	`json:"untagged_vlan,omitempty"`
-	TaggedVlans 	 []NestedVLAN	`json:"tagged_vlans,omitempty"`
+	Enabled        *bool                `json:"enabled,omitempty"`
+	Url            string               `json:"url"`
+	Id             int                  `json:"id"`
+	Name           string               `json:"name"`
+	MTU            *int                 `json:"mtu,omitempty"`
+	MacAddress     *string              `json:"mac_address,omitempty"`
+	Description    *string              `json:"description,omitempty"`
+	Mode           *string              `json:"mode,omitempty"`
+	Tags           []NestedTag          `json:"tags,omitempty"`
+	VirtualMachine NestedVirtualMachine `json:"virtual_machine"`
+	UntaggedVlan   *NestedVLAN          `json:"untagged_vlan,omitempty"`
+	TaggedVlans    []NestedVLAN         `json:"tagged_vlans,omitempty"`
 }
 
 type WritableVMInterface struct {
-	Id 				int				`json:"id,omitempty"`
-	Url 			string			`json:"url,omitempty"`
-	VirtualMachine 	int				`json:"virtual_machine,omitempty"`
-	Name 			string			`json:"name"`
-	Enabled 		bool			`json:"enabled,omitempty"`
-	MTU 			int				`json:"mtu,omitempty"`
-	MacAddress 		*string			`json:"mac_address,omitempty"`
-	Description 	string			`json:"description,omitempty"`
-	Mode 			string			`json:"mode,omitempty"`
-	UntaggedVlan 	*int			`json:"untagged_vlan,omitempty"`
-	TaggedVlans 	[]int			`json:"tagged_vlans,omitempty"`
-	Tags        	[]NestedTag		`json:"tags,omitempty"`
+	Id             int         `json:"id,omitempty"`
+	Url            string      `json:"url,omitempty"`
+	VirtualMachine int         `json:"virtual_machine,omitempty"`
+	Name           string      `json:"name"`
+	Enabled        bool        `json:"enabled,omitempty"`
+	MTU            int         `json:"mtu,omitempty"`
+	MacAddress     *string     `json:"mac_address,omitempty"`
+	Description    string      `json:"description,omitempty"`
+	Mode           string      `json:"mode,omitempty"`
+	UntaggedVlan   *int        `json:"untagged_vlan,omitempty"`
+	TaggedVlans    []int       `json:"tagged_vlans,omitempty"`
+	Tags           []NestedTag `json:"tags,omitempty"`
 }
 
 func (vmi *VMInterface) Writeable() WritableVMInterface {
@@ -62,7 +71,7 @@ func (vmi *VMInterface) Writeable() WritableVMInterface {
 		res.UntaggedVlan = &vmi.UntaggedVlan.Id
 	}
 	var taggedVlans = make([]int, len(vmi.TaggedVlans))
-	for _, vlan := range vmi.TaggedVlans{
+	for _, vlan := range vmi.TaggedVlans {
 		taggedVlans = append(taggedVlans, vlan.Id)
 	}
 	res.TaggedVlans = taggedVlans

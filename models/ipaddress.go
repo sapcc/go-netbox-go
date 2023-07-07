@@ -3,6 +3,7 @@ package models
 import (
 	"encoding/json"
 	"fmt"
+
 	"github.com/sapcc/go-netbox-go/common"
 )
 
@@ -56,8 +57,8 @@ type IpAddress struct {
 	CustomFields        interface{} `json:"custom_fields"`
 	Created             string      `json:"created"`
 	LastUpdated         string      `json:"last_updated"`
-	AssignedInterface   Interface
-	AssignedVMInterface VMInterface
+	AssignedInterface   NestedInterface
+	AssignedVMInterface NestedVMInterface
 	AssignedObjectType  string
 }
 
@@ -88,14 +89,14 @@ func (ip *IpAddress) UnmarshalJSON(b []byte) error {
 	}
 	switch s {
 	case "dcim.interface":
-		var inter Interface
+		var inter NestedInterface
 		if err := json.Unmarshal(tmp["assigned_object"], &inter); err != nil {
 			return err
 		}
 		ip.AssignedInterface = inter
 		ip.AssignedObjectType = s
 	case "virtualization.vminterface":
-		var inter VMInterface
+		var inter NestedVMInterface
 		if err := json.Unmarshal(tmp["assigned_object"], &inter); err != nil {
 			fmt.Println("unable to unmarshal vminterface")
 			fmt.Println(string(tmp["assigned_object"]))

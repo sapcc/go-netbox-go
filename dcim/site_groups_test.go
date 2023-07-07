@@ -1,11 +1,12 @@
 package dcim
 
 import (
+	"os"
+	"testing"
+
 	"github.com/sapcc/go-netbox-go/models"
 	"github.com/seborama/govcr"
 	"github.com/stretchr/testify/assert"
-	"os"
-	"testing"
 )
 
 func TestClient_ListSiteGroups(t *testing.T) {
@@ -35,7 +36,7 @@ func TestClient_GetSiteGroup(t *testing.T) {
 	vcrConf.Client = client.HttpClient
 	vcr := govcr.NewVCR("GetSiteGroup", vcrConf)
 	client.HttpClient = vcr.Client
-	res, err := client.GetSiteGroup(71)
+	res, err := client.GetSiteGroup(14)
 	if err != nil {
 		t.Fatal(err)
 	}
