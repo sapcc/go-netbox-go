@@ -69,7 +69,7 @@ type WritableInterface struct {
 	Mtu           int         `json:"mtu,omitempty"`
 	Name          string      `json:"name"`
 	Parent        int         `json:"parent,omitempty"`
-	TaggedVlans   []int       `json:"tagged_vlans"`
+	TaggedVlans   []int       `json:"tagged_vlans,omitempty"`
 	Tags          []NestedTag `json:"tags,omitempty"`
 	Type          string      `json:"type"`
 	UntaggedVlan  int         `json:"untagged_vlan,omitempty"`
