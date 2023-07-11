@@ -9,8 +9,8 @@ import (
 )
 
 type NestedCable struct {
-	ID      int        `json:"id,omitempty"`
-	URL     strfmt.URI `json:"url,omitempty"`
+	Id      int        `json:"id,omitempty"`
+	Url     strfmt.URI `json:"url,omitempty"`
 	Display string     `json:"display,omitempty"`
 	Label   string     `json:"label,omitempty"`
 }
@@ -27,7 +27,7 @@ type Cable struct {
 	CustomFields       interface{}     `json:"custom_fields,omitempty"`
 	Description        string          `json:"description,omitempty"`
 	Display            string          `json:"display,omitempty"`
-	ID                 int64           `json:"id,omitempty"`
+	Id                 int64           `json:"id,omitempty"`
 	Label              string          `json:"label,omitempty"`
 	LastUpdated        strfmt.DateTime `json:"last_updated,omitempty"`
 	Length             float64         `json:"length,omitempty"`
@@ -36,7 +36,7 @@ type Cable struct {
 	Tags               []NestedTag     `json:"tags,omitempty"`
 	Tenant             NestedTenant    `json:"tenant,omitempty"`
 	Type               string          `json:"type,omitempty"`
-	URL                strfmt.URI      `json:"url,omitempty"`
+	Url                strfmt.URI      `json:"url,omitempty"`
 	Aterminations      []NestedInterface
 	Bterminations      []NestedInterface
 	AssignedObjectType string
@@ -49,7 +49,7 @@ type WriteableCable struct {
 	CustomFields interface{}     `json:"custom_fields,omitempty"`
 	Description  string          `json:"description,omitempty"`
 	Display      string          `json:"display,omitempty"`
-	ID           int64           `json:"id,omitempty"`
+	Id           int64           `json:"id,omitempty"`
 	Label        string          `json:"label,omitempty"`
 	LastUpdated  strfmt.DateTime `json:"last_updated,omitempty"`
 	Length       float64         `json:"length,omitempty"`
@@ -58,7 +58,7 @@ type WriteableCable struct {
 	Tags         []NestedTag     `json:"tags,omitempty"`
 	Tenant       int64           `json:"tenant,omitempty"`
 	Type         string          `json:"type,omitempty"`
-	URL          strfmt.URI      `json:"url,omitempty"`
+	Url          strfmt.URI      `json:"url,omitempty"`
 }
 
 type LengthUnit struct {
@@ -73,12 +73,12 @@ type CableStatus struct {
 
 type Termination struct {
 	Interface  NestedInterface `json:"object,omitempty"`
-	ObjectID   int             `json:"object_id"`
+	ObjectId   int             `json:"object_id"`
 	ObjectType string          `json:"object_type"`
 }
 type ListCablesRequest struct {
 	common.ListParams
-	CableID   int
+	CableId   int
 	CableType string
 }
 
@@ -133,13 +133,13 @@ func (cable *Cable) UnmarshalJSON(b []byte) error {
 	if err := json.Unmarshal(tmp["id"], &id); err != nil {
 		return err
 	}
-	cable.ID = id
+	cable.Id = id
 
 	var url strfmt.URI
 	if err := json.Unmarshal(tmp["url"], &url); err != nil {
 		return err
 	}
-	cable.URL = url
+	cable.Url = url
 
 	var display string
 	if err := json.Unmarshal(tmp["display"], &display); err != nil {

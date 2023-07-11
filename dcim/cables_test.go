@@ -14,13 +14,13 @@ func TestClient_GetCable(t *testing.T) {
 	}
 	vcrConf := &govcr.VCRConfig{}
 	vcrConf.Client = client.HttpClient
-	vcr := govcr.NewVCR("ListCables", vcrConf)
+	vcr := govcr.NewVCR("GetCable", vcrConf)
 	client.HttpClient = vcr.Client
 	res, err := client.GetCable(2026) //2026
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Log("Cable ID:", res.ID)
+	t.Log("Cable ID:", res.Id)
 }
 
 // func TestClient_ListCables(t *testing.T) {
