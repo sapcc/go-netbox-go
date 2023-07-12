@@ -95,3 +95,39 @@ type ListDevicesResponse struct {
 	common.ReturnValues
 	Results []Device `json:"results"`
 }
+
+type WritableDeviceWithConfigContext struct {
+	Airflow          string          `json:"airflow,omitempty"`
+	AssetTag         string          `json:"asset_tag,omitempty"`
+	Cluster          int             `json:"cluster,omitempty"`
+	Comments         string          `json:"comments,omitempty"`
+	ConfigContext    interface{}     `json:"config_context,omitempty"`
+	Created          strfmt.DateTime `json:"created,omitempty"`
+	CustomFields     interface{}     `json:"custom_fields,omitempty"`
+	Description      string          `json:"description,omitempty"`
+	DeviceRole       int             `json:"device_role"`
+	DeviceType       int             `json:"device_type"`
+	Display          string          `json:"display,omitempty"`
+	Face             string          `json:"face,omitempty"`
+	Id               int             `json:"id,omitempty"`
+	LastUpdated      strfmt.DateTime `json:"last_updated,omitempty"`
+	LocalContextData interface{}     `json:"local_context_data,omitempty"`
+	Location         int             `json:"location,omitempty"`
+	Name             string          `json:"name,omitempty"`
+	ParentDevice     *NestedDevice   `json:"parent_device,omitempty"`
+	Platform         int             `json:"platform,omitempty"`
+	Position         float64         `json:"position,omitempty"`
+	PrimaryIP        string          `json:"primary_ip,omitempty"`
+	PrimaryIp4       int             `json:"primary_ip4,omitempty"`
+	PrimaryIp6       int             `json:"primary_ip6,omitempty"`
+	Rack             int             `json:"rack,omitempty"`
+	Serial           string          `json:"serial,omitempty"`
+	Site             int             `json:"site"`
+	Status           string          `json:"status,omitempty"`
+	Tags             []NestedTag     `json:"tags,omitempty"`
+	Tenant           int             `json:"tenant,omitempty"`
+	Url              strfmt.URI      `json:"url,omitempty"`
+	VcPosition       int             `json:"vc_position,omitempty"`
+	VcPriority       int             `json:"vc_priority,omitempty"`
+	VirtualChassis   int             `json:"virtual_chassis,omitempty"`
+}
