@@ -27,7 +27,7 @@ type Cable struct {
 	CustomFields       interface{}     `json:"custom_fields,omitempty"`
 	Description        string          `json:"description,omitempty"`
 	Display            string          `json:"display,omitempty"`
-	Id                 int64           `json:"id,omitempty"`
+	Id                 int             `json:"id,omitempty"`
 	Label              string          `json:"label,omitempty"`
 	LastUpdated        strfmt.DateTime `json:"last_updated,omitempty"`
 	Length             float64         `json:"length,omitempty"`
@@ -37,28 +37,30 @@ type Cable struct {
 	Tenant             NestedTenant    `json:"tenant,omitempty"`
 	Type               string          `json:"type,omitempty"`
 	Url                strfmt.URI      `json:"url,omitempty"`
-	Aterminations      []NestedInterface
-	Bterminations      []NestedInterface
+	Aterminations      []Termination
+	Bterminations      []Termination
 	AssignedObjectType string
 }
 
 type WriteableCable struct {
-	Color        string          `json:"color,omitempty"`
-	Comments     string          `json:"comments,omitempty"`
-	Created      strfmt.DateTime `json:"created,omitempty"`
-	CustomFields interface{}     `json:"custom_fields,omitempty"`
-	Description  string          `json:"description,omitempty"`
-	Display      string          `json:"display,omitempty"`
-	Id           int64           `json:"id,omitempty"`
-	Label        string          `json:"label,omitempty"`
-	LastUpdated  strfmt.DateTime `json:"last_updated,omitempty"`
-	Length       float64         `json:"length,omitempty"`
-	LengthUnit   string          `json:"length_unit,omitempty"`
-	Status       string          `json:"status,omitempty"`
-	Tags         []NestedTag     `json:"tags,omitempty"`
-	Tenant       int64           `json:"tenant,omitempty"`
-	Type         string          `json:"type,omitempty"`
-	Url          strfmt.URI      `json:"url,omitempty"`
+	Aterminations []Termination   `json:"a_terminations,omitempty"`
+	Bterminations []Termination   `json:"b_terminations,omitempty"`
+	Color         string          `json:"color,omitempty"`
+	Comments      string          `json:"comments,omitempty"`
+	Created       strfmt.DateTime `json:"created,omitempty"`
+	CustomFields  interface{}     `json:"custom_fields,omitempty"`
+	Description   string          `json:"description,omitempty"`
+	Display       string          `json:"display,omitempty"`
+	Id            int64           `json:"id,omitempty"`
+	Label         string          `json:"label,omitempty"`
+	LastUpdated   strfmt.DateTime `json:"last_updated,omitempty"`
+	Length        float64         `json:"length,omitempty"`
+	LengthUnit    string          `json:"length_unit,omitempty"`
+	Status        string          `json:"status,omitempty"`
+	Tags          []NestedTag     `json:"tags,omitempty"`
+	Tenant        int64           `json:"tenant,omitempty"`
+	Type          string          `json:"type,omitempty"`
+	Url           strfmt.URI      `json:"url,omitempty"`
 }
 
 type LengthUnit struct {
@@ -98,12 +100,12 @@ func (cable *Cable) UnmarshalJSON(b []byte) error {
 		return err
 	}
 
-	var aterm []NestedInterface
+	var aterm []Termination
 	for term := range a_terminations {
 		if a_terminations[term].ObjectType != "dcim.interface" {
 			return fmt.Errorf("unknown assigned object type %v", a_terminations[term].ObjectType)
 		}
-		aterm = append(aterm, a_terminations[term].Interface)
+		aterm = append(aterm, a_terminations[term])
 	}
 	cable.Aterminations = aterm
 
@@ -112,12 +114,12 @@ func (cable *Cable) UnmarshalJSON(b []byte) error {
 		return err
 	}
 
-	var bterm []NestedInterface
+	var bterm []Termination
 	for term := range b_terminations {
 		if b_terminations[term].ObjectType != "dcim.interface" {
 			return fmt.Errorf("unknown assigned object type %v", b_terminations[term].ObjectType)
 		}
-		bterm = append(bterm, b_terminations[term].Interface)
+		bterm = append(bterm, b_terminations[term])
 	}
 	cable.Bterminations = bterm
 
@@ -129,7 +131,7 @@ func (cable *Cable) UnmarshalJSON(b []byte) error {
 	}
 	cable.Type = cabletype
 
-	var id int64
+	var id int
 	if err := json.Unmarshal(tmp["id"], &id); err != nil {
 		return err
 	}

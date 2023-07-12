@@ -12,7 +12,7 @@ type Tag struct {
 }
 
 type NestedTag struct {
-	ID    int64      `json:"id,omitempty"`
+	Id    int        `json:"id,omitempty"`
 	Url   strfmt.URI `json:"url,omitempty"`
 	Name  string     `json:"name"`
 	Slug  string     `json:"slug"`

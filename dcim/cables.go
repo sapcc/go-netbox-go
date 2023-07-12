@@ -1,6 +1,7 @@
 package dcim
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -35,40 +36,49 @@ func (c *Client) GetCable(id int) (*models.Cable, error) {
 	return &resObj, nil
 }
 
-// func (c *Client) ListCables(opts models.ListCablesRequest) (*models.ListCablesResponse, error) {
-// 	request, err := http.NewRequest("GET", c.BaseUrl.String()+basePath+"cables/", nil)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	c.SetAuthToken(&request.Header)
-// 	setListCablesParams(request, opts)
-// 	response, err := c.HttpClient.Do(request)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	if response.StatusCode != 200 {
-// 		return nil, fmt.Errorf("unexpected return code of %d", response.StatusCode)
-// 	}
-// 	resObj := models.ListCablesResponse{}
-// 	bytes, err := ioutil.ReadAll(response.Body)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	err = json.Unmarshal(bytes, &resObj)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	return &resObj, nil
-// }
-// func setListCablesParams(req *http.Request, opts models.ListCablesRequest) {
-// 	q := req.URL.Query()
-// 	opts.SetListParams(&q)
-// 	if opts.CableID != 0 {
-// 		q.Set("id", strconv.Itoa(opts.CableID))
-// 	}
-// 	if opts.CableType != "" {
-// 		q.Set("a_terminations.object_type", opts.CableType)
-// 		q.Set("b_terminations.object_type", opts.CableType)
-// 	}
-// 	req.URL.RawQuery = q.Encode()
-// }
+func (c *Client) CreateCable(cable models.WriteableCable) (*models.Cable, error) {
+	body, err := json.Marshal(cable)
+	if err != nil {
+		return nil, err
+	}
+	request, err := http.NewRequest("POST", c.BaseUrl.String()+basePath+"cables/", bytes.NewBuffer(body))
+	if err != nil {
+		return nil, err
+	}
+	c.SetAuthToken(&request.Header)
+	response, err := c.HttpClient.Do(request)
+	if err != nil {
+		return nil, err
+	}
+	if response.StatusCode != 201 {
+		errBody, _ := ioutil.ReadAll(response.Body)
+		return nil, fmt.Errorf("unexpected response code of %d: %s", response.StatusCode, errBody)
+	}
+	resObj := models.Cable{}
+	byteses, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		return nil, err
+	}
+	err = json.Unmarshal(byteses, &resObj)
+	if err != nil {
+		return nil, err
+	}
+	return &resObj, nil
+}
+
+func (c *Client) DeleteCable(id int) error {
+	request, err := http.NewRequest("DELETE", c.BaseUrl.String()+basePath+"cables/"+strconv.Itoa(id)+"/", nil)
+	if err != nil {
+		return err
+	}
+	c.SetAuthToken(&request.Header)
+	response, err := c.HttpClient.Do(request)
+	if err != nil {
+		return err
+	}
+	if response.StatusCode != 204 {
+		errBody, _ := ioutil.ReadAll(response.Body)
+		return fmt.Errorf("unexpected return code of %d: %s", response.StatusCode, errBody)
+	}
+	return nil
+}
