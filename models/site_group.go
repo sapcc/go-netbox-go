@@ -18,7 +18,7 @@ type SiteGroup struct {
 	Name         string      `json:"name"`
 	Slug         string      `json:"slug"`
 	Description  string      `json:"description"`
-	Tags         interface{} `json:"tags"`
+	Tags         []NestedTag `json:"tags"`
 	CustomFields interface{} `json:"custom_fields"`
 	Created      string      `json:"created"`
 	SiteCount    int         `json:"site_count"`

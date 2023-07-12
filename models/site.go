@@ -17,8 +17,8 @@ type Site struct {
 	Url                 string          `json:"url"`
 	Name                string          `json:"name"`
 	Slug                string          `json:"slug"`
-	Status              interface{}     `json:"status"`
-	Region              interface{}     `json:"region"`
+	Status              Status          `json:"status"`
+	Region              NestedRegion    `json:"region"`
 	Tenant              Tenant          `json:"tenant"`
 	Facility            string          `json:"facility"`
 	Group               NestedSiteGroup `json:"group"`
@@ -30,7 +30,7 @@ type Site struct {
 	Latitude            float64         `json:"latitude"`
 	Longitude           float64         `json:"longitude"`
 	Comments            string          `json:"comments"`
-	Tags                interface{}     `json:"tags"`
+	Tags                []NestedTag     `json:"tags"`
 	CustomFields        interface{}     `json:"custom_fields"`
 	Created             string          `json:"created"`
 	LastUpdated         string          `json:"last_updated"`

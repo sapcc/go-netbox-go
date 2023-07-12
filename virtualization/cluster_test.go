@@ -1,11 +1,12 @@
 package virtualization
 
 import (
+	"os"
+	"testing"
+
 	"github.com/sapcc/go-netbox-go/models"
 	"github.com/seborama/govcr"
 	"github.com/stretchr/testify/assert"
-	"os"
-	"testing"
 )
 
 func TestClient_ListClusters(t *testing.T) {
@@ -29,7 +30,7 @@ func TestClient_ListClusters(t *testing.T) {
 	assert.NotEqual(t, 0, res.Count)
 }
 
-func TestClient_listClusterByType(t *testing.T) {
+func TestClient_ListClusterByType(t *testing.T) {
 	clint, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
@@ -40,7 +41,7 @@ func TestClient_listClusterByType(t *testing.T) {
 	clint.HttpClient = vcr.Client
 	opts := models.ListClusterRequest{
 		Region: "ap-ae-1",
-		Type: "cc-k8s-controlplane-swift",
+		Type:   "cc-k8s-controlplane-swift",
 	}
 	res, err := clint.ListClusters(opts)
 	if err != nil {
