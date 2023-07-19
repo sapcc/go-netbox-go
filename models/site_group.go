@@ -1,6 +1,7 @@
 package models
 
 import (
+	"github.com/go-openapi/strfmt"
 	"github.com/sapcc/go-netbox-go/common"
 )
 
@@ -12,17 +13,19 @@ type NestedSiteGroup struct {
 }
 
 type SiteGroup struct {
-	Id           int         `json:"id"`
-	Url          string      `json:"url"`
-	Depth        int         `json:"_depth"`
-	Name         string      `json:"name"`
-	Slug         string      `json:"slug"`
-	Description  string      `json:"description"`
-	Tags         []NestedTag `json:"tags"`
-	CustomFields interface{} `json:"custom_fields"`
-	Created      string      `json:"created"`
-	SiteCount    int         `json:"site_count"`
-	LastUpdated  string      `json:"last_updated"`
+	Created      strfmt.DateTime `json:"created"`
+	CustomFields interface{}     `json:"custom_fields"`
+	Depth        int             `json:"_depth"`
+	Description  string          `json:"description"`
+	Display      string          `json:"display,omitempty"`
+	Id           int             `json:"id"`
+	LastUpdated  strfmt.DateTime `json:"last_updated"`
+	Name         string          `json:"name"`
+	Parent       NestedSiteGroup `json:"parent,omitempty"`
+	SiteCount    int             `json:"site_count"`
+	Slug         string          `json:"slug"`
+	Tags         []NestedTag     `json:"tags"`
+	Url          strfmt.URI      `json:"url"`
 }
 
 type ListSiteGroupsRequest struct {
