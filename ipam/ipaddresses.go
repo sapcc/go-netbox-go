@@ -4,10 +4,11 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/sapcc/go-netbox-go/models"
 	"io/ioutil"
 	"net/http"
 	"strconv"
+
+	"github.com/sapcc/go-netbox-go/models"
 )
 
 func (c *Client) ListIpAddresses(opts models.ListIpAddressesRequest) (*models.ListIpAddressesResponse, error) {

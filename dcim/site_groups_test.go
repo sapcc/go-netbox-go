@@ -9,19 +9,17 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestClient_ListInterfaces(t *testing.T) {
+func TestClient_ListSiteGroups(t *testing.T) {
 	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
 	vcrConf.Client = client.HttpClient
-	vcr := govcr.NewVCR("ListInterfaces", vcrConf)
+	vcr := govcr.NewVCR("ListSiteGroups", vcrConf)
 	client.HttpClient = vcr.Client
-	opts := models.ListInterfacesRequest{}
-	opts.DeviceId = 10867
-	opts.Name = "bond2"
-	res, err := client.ListInterfaces(opts)
+	opts := models.ListSiteGroupsRequest{}
+	res, err := client.ListSiteGroups(opts)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -29,28 +27,18 @@ func TestClient_ListInterfaces(t *testing.T) {
 	assert.NotEqual(t, 0, res.Count)
 }
 
-func TestClient_CreateDeleteInterface(t *testing.T) {
+func TestClient_GetSiteGroup(t *testing.T) {
 	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
 	vcrConf.Client = client.HttpClient
-	vcr := govcr.NewVCR("CreateDeleteInterface", vcrConf)
+	vcr := govcr.NewVCR("GetSiteGroup", vcrConf)
 	client.HttpClient = vcr.Client
-	wInt := models.WritableInterface{}
-	wInt.MacAddress = "aaaa:bbbb:cccc"
-	wInt.Name = "Test Interface"
-	wInt.Device = 10867
-	wInt.Type = "1000base-t"
-	interf, err := client.CreateInterface(wInt)
+	res, err := client.GetSiteGroup(14)
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Log(interf)
-
-	err = client.DeleteInterface(interf.Id)
-	if err != nil {
-		t.Fatal(err)
-	}
+	t.Log(res.Name)
 }

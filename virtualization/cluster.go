@@ -1,7 +1,6 @@
 package virtualization
 
 import (
-	bytes2 "bytes"
 	"encoding/json"
 	"fmt"
 	"github.com/sapcc/go-netbox-go/models"
@@ -11,7 +10,8 @@ import (
 )
 
 func (c *Client) ListClusters (opts models.ListClusterRequest) (*models.ListClusterResponse, error) {
-	request, err := http.NewRequest("GET", c.BaseUrl.String() + basePath + "clusters/", bytes2.NewBuffer([]byte{'a'}))
+	//request, err := http.NewRequest("GET", c.BaseUrl.String() + basePath + "clusters/", bytes2.NewBuffer([]byte{'a'}))
+	request, err := http.NewRequest("GET", c.BaseUrl.String() + basePath + "clusters/", nil)
 	if err != nil {
 		return nil, err
 	}
@@ -22,7 +22,8 @@ func (c *Client) ListClusters (opts models.ListClusterRequest) (*models.ListClus
 		return nil, err
 	}
 	if response.StatusCode != 200 {
-		return nil, fmt.Errorf("unexpected return code of %d", response.StatusCode)
+		errorBody,_ := ioutil.ReadAll(response.Body)
+		return nil, fmt.Errorf("unexpected return code of %d: %s", response.StatusCode, errorBody)
 	}
 	resObj := models.ListClusterResponse{}
 	bytes, err := ioutil.ReadAll(response.Body)

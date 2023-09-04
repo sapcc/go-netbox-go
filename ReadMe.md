@@ -8,7 +8,7 @@ Please do not implement unnecessary details or unused api calls due to the added
 
 Development
 -----------
-Use `NETBOX_URL` and `NETBOX_TOKEN` to direct the tests against your instance of netbox.
+Use `NETBOX_URL` (e.g. https://netbox.corp) and `NETBOX_TOKEN` to direct the tests against your instance of netbox.
 
 To test against a new version:
 - create the new branch with the netbox api version

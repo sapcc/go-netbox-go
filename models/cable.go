@@ -3,50 +3,65 @@ package models
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/go-openapi/strfmt"
+	"github.com/sapcc/go-netbox-go/common"
 )
 
 type NestedCable struct {
-	Id      int    `json:"id,omitempty"`
-	Url     string `json:"url,omitempty"`
-	Display string `json:"display,omitempty"`
-	Label   string `json:"label,omitempty"`
+	Id      int        `json:"id,omitempty"`
+	Url     strfmt.URI `json:"url,omitempty"`
+	Display string     `json:"display,omitempty"`
+	Label   string     `json:"label,omitempty"`
+}
+
+type CableLengthUnit struct {
+	Label *string `json:"label"`
+	Value *string `json:"value"`
 }
 
 type Cable struct {
-	NestedCable
-	TerminationAType string      `json:"termination_a_type"`
-	TerminationAId   int         `json:"termination_a_id"`
-	TerminationA     string      `json:"termination_a"`
-	TerminationBType string      `json:"termination_b_type"`
-	TerminationBId   int         `json:"termination_b_id"`
-	//TerminationB     string      `json:"termination_b"`
-	TerminationBInterface NestedInterface
-	//TerminationBConsolePort NesterConsolePort
-	//TerminationBConsoleServerPort NestedConsoleServerPort
-	Type             string      `json:"type"`
-	Status           CableStatus `json:"status"`
-	Color            string      `json:"color"`
-	Length           int         `json:"length"`
-	LengthUnit       LengthUnit  `json:"length_unit"`
-	Tags             interface{} `json:"tags"`
-	CustomFields     interface{} `json:"custom_fields"`
+	Color              string          `json:"color,omitempty"`
+	Comments           string          `json:"comments,omitempty"`
+	Created            strfmt.DateTime `json:"created,omitempty"`
+	CustomFields       interface{}     `json:"custom_fields,omitempty"`
+	Description        string          `json:"description,omitempty"`
+	Display            string          `json:"display,omitempty"`
+	Id                 int             `json:"id,omitempty"`
+	Label              string          `json:"label,omitempty"`
+	LastUpdated        strfmt.DateTime `json:"last_updated,omitempty"`
+	Length             float64         `json:"length,omitempty"`
+	LengthUnit         CableLengthUnit `json:"length_unit,omitempty"`
+	Status             CableStatus     `json:"status,omitempty"`
+	Tags               []NestedTag     `json:"tags,omitempty"`
+	Tenant             NestedTenant    `json:"tenant,omitempty"`
+	Type               string          `json:"type,omitempty"`
+	Url                strfmt.URI      `json:"url,omitempty"`
+	Aterminations      []Termination
+	Bterminations      []Termination
+	AssignedObjectType string
 }
 
 type WriteableCable struct {
-	TerminationAType string      `json:"termination_a_type"`
-	TerminationAId   int         `json:"termination_a_id"`
-	TerminationBType string      `json:"termination_b_type"`
-	TerminationBId   int         `json:"termination_b_id"`
-	Type             string      `json:"type,omitempty"`
-	Status           string      `json:"status,omitempty"`
-	Label            string      `json:"label,omitempty"`
-	Color            string      `json:"color,omitempty"`
-	Length           int         `json:"length,omitempty"`
-	LengthUnit       string      `json:"length_unit,omitempty"`
-	Tags             interface{} `json:"tags"`
-	CustomFields     interface{} `json:"custom_fields"`
+	Aterminations []Termination   `json:"a_terminations,omitempty"`
+	Bterminations []Termination   `json:"b_terminations,omitempty"`
+	Color         string          `json:"color,omitempty"`
+	Comments      string          `json:"comments,omitempty"`
+	Created       strfmt.DateTime `json:"created,omitempty"`
+	CustomFields  interface{}     `json:"custom_fields,omitempty"`
+	Description   string          `json:"description,omitempty"`
+	Display       string          `json:"display,omitempty"`
+	Id            int64           `json:"id,omitempty"`
+	Label         string          `json:"label,omitempty"`
+	LastUpdated   strfmt.DateTime `json:"last_updated,omitempty"`
+	Length        float64         `json:"length,omitempty"`
+	LengthUnit    string          `json:"length_unit,omitempty"`
+	Status        string          `json:"status,omitempty"`
+	Tags          []NestedTag     `json:"tags,omitempty"`
+	Tenant        int64           `json:"tenant,omitempty"`
+	Type          string          `json:"type,omitempty"`
+	Url           strfmt.URI      `json:"url,omitempty"`
 }
-
 
 type LengthUnit struct {
 	Label string `json:"label"`
@@ -58,92 +73,110 @@ type CableStatus struct {
 	Value string `json:"value"`
 }
 
+type Termination struct {
+	Interface  NestedInterface `json:"object,omitempty"`
+	ObjectId   int             `json:"object_id"`
+	ObjectType string          `json:"object_type"`
+}
+type ListCablesRequest struct {
+	common.ListParams
+	CableId   int
+	CableType string
+}
+
+type ListCablesResponse struct {
+	common.ReturnValues
+	Results []Cable `json:"results"`
+}
+
 func (cable *Cable) UnmarshalJSON(b []byte) error {
 	var tmp map[string]json.RawMessage
 	if err := json.Unmarshal(b, &tmp); err != nil {
 		return err
 	}
-	var termAType string
-	if err := json.Unmarshal(tmp["termination_a_type"], &termAType); err != nil {
-		fmt.Println("unable to unmarshal cable")
-		fmt.Println(string(tmp["termination_a_type"]))
-		return err
-	}
-	switch termAType {
-	case "dcim.consoleport":
-	case "dcim.consoleserverport":
-	case "dcim.interface":
-	case "":
-	default:
-		return fmt.Errorf("unknown termination type %s", termAType)
 
-	}
-	var termBType string
-	if err := json.Unmarshal(tmp["termination_b_type"], &termBType); err != nil {
-		fmt.Println("unable to unmarshal cable")
-		fmt.Println(string(tmp["termination_b_type"]))
+	var a_terminations []Termination
+	if err := json.Unmarshal(tmp["a_terminations"], &a_terminations); err != nil {
 		return err
 	}
-	switch termBType {
-	//case "dcim.consoleport":
-	//case "dcim.consoleserverport":
-	case "dcim.interface":
-		inter := NestedInterface{}
-		if err := json.Unmarshal(tmp["termination_b"], &inter); err != nil {
-			fmt.Println("unable to unmarshal termination b")
-			fmt.Println(string(tmp["termination_b"]))
-			return err
+
+	var aterm []Termination
+	for term := range a_terminations {
+		if a_terminations[term].ObjectType != "dcim.interface" {
+			return fmt.Errorf("unknown assigned object type %v", a_terminations[term].ObjectType)
 		}
-		cable.TerminationBInterface = inter
-	//case "":
-	default:
-		return fmt.Errorf("unknown termination type %s", termBType)
-
+		aterm = append(aterm, a_terminations[term])
 	}
+	cable.Aterminations = aterm
+
+	var b_terminations []Termination
+	if err := json.Unmarshal(tmp["b_terminations"], &b_terminations); err != nil {
+		return err
+	}
+
+	var bterm []Termination
+	for term := range b_terminations {
+		if b_terminations[term].ObjectType != "dcim.interface" {
+			return fmt.Errorf("unknown assigned object type %v", b_terminations[term].ObjectType)
+		}
+		bterm = append(bterm, b_terminations[term])
+	}
+	cable.Bterminations = bterm
+
+	cable.AssignedObjectType = "dcim.interface"
+
+	var cabletype string
+	if err := json.Unmarshal(tmp["type"], &cabletype); err != nil {
+		return err
+	}
+	cable.Type = cabletype
+
 	var id int
 	if err := json.Unmarshal(tmp["id"], &id); err != nil {
 		return err
 	}
 	cable.Id = id
-	var url string
+
+	var url strfmt.URI
 	if err := json.Unmarshal(tmp["url"], &url); err != nil {
 		return err
 	}
 	cable.Url = url
+
 	var display string
 	if err := json.Unmarshal(tmp["display"], &display); err != nil {
 		return err
 	}
 	cable.Display = display
+
 	var label string
 	if err := json.Unmarshal(tmp["label"], &label); err != nil {
 		return err
 	}
 	cable.Label = label
-	var typ string
-	if err := json.Unmarshal(tmp["type"], &typ); err != nil {
-		return err
-	}
-	cable.Type = typ
+
 	var status CableStatus
 	if err := json.Unmarshal(tmp["status"], &status); err != nil {
 		return err
 	}
 	cable.Status = status
+
 	var color string
 	if err := json.Unmarshal(tmp["color"], &color); err != nil {
 		return err
 	}
-	var length int
+	cable.Color = color
+
+	var length float64
 	if err := json.Unmarshal(tmp["length"], &length); err != nil {
 		return err
 	}
 	cable.Length = length
-	var lengthUnit LengthUnit
+
+	var lengthUnit CableLengthUnit
 	if err := json.Unmarshal(tmp["length_unit"], &lengthUnit); err != nil {
 		return err
 	}
 	cable.LengthUnit = lengthUnit
 	return nil
 }
-

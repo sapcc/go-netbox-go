@@ -4,10 +4,11 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/sapcc/go-netbox-go/models"
 	"io/ioutil"
 	"net/http"
 	"strconv"
+
+	"github.com/sapcc/go-netbox-go/models"
 )
 
 func (c *Client) ListInterfaces(opts models.ListInterfacesRequest) (*models.ListInterfacesResponse, error) {
@@ -51,12 +52,12 @@ func setListInterfacesParams(req *http.Request, opts models.ListInterfacesReques
 	req.URL.RawQuery = q.Encode()
 }
 
-func (c *Client) UpdateInterface (interf models.WritableInterface, id int) (*models.Interface, error) {
+func (c *Client) UpdateInterface(interf models.WritableInterface, id int) (*models.Interface, error) {
 	body, err := json.Marshal(interf)
 	if err != nil {
 		return nil, err
 	}
-	request, err := http.NewRequest("PUT", c.BaseUrl.String() + basePath + "interfaces/" + strconv.Itoa(id) + "/", bytes.NewBuffer(body) )
+	request, err := http.NewRequest("PUT", c.BaseUrl.String()+basePath+"interfaces/"+strconv.Itoa(id)+"/", bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
@@ -81,12 +82,12 @@ func (c *Client) UpdateInterface (interf models.WritableInterface, id int) (*mod
 	return &resObj, nil
 }
 
-func (c *Client) CreateInterface (interf models.WritableInterface) (*models.Interface, error) {
+func (c *Client) CreateInterface(interf models.WritableInterface) (*models.Interface, error) {
 	body, err := json.Marshal(interf)
 	if err != nil {
 		return nil, err
 	}
-	request, err := http.NewRequest("POST", c.BaseUrl.String() + basePath + "interfaces/", bytes.NewBuffer(body))
+	request, err := http.NewRequest("POST", c.BaseUrl.String()+basePath+"interfaces/", bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
@@ -109,4 +110,21 @@ func (c *Client) CreateInterface (interf models.WritableInterface) (*models.Inte
 		return nil, err
 	}
 	return &resObj, nil
+}
+
+func (c *Client) DeleteInterface(id int) error {
+	request, err := http.NewRequest("DELETE", c.BaseUrl.String()+basePath+"interfaces/"+strconv.Itoa(id)+"/", nil)
+	if err != nil {
+		return err
+	}
+	c.SetAuthToken(&request.Header)
+	response, err := c.HttpClient.Do(request)
+	if err != nil {
+		return err
+	}
+	if response.StatusCode != 204 {
+		errBody, _ := ioutil.ReadAll(response.Body)
+		return fmt.Errorf("unexpected return code of %d: %s", response.StatusCode, errBody)
+	}
+	return nil
 }

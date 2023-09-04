@@ -1,12 +1,14 @@
 package dcim
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/sapcc/go-netbox-go/models"
 	"io/ioutil"
 	"net/http"
 	"strconv"
+
+	"github.com/sapcc/go-netbox-go/models"
 )
 
 func (c *Client) ListDevices(opts models.ListDevicesRequest) (*models.ListDevicesResponse, error) {
@@ -89,6 +91,53 @@ func (c *Client) GetDevice(id int) (*models.Device, error) {
 		return nil, err
 	}
 	return &resObj, nil
+}
+
+func (c *Client) CreateDevice(dev models.WritableDeviceWithConfigContext) (*models.Device, error) {
+	body, err := json.Marshal(dev)
+	if err != nil {
+		return nil, err
+	}
+	request, err := http.NewRequest("POST", c.BaseUrl.String()+basePath+"devices/", bytes.NewBuffer(body))
+	if err != nil {
+		return nil, err
+	}
+	c.SetAuthToken(&request.Header)
+	response, err := c.HttpClient.Do(request)
+	if err != nil {
+		return nil, err
+	}
+	if response.StatusCode != 201 {
+		errBody, _ := ioutil.ReadAll(response.Body)
+		return nil, fmt.Errorf("unexpected response code of %d: %s", response.StatusCode, errBody)
+	}
+	resObj := models.Device{}
+	byteses, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		return nil, err
+	}
+	err = json.Unmarshal(byteses, &resObj)
+	if err != nil {
+		return nil, err
+	}
+	return &resObj, nil
+}
+
+func (c *Client) DeleteDevice(id int) error {
+	request, err := http.NewRequest("DELETE", c.BaseUrl.String()+basePath+"devices/"+strconv.Itoa(id)+"/", nil)
+	if err != nil {
+		return err
+	}
+	c.SetAuthToken(&request.Header)
+	response, err := c.HttpClient.Do(request)
+	if err != nil {
+		return err
+	}
+	if response.StatusCode != 204 {
+		errBody, _ := ioutil.ReadAll(response.Body)
+		return fmt.Errorf("unexpected return code of %d: %s", response.StatusCode, errBody)
+	}
+	return nil
 }
 
 /*
