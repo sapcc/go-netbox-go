@@ -89,6 +89,7 @@ type ListDevicesRequest struct {
 	Site         string
 	RackId       int
 	Serial       string
+	RoleId       int
 }
 
 type ListDevicesResponse struct {

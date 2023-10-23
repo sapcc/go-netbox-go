@@ -3,10 +3,11 @@ package dcim
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/sapcc/go-netbox-go/models"
 	"io/ioutil"
 	"net/http"
 	"strconv"
+
+	"github.com/sapcc/go-netbox-go/models"
 )
 
 func (c *Client) ListSiteGroups(opts models.ListSiteGroupsRequest) (*models.ListSiteGroupsResponse, error) {
@@ -29,6 +30,9 @@ func (c *Client) ListSiteGroups(opts models.ListSiteGroupsRequest) (*models.List
 		return nil, err
 	}
 	err = json.Unmarshal(bytes, &resObj)
+	if err != nil {
+		return nil, err
+	}
 	return &resObj, nil
 }
 

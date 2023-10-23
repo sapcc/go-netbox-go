@@ -36,7 +36,7 @@ func TestClient_GetSiteGroup(t *testing.T) {
 	vcrConf.Client = client.HttpClient
 	vcr := govcr.NewVCR("GetSiteGroup", vcrConf)
 	client.HttpClient = vcr.Client
-	res, err := client.GetSiteGroup(14)
+	res, err := client.GetSiteGroup(69)
 	if err != nil {
 		t.Fatal(err)
 	}
