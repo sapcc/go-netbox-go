@@ -1,6 +1,9 @@
 package models
 
-import "github.com/go-openapi/strfmt"
+import (
+	"github.com/go-openapi/strfmt"
+	"github.com/sapcc/go-netbox-go/common"
+)
 
 type NestedRegion struct {
 	Depth     int        `json:"_depth,omitempty"`
@@ -26,4 +29,14 @@ type Region struct {
 	Slug         string          `json:"slug"`
 	Tags         []NestedTag     `json:"tags,omitempty"`
 	Url          strfmt.URI      `json:"url,omitempty"`
+}
+
+type ListRegionsRequest struct {
+	common.ListParams
+	Region string
+}
+
+type ListRegionsResponse struct {
+	common.ReturnValues
+	Results []Site `json:"results"`
 }
