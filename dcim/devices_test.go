@@ -18,14 +18,28 @@ func TestClient_GetDevice(t *testing.T) {
 	vcrConf.Client = client.HttpClient
 	vcr := govcr.NewVCR("GetDevice", vcrConf)
 	client.HttpClient = vcr.Client
-	res, err := client.GetDevice(10867)
+	res, err := client.GetDevice(27572)
 	if err != nil {
 		t.Fatal(err)
 	}
-	//t.Log(res)
-	t.Log(res.Cluster)
+	t.Log(res.Name)
 }
 
+func TestClient_GetDeviceWithContext(t *testing.T) {
+	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	if err != nil {
+		t.Fatal(err)
+	}
+	vcrConf := &govcr.VCRConfig{}
+	vcrConf.Client = client.HttpClient
+	vcr := govcr.NewVCR("GetDevice", vcrConf)
+	client.HttpClient = vcr.Client
+	res, err := client.GetDeviceWithContext(27572)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(res.Name)
+}
 func TestClient_ListDevices(t *testing.T) {
 	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {

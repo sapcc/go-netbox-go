@@ -1,14 +1,15 @@
 package virtualization
 
 import (
+	"os"
+	"testing"
+
 	"github.com/sapcc/go-netbox-go/dcim"
 	"github.com/sapcc/go-netbox-go/ipam"
 	"github.com/sapcc/go-netbox-go/models"
 	"github.com/sapcc/go-netbox-go/tenancy"
 	"github.com/seborama/govcr"
 	"github.com/stretchr/testify/assert"
-	"os"
-	"testing"
 )
 
 func TestClient_GetVirtualMachine(t *testing.T) {
