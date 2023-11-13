@@ -39,8 +39,11 @@ func (c *Client) ListRegions(opts models.ListRegionsRequest) (*models.ListRegion
 func setListRegionsParams(req *http.Request, opts models.ListRegionsRequest) {
 	q := req.URL.Query()
 	opts.SetListParams(&q)
-	if opts.Region != "" {
-		q.Set("region", opts.Region)
+	if opts.Name != "" {
+		q.Set("name", opts.Region)
+	}
+	if opts.Slug != "" {
+		q.Set("slug", opts.Slug)
 	}
 	req.URL.RawQuery = q.Encode()
 }

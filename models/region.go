@@ -34,9 +34,10 @@ type Region struct {
 type ListRegionsRequest struct {
 	common.ListParams
 	Region string
+	Slug   string
 }
 
 type ListRegionsResponse struct {
 	common.ReturnValues
-	Results []Site `json:"results"`
+	Results []Region `json:"results"`
 }
