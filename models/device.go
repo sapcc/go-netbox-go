@@ -5,16 +5,6 @@ import (
 	"github.com/sapcc/go-netbox-go/common"
 )
 
-type NestedDeviceType struct {
-	Id           int                `json:"id"`
-	Url          strfmt.URI         `json:"url"`
-	Manufacturer NestedManufacturer `json:"manufacturer"`
-	Model        string             `json:"model"`
-	Slug         string             `json:"slug"`
-	Display      string             `json:"display"`
-	DeviceCount  int                `json:"device_count"`
-}
-
 type NestedManufacturer struct {
 	Id              int    `json:"id"`
 	Url             string `json:"url"`
