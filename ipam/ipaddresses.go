@@ -149,3 +149,20 @@ func (c *Client) UpdateIpAddress(address models.WriteableIpAddress) (*models.IpA
 	}
 	return &resObj, nil
 }
+
+func (c *Client) DeleteIpAddress(id int) error {
+	request, err := http.NewRequest("DELETE", c.BaseUrl.String()+basePath+"ip-addresses/"+strconv.Itoa(id)+"/", nil)
+	if err != nil {
+		return err
+	}
+	c.SetAuthToken(&request.Header)
+	response, err := c.HttpClient.Do(request)
+	if err != nil {
+		return err
+	}
+	if response.StatusCode != 204 {
+		errBody, _ := ioutil.ReadAll(response.Body)
+		return fmt.Errorf("unexpected return code of %d: %s", response.StatusCode, errBody)
+	}
+	return nil
+}

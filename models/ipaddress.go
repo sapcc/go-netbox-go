@@ -25,6 +25,11 @@ type IpamRole struct {
 	Value string `json:"value"`
 }
 
+type IpAddressStatus struct {
+	Label string `json:"label"`
+	Value string `json:"value"`
+}
+
 type WriteableIpAddress struct {
 	NestedIpAddress
 	Vrf                int         `json:"vrf,omitempty"`
@@ -37,7 +42,7 @@ type WriteableIpAddress struct {
 	NatOutside         int         `json:"nat_outside,omitempty"`
 	DnsName            string      `json:"dns_name,omitempty"`
 	Description        string      `json:"description,omitempty"`
-	Tags               interface{} `json:"tags,omitempty"`
+	Tags               []NestedTag `json:"tags,omitempty"`
 	CustomFields       interface{} `json:"custom_fields,omitempty"`
 	Created            string      `json:"created,omitempty"`
 	LastUpdated        string      `json:"last_updated,omitempty"`
@@ -45,21 +50,22 @@ type WriteableIpAddress struct {
 
 type IpAddress struct {
 	NestedIpAddress
-	Vrf                 interface{} `json:"vrf"`
-	Tenant              Tenant      `json:"tenant"`
-	Status              interface{} `json:"status"`
-	Role                IpamRole    `json:"role"`
-	NatInside           interface{} `json:"nat_inside"`
-	NatOutside          interface{} `json:"nat_outside"`
-	DnsName             string      `json:"dns_name"`
-	Description         string      `json:"description"`
-	Tags                interface{} `json:"tags"`
-	CustomFields        interface{} `json:"custom_fields"`
-	Created             string      `json:"created"`
-	LastUpdated         string      `json:"last_updated"`
+	Vrf                 interface{}     `json:"vrf"`
+	Tenant              Tenant          `json:"tenant"`
+	Status              IpAddressStatus `json:"status"`
+	Role                IpamRole        `json:"role"`
+	NatInside           interface{}     `json:"nat_inside"`
+	NatOutside          interface{}     `json:"nat_outside"`
+	DnsName             string          `json:"dns_name"`
+	Description         string          `json:"description"`
+	Tags                []NestedTag     `json:"tags"`
+	CustomFields        interface{}     `json:"custom_fields"`
+	Created             string          `json:"created"`
+	LastUpdated         string          `json:"last_updated"`
 	AssignedInterface   NestedInterface
 	AssignedVMInterface NestedVMInterface
-	AssignedObjectType  string
+	AssignedObjectType  string `json:"assigned_object_type"`
+	AssignedObjectId    int    `json:"assigned_object_id"`
 }
 
 type ListIpAddressesRequest struct {
@@ -83,6 +89,11 @@ func (ip *IpAddress) UnmarshalJSON(b []byte) error {
 	if err := json.Unmarshal(b, &tmp); err != nil {
 		return err
 	}
+	var i int
+	if err := json.Unmarshal(tmp["assigned_object_id"], &i); err != nil {
+		return err
+	}
+	ip.AssignedObjectId = i
 	var s string
 	if err := json.Unmarshal(tmp["assigned_object_type"], &s); err != nil {
 		return err
@@ -134,6 +145,11 @@ func (ip *IpAddress) UnmarshalJSON(b []byte) error {
 		return err
 	}
 	ip.Tenant = tenant
+	var status IpAddressStatus
+	if err := json.Unmarshal(tmp["status"], &status); err != nil {
+		return err
+	}
+	ip.Status = status
 	var dnsName string
 	if err := json.Unmarshal(tmp["dns_name"], &dnsName); err != nil {
 		return err
@@ -154,5 +170,12 @@ func (ip *IpAddress) UnmarshalJSON(b []byte) error {
 		return err
 	}
 	ip.LastUpdated = lastUpdated
+	if _, ok := tmp["tags"]; ok {
+		var tags []NestedTag
+		if err := json.Unmarshal(tmp["tags"], &tags); err != nil {
+			return err
+		}
+		ip.Tags = tags
+	}
 	return nil
 }
