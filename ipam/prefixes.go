@@ -4,10 +4,11 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/sapcc/go-netbox-go/models"
 	"io/ioutil"
 	"net/http"
 	"strconv"
+
+	"github.com/sapcc/go-netbox-go/models"
 )
 
 func (c *Client) ListPrefixes(opts models.ListPrefixesRequest) (*models.ListPrefixesReponse, error) {
@@ -184,6 +185,9 @@ func setListPrefixesParams(req *http.Request, opts models.ListPrefixesRequest) {
 	}
 	if opts.Site != "" {
 		q.Set("site", opts.Site)
+	}
+	if opts.TenantId != 0 {
+		q.Set("tenant_id", strconv.Itoa(opts.TenantId))
 	}
 	if opts.VrfId != 0 {
 		q.Set("vrf_id", strconv.Itoa(opts.VrfId))

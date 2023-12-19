@@ -22,7 +22,7 @@ type Prefix struct {
 	Role         Role        `json:"role"`
 	IsPool       bool        `json:"is_pool"`
 	Description  string      `json:"description"`
-	Tags         interface{} `json:"tags"`
+	Tags         []NestedTag `json:"tags"`
 	CustomFields interface{} `json:"custom_fields"`
 	Created      string      `json:"created"`
 	LastUpdated  string      `json:"last_updated"`
@@ -52,6 +52,7 @@ type ListPrefixesRequest struct {
 	Region        string
 	Site          string
 	Tag           string
+	TenantId      int
 	VrfId         int
 	Prefix        string
 	MaskLength    int
