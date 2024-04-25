@@ -21,7 +21,7 @@ func TestClient_GetVirtualMachine(t *testing.T) {
 	vcrConf.Client = client.HttpClient
 	vcr := govcr.NewVCR("GetVirtualMachine", vcrConf)
 	client.HttpClient = vcr.Client
-	vm, err := client.GetVirtualMachine(10)
+	vm, err := client.GetVirtualMachine(4773)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -38,7 +38,7 @@ func TestClient_ListVirtualMachines(t *testing.T) {
 	vcr := govcr.NewVCR("ListVirtualMachines", vcrConf)
 	client.HttpClient = vcr.Client
 	opts := models.ListVirtualMachinesRequest{}
-	opts.Id = 10
+	opts.Id = 4773
 	res, err := client.ListVirtualMachines(opts)
 	if err != nil {
 		t.Fatal(err)

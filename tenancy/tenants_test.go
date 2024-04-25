@@ -18,7 +18,7 @@ func TestClient_GetTenant(t *testing.T) {
 	vcrConf.Client = client.HttpClient
 	vcr := govcr.NewVCR("ListTenants", vcrConf)
 	client.HttpClient = vcr.Client
-	res, err := client.GetTenant(17)
+	res, err := client.GetTenant(1)
 	if err != nil {
 		t.Fatal(err)
 	}

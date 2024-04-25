@@ -19,7 +19,7 @@ type Vlan struct {
 	Created      string      `json:"created"`
 	LastUpdated  string      `json:"last_updated"`
 	PrefixCount  int         `json:"prefix_count"`
-	Role         interface{} `json:"role"`
+	Role         Role        `json:"role"`
 	Site         Site        `json:"site"`
 	Status       interface{} `json:"status"`
 	Tenant       Tenant      `json:"tenant"`
