@@ -45,7 +45,7 @@ type Device struct {
 	Created          strfmt.DateTime      `json:"created,omitempty"`
 	CustomFields     interface{}          `json:"custom_fields,omitempty"`
 	Description      string               `json:"description,omitempty"`
-	DeviceRole       NestedDeviceRole     `json:"device_role"`
+	DeviceRole       NestedDeviceRole     `json:"role"`
 	DeviceType       NestedDeviceType     `json:"device_type"`
 	Display          string               `json:"display,omitempty"`
 	Face             DeviceFace           `json:"face"`
@@ -96,7 +96,7 @@ type WritableDeviceWithConfigContext struct {
 	Created          strfmt.DateTime `json:"created,omitempty"`
 	CustomFields     interface{}     `json:"custom_fields,omitempty"`
 	Description      string          `json:"description,omitempty"`
-	DeviceRole       int             `json:"device_role"`
+	DeviceRole       int             `json:"role"`
 	DeviceType       int             `json:"device_type"`
 	Display          string          `json:"display,omitempty"`
 	Face             string          `json:"face,omitempty"`
