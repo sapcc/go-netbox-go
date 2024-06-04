@@ -60,6 +60,7 @@ type Device struct {
 	PrimaryIp        NestedIpAddress      `json:"primary_ip"`
 	PrimaryIp4       NestedIpAddress      `json:"primary_ip4"`
 	PrimaryIp6       NestedIpAddress      `json:"primary_ip6"`
+	OOBIp            NestedIpAddress      `json:"oob_ip"`
 	Rack             NestedRack           `json:"rack"`
 	Serial           string               `json:"serial"`
 	Site             NestedSite           `json:"site"`
@@ -111,6 +112,7 @@ type WritableDeviceWithConfigContext struct {
 	PrimaryIP        string          `json:"primary_ip,omitempty"`
 	PrimaryIp4       int             `json:"primary_ip4,omitempty"`
 	PrimaryIp6       int             `json:"primary_ip6,omitempty"`
+	OOBIp            int             `json:"oob_ip,omitempty"`
 	Rack             int             `json:"rack,omitempty"`
 	Serial           string          `json:"serial,omitempty"`
 	Site             int             `json:"site"`
