@@ -47,6 +47,7 @@ type ListInterfacesRequest struct {
 	Type       string
 	DeviceId   int
 	MacAddress string
+	LagId      int
 }
 
 type ListInterfacesResponse struct {

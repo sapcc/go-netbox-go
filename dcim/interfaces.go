@@ -49,6 +49,9 @@ func setListInterfacesParams(req *http.Request, opts models.ListInterfacesReques
 	if opts.MacAddress != "" {
 		q.Set("mac_address", opts.MacAddress)
 	}
+	if opts.LagId != 0 {
+		q.Set("lag_id", strconv.Itoa(opts.LagId))
+	}
 	req.URL.RawQuery = q.Encode()
 }
 
