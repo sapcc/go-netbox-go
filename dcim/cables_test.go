@@ -1,6 +1,7 @@
 package dcim
 
 import (
+	"fmt"
 	"os"
 	"testing"
 
@@ -53,6 +54,8 @@ func TestClient_CreateDeleteCable(t *testing.T) {
 	wTag.Slug = "apod"
 
 	wCable.Tags = append(wCable.Tags, wTag)
+
+	fmt.Println("--->", wCable.Tags)
 
 	cab, err := client.CreateCable(wCable)
 	if err != nil {

@@ -1,7 +1,6 @@
 package models
 
 import (
-	"github.com/go-openapi/strfmt"
 	"github.com/sapcc/go-netbox-go/common"
 )
 
@@ -12,11 +11,11 @@ type Tag struct {
 }
 
 type NestedTag struct {
-	Id    int        `json:"id,omitempty"`
-	Url   strfmt.URI `json:"url,omitempty"`
-	Name  string     `json:"name"`
-	Slug  string     `json:"slug"`
-	Color string     `json:"color,omitempty"`
+	Id int `json:"id,omitempty"`
+	//Url   strfmt.URI `json:"url,omitempty"` //commented this aout as we get error when updating devices with tag: "Error: unexpected return code of 400: {"tags":[["Cannot resolve keyword 'url' into field. Choices are:"
+	Name  string `json:"name"`
+	Slug  string `json:"slug"`
+	Color string `json:"color,omitempty"`
 }
 
 type ListTagsRequest struct {

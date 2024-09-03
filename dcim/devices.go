@@ -168,6 +168,36 @@ func (c *Client) DeleteDevice(id int) error {
 	return nil
 }
 
+func (c *Client) UpdateDevice(dev models.WritableDeviceWithConfigContext) (*models.Device, error) {
+	body, err := json.Marshal(dev)
+	if err != nil {
+		return nil, err
+	}
+	request, err := http.NewRequest("PATCH", c.BaseUrl.String()+basePath+"devices/"+strconv.Itoa(dev.Id)+"/", bytes.NewBuffer(body))
+	if err != nil {
+		return nil, err
+	}
+	c.SetAuthToken(&request.Header)
+	response, err := c.HttpClient.Do(request)
+	if err != nil {
+		return nil, err
+	}
+	if response.StatusCode != 200 {
+		errBody, _ := ioutil.ReadAll(response.Body)
+		return nil, fmt.Errorf("unexpected return code of %d: %s", response.StatusCode, errBody)
+	}
+	resObj := models.Device{}
+	byteses, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		return nil, err
+	}
+	err = json.Unmarshal(byteses, &resObj)
+	if err != nil {
+		return nil, err
+	}
+	return &resObj, nil
+}
+
 /*
 func (c *Client) ListDevicesByCluster(id int) (*models.ListDevicesResponse, error) {
 	request, err := http.NewRequest("GET", c.BaseUrl.String() + basePath + "devices/?cluster_id=" + strconv.Itoa(id), nil )

@@ -3,13 +3,14 @@ package extras
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/sapcc/go-netbox-go/models"
 	"io/ioutil"
 	"net/http"
+
+	"github.com/sapcc/go-netbox-go/models"
 )
 
 func (c *Client) ListTags(opts models.ListTagsRequest) (*models.ListTagsResponse, error) {
-	request, err := http.NewRequest("GET", c.BaseUrl.String() + basePath + "tags/", nil)
+	request, err := http.NewRequest("GET", c.BaseUrl.String()+basePath+"tags/", nil)
 	if err != nil {
 		return nil, err
 	}
@@ -33,7 +34,6 @@ func (c *Client) ListTags(opts models.ListTagsRequest) (*models.ListTagsResponse
 	}
 	return &resObj, nil
 }
-
 
 /*
 
@@ -59,7 +59,7 @@ func (c *Client) CreateTag(tag models.Tag) error {
 	return nil
 }
 
- */
+*/
 
 func setListTagsParams(req *http.Request, opts models.ListTagsRequest) {
 	q := req.URL.Query()

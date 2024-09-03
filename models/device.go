@@ -65,7 +65,7 @@ type Device struct {
 	Serial           string               `json:"serial"`
 	Site             NestedSite           `json:"site"`
 	Status           DeviceStatus         `json:"status"`
-	Tags             []NestedTag          `json:"tags"`
+	Tags             []NestedTag          `json:"tags,omitempty"`
 	Tenant           NestedTenant         `json:"tenant"`
 	VCPosition       int                  `json:"vc_position"`
 	VCPriority       int                  `json:"vc_priority"`
@@ -123,4 +123,24 @@ type WritableDeviceWithConfigContext struct {
 	VcPosition       int             `json:"vc_position,omitempty"`
 	VcPriority       int             `json:"vc_priority,omitempty"`
 	VirtualChassis   int             `json:"virtual_chassis,omitempty"`
+}
+
+func (dev *Device) Writeable() WritableDeviceWithConfigContext {
+	var clusterId int
+	if dev.Cluster == nil {
+		clusterId = 0
+	} else {
+		clusterId = dev.Cluster.Id
+	}
+	res := WritableDeviceWithConfigContext{
+		Id:         dev.Id,
+		Cluster:    clusterId,
+		DeviceRole: dev.DeviceRole.Id,
+		DeviceType: dev.DeviceType.Id,
+		PrimaryIp4: dev.PrimaryIp4.Id,
+		OOBIp:      dev.OOBIp.Id,
+		Tags:       dev.Tags,
+		Site:       dev.Site.Id,
+	}
+	return res
 }
