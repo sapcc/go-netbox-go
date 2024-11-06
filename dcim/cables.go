@@ -82,3 +82,33 @@ func (c *Client) DeleteCable(id int) error {
 	}
 	return nil
 }
+
+func (c *Client) UpdateCable(cable models.WriteableCable) (*models.Cable, error) {
+	body, err := json.Marshal(cable)
+	if err != nil {
+		return nil, err
+	}
+	request, err := http.NewRequest("PATCH", c.BaseUrl.String()+basePath+"cables/"+strconv.Itoa(int(cable.Id))+"/", bytes.NewBuffer(body))
+	if err != nil {
+		return nil, err
+	}
+	c.SetAuthToken(&request.Header)
+	response, err := c.HttpClient.Do(request)
+	if err != nil {
+		return nil, err
+	}
+	if response.StatusCode != 200 {
+		errBody, _ := ioutil.ReadAll(response.Body)
+		return nil, fmt.Errorf("unexpected return code of %d: %s", response.StatusCode, errBody)
+	}
+	resObj := models.Cable{}
+	byteses, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		return nil, err
+	}
+	err = json.Unmarshal(byteses, &resObj)
+	if err != nil {
+		return nil, err
+	}
+	return &resObj, nil
+}

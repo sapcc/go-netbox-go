@@ -68,3 +68,28 @@ func TestClient_CreateDeleteCable(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
+func TestClient_UpdateCable(t *testing.T) {
+	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	if err != nil {
+		t.Fatal(err)
+	}
+	vcrConf := &govcr.VCRConfig{}
+	vcrConf.Client = client.HttpClient
+	vcr := govcr.NewVCR("CreateDeleteCable", vcrConf)
+	client.HttpClient = vcr.Client
+
+	wCable := models.WriteableCable{}
+	wCable.Id = 117102
+	aterm := models.Termination{}
+	aterm.ObjectId = 598436
+	aterm.ObjectType = "dcim.interface"
+
+	wCable.Aterminations = append(wCable.Aterminations, aterm)
+
+	cab, err := client.UpdateCable(wCable)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(cab)
+}
