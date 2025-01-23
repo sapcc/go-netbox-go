@@ -88,14 +88,7 @@ check-dependency-licenses: FORCE install-go-licence-detector
 
 clean: FORCE
 	git clean -dxf build
-	rm -rf dcim/govcr-fixtures
-	rm -rf ipam/govcr-fixtures
-	rm -rf tenancy/govcr-fixtures
-	rm -rf virtualization/govcr-fixtures
 
-test: FORCE
-	go test -v ./...
-	
 vars: FORCE
 	@printf "GO_BUILDFLAGS=$(GO_BUILDFLAGS)\n"
 	@printf "GO_COVERPKGS=$(GO_COVERPKGS)\n"
