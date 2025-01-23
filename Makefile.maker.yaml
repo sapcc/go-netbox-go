@@ -11,13 +11,13 @@ golangciLint:
 
 githubWorkflow:
   ci:
-    enabled: true
+    enabled: false
     coveralls: false
     ignorePaths:
       - "**.md" # all Markdown files
 
 makefile:
-  enabled: false
+  enabled: true
   
 renovate:
   enabled: true
