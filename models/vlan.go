@@ -3,9 +3,9 @@ package models
 import "github.com/sapcc/go-netbox-go/common"
 
 type NestedVLAN struct {
-	Id          int    `json:"id"`
-	Url         string `json:"url"`
-	VId         int    `json:"vid"`
+	ID          int    `json:"id"`
+	URL         string `json:"url"`
+	VID         int    `json:"vid"`
 	Name        string `json:"name"`
 	DisplayName string `json:"display_name"`
 }

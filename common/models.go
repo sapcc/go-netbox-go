@@ -7,13 +7,13 @@ import (
 )
 
 type Client struct {
-	HttpClient *http.Client
-	BaseUrl    url.URL
+	HTTPClient *http.Client
+	BaseURL    url.URL
 	AuthToken  string
 }
 
 type ListParams struct {
-	Id                   int
+	ID                   int
 	Name                 string
 	Q                    string
 	Limit                int
@@ -28,8 +28,8 @@ type ReturnValues struct {
 }
 
 func (p *ListParams) SetListParams(values *url.Values) {
-	if p.Id != 0 {
-		values.Set("id", strconv.Itoa(p.Id))
+	if p.ID != 0 {
+		values.Set("id", strconv.Itoa(p.ID))
 	}
 	if p.Name != "" {
 		values.Set("name", p.Name)

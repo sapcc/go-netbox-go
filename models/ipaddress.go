@@ -7,14 +7,14 @@ import (
 	"github.com/sapcc/go-netbox-go/common"
 )
 
-type NestedIpAddress struct {
-	Id      int         `json:"id,omitempty"`
-	Url     string      `json:"url,omitempty"`
+type NestedIPAddress struct {
+	ID      int         `json:"id,omitempty"`
+	URL     string      `json:"url,omitempty"`
 	Family  interface{} `json:"family,omitempty"`
 	Address string      `json:"address"`
 }
 
-type AvailableIp struct {
+type AvailableIP struct {
 	Family  int         `json:"family"`
 	Address string      `json:"address"`
 	Vrf     interface{} `json:"vrf"`
@@ -25,22 +25,22 @@ type IpamRole struct {
 	Value string `json:"value"`
 }
 
-type IpAddressStatus struct {
+type IPAddressStatus struct {
 	Label string `json:"label"`
 	Value string `json:"value"`
 }
 
-type WriteableIpAddress struct {
-	NestedIpAddress
+type WriteableIPAddress struct {
+	NestedIPAddress
 	Vrf                int         `json:"vrf,omitempty"`
 	Tenant             int         `json:"tenant,omitempty"`
 	Status             string      `json:"status,omitempty"`
 	Role               string      `json:"role,omitempty"`
 	AssignedObjectType string      `json:"assigned_object_type,omitempty"`
-	AssignedObjectId   int         `json:"assigned_object_id,omitempty"`
+	AssignedObjectID   int         `json:"assigned_object_id,omitempty"`
 	NatInside          int         `json:"nat_inside,omitempty"`
 	NatOutside         int         `json:"nat_outside,omitempty"`
-	DnsName            string      `json:"dns_name,omitempty"`
+	DNSName            string      `json:"dns_name,omitempty"`
 	Description        string      `json:"description,omitempty"`
 	Tags               []NestedTag `json:"tags,omitempty"`
 	CustomFields       interface{} `json:"custom_fields,omitempty"`
@@ -48,15 +48,15 @@ type WriteableIpAddress struct {
 	LastUpdated        string      `json:"last_updated,omitempty"`
 }
 
-type IpAddress struct {
-	NestedIpAddress
+type IPAddress struct {
+	NestedIPAddress
 	Vrf                 interface{}     `json:"vrf"`
 	Tenant              Tenant          `json:"tenant"`
-	Status              IpAddressStatus `json:"status"`
+	Status              IPAddressStatus `json:"status"`
 	Role                IpamRole        `json:"role"`
 	NatInside           interface{}     `json:"nat_inside"`
 	NatOutside          interface{}     `json:"nat_outside"`
-	DnsName             string          `json:"dns_name"`
+	DNSName             string          `json:"dns_name"`
 	Description         string          `json:"description"`
 	Tags                []NestedTag     `json:"tags"`
 	CustomFields        interface{}     `json:"custom_fields"`
@@ -65,26 +65,26 @@ type IpAddress struct {
 	AssignedInterface   NestedInterface
 	AssignedVMInterface NestedVMInterface
 	AssignedObjectType  string `json:"assigned_object_type"`
-	AssignedObjectId    int    `json:"assigned_object_id"`
+	AssignedObjectID    int    `json:"assigned_object_id"`
 }
 
-type ListIpAddressesRequest struct {
+type ListIPAddressesRequest struct {
 	common.ListParams
-	InterfaceId   int
-	VmInterfaceId int
-	DeviceId      int
+	InterfaceID   int
+	VMInterfaceID int
+	DeviceID      int
 	Role          string
 	Address       string
-	VrfId         int
+	VrfID         int
 	Parent        string
 }
 
-type ListIpAddressesResponse struct {
+type ListIPAddressesResponse struct {
 	common.ReturnValues
-	Results []IpAddress `json:"results"`
+	Results []IPAddress `json:"results"`
 }
 
-func (ip *IpAddress) UnmarshalJSON(b []byte) error {
+func (ip *IPAddress) UnmarshalJSON(b []byte) error {
 	var tmp map[string]json.RawMessage
 	if err := json.Unmarshal(b, &tmp); err != nil {
 		return err
@@ -93,7 +93,7 @@ func (ip *IpAddress) UnmarshalJSON(b []byte) error {
 	if err := json.Unmarshal(tmp["assigned_object_id"], &i); err != nil {
 		return err
 	}
-	ip.AssignedObjectId = i
+	ip.AssignedObjectID = i
 	var s string
 	if err := json.Unmarshal(tmp["assigned_object_type"], &s); err != nil {
 		return err
@@ -129,12 +129,12 @@ func (ip *IpAddress) UnmarshalJSON(b []byte) error {
 	if err := json.Unmarshal(tmp["id"], &id); err != nil {
 		return err
 	}
-	ip.Id = id
+	ip.ID = id
 	var url string
 	if err := json.Unmarshal(tmp["url"], &url); err != nil {
 		return err
 	}
-	ip.Url = url
+	ip.URL = url
 	var addr string
 	if err := json.Unmarshal(tmp["address"], &addr); err != nil {
 		return err
@@ -145,7 +145,7 @@ func (ip *IpAddress) UnmarshalJSON(b []byte) error {
 		return err
 	}
 	ip.Tenant = tenant
-	var status IpAddressStatus
+	var status IPAddressStatus
 	if err := json.Unmarshal(tmp["status"], &status); err != nil {
 		return err
 	}
@@ -154,7 +154,7 @@ func (ip *IpAddress) UnmarshalJSON(b []byte) error {
 	if err := json.Unmarshal(tmp["dns_name"], &dnsName); err != nil {
 		return err
 	}
-	ip.DnsName = dnsName
+	ip.DNSName = dnsName
 	var descr string
 	if err := json.Unmarshal(tmp["description"], &descr); err != nil {
 		return err

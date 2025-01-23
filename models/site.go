@@ -2,12 +2,13 @@ package models
 
 import (
 	"github.com/go-openapi/strfmt"
+
 	"github.com/sapcc/go-netbox-go/common"
 )
 
 type NestedSite struct {
-	Id      int    `json:"id"`
-	Url     string `json:"url"`
+	ID      int    `json:"id"`
+	URL     string `json:"url"`
 	Slug    string `json:"slug"`
 	Name    string `json:"name"`
 	Display string `json:"display,omitempty"`
@@ -27,7 +28,7 @@ type Site struct {
 	DeviceCount         int             `json:"device_count"`
 	Facility            string          `json:"facility"`
 	Group               NestedSiteGroup `json:"group"`
-	Id                  int             `json:"id"`
+	ID                  int             `json:"id"`
 	LastUpdated         strfmt.DateTime `json:"last_updated"`
 	Latitude            float64         `json:"latitude"`
 	Longitude           float64         `json:"longitude"`
@@ -42,7 +43,7 @@ type Site struct {
 	Tags                []NestedTag     `json:"tags"`
 	Tenant              Tenant          `json:"tenant"`
 	TimeZone            string          `json:"time_zone"`
-	Url                 strfmt.URI      `json:"url"`
+	URL                 strfmt.URI      `json:"url"`
 	VirtualMachineCount int             `json:"virtualmachine_count"`
 	VlanCount           int             `json:"vlan_count"`
 }

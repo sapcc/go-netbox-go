@@ -4,9 +4,10 @@ import (
 	"os"
 	"testing"
 
-	"github.com/sapcc/go-netbox-go/models"
 	"github.com/seborama/govcr"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/sapcc/go-netbox-go/models"
 )
 
 func TestClient_ListDeviceTypes(t *testing.T) {
@@ -15,9 +16,9 @@ func TestClient_ListDeviceTypes(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HttpClient
+	vcrConf.Client = client.HTTPClient
 	vcr := govcr.NewVCR("ListDeviceTypes", vcrConf)
-	client.HttpClient = vcr.Client
+	client.HTTPClient = vcr.Client
 	opts := models.ListDeviceTypesRequest{}
 	res, err := client.ListDeviceTypes(opts)
 	if err != nil {

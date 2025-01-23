@@ -2,9 +2,10 @@ package extras
 
 import (
 	"crypto/tls"
-	"github.com/sapcc/go-netbox-go/common"
 	"net/http"
 	"net/url"
+
+	"github.com/sapcc/go-netbox-go/common"
 )
 
 const basePath = "/api/extras/"
@@ -13,18 +14,18 @@ type Client struct {
 	common.Client
 }
 
-func New(baseUrl string, authToken string, insecureSkipVerify bool) (*Client, error) {
-	u, err := url.Parse(baseUrl)
+func New(baseURL, authToken string, insecureSkipVerify bool) (*Client, error) {
+	u, err := url.Parse(baseURL)
 	if err != nil {
 		return nil, err
 	}
 	tr := http.DefaultTransport.(*http.Transport)
 	tr.TLSClientConfig = &tls.Config{
-		InsecureSkipVerify: insecureSkipVerify,
+		InsecureSkipVerify: insecureSkipVerify, // #nosec
 	}
 	res := &Client{}
-	res.BaseUrl = *u
-	res.HttpClient = &http.Client{
+	res.BaseURL = *u
+	res.HTTPClient = &http.Client{
 		Transport: tr,
 	}
 	res.AuthToken = authToken

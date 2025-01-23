@@ -4,9 +4,10 @@ import (
 	"os"
 	"testing"
 
-	"github.com/sapcc/go-netbox-go/models"
 	"github.com/seborama/govcr"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/sapcc/go-netbox-go/models"
 )
 
 func TestClient_ListInterfaces(t *testing.T) {
@@ -15,17 +16,17 @@ func TestClient_ListInterfaces(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HttpClient
+	vcrConf.Client = client.HTTPClient
 	vcr := govcr.NewVCR("ListInterfaces", vcrConf)
-	client.HttpClient = vcr.Client
+	client.HTTPClient = vcr.Client
 	opts := models.ListInterfacesRequest{}
-	opts.DeviceId = 10867
+	opts.DeviceID = 10867
 	opts.Name = "bond2"
 	res, err := client.ListInterfaces(opts)
 	if err != nil {
 		t.Fatal(err)
 	}
-	//t.Log(res)
+	// t.Log(res)
 	assert.NotEqual(t, 0, res.Count)
 }
 
@@ -35,9 +36,9 @@ func TestClient_CreateDeleteInterface(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HttpClient
+	vcrConf.Client = client.HTTPClient
 	vcr := govcr.NewVCR("CreateDeleteInterface", vcrConf)
-	client.HttpClient = vcr.Client
+	client.HTTPClient = vcr.Client
 	wInt := models.WritableInterface{}
 	wInt.MacAddress = "aaaa:bbbb:cccc"
 	wInt.Name = "Test Interface"
@@ -49,7 +50,7 @@ func TestClient_CreateDeleteInterface(t *testing.T) {
 	}
 	t.Log(interf)
 
-	err = client.DeleteInterface(interf.Id)
+	err = client.DeleteInterface(interf.ID)
 	if err != nil {
 		t.Fatal(err)
 	}

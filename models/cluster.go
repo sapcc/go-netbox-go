@@ -2,29 +2,30 @@ package models
 
 import (
 	"github.com/go-openapi/strfmt"
+
 	"github.com/sapcc/go-netbox-go/common"
 )
 
 type NestedCluster struct {
 	Display             string     `json:"display,omitempty"`
-	Id                  int        `json:"id,omitempty"`
+	ID                  int        `json:"id,omitempty"`
 	Name                string     `json:"name"`
-	Url                 strfmt.URI `json:"url,omitempty"`
+	URL                 strfmt.URI `json:"url,omitempty"`
 	VirtualmachineCount int        `json:"virtualmachine_count,omitempty"`
 }
 
 type NestedClusterGroup struct {
 	ClusterCount int        `json:"cluster_count,omitempty"`
 	Display      string     `json:"display,omitempty"`
-	Id           int        `json:"id,omitempty"`
+	ID           int        `json:"id,omitempty"`
 	Name         string     `json:"name"`
 	Slug         string     `json:"slug"`
 	URL          strfmt.URI `json:"url,omitempty"`
 }
 
 type NestedClusterType struct {
-	Id           int    `json:"id"`
-	Url          string `json:"url"`
+	ID           int    `json:"id"`
+	URL          string `json:"url"`
 	Name         string `json:"name"`
 	Slug         string `json:"slug"`
 	ClusterCount int    `json:"cluster_count"`
@@ -42,7 +43,7 @@ type Cluster struct {
 	DeviceCount         int                `json:"device_count,omitempty"`
 	Display             string             `json:"display,omitempty"`
 	Group               NestedClusterGroup `json:"group,omitempty"`
-	Id                  int                `json:"id,omitempty"`
+	ID                  int                `json:"id,omitempty"`
 	LastUpdated         strfmt.DateTime    `json:"last_updated,omitempty"`
 	Name                string             `json:"name"`
 	Site                NestedSite         `json:"site,omitempty"`

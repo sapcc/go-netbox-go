@@ -2,9 +2,10 @@ package ipam
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strconv"
 
@@ -12,22 +13,26 @@ import (
 )
 
 func (c *Client) ListPrefixes(opts models.ListPrefixesRequest) (*models.ListPrefixesReponse, error) {
-	request, err := http.NewRequest("GET", c.BaseUrl.String()+basePath+"prefixes/", nil)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"prefixes/", http.NoBody)
 	if err != nil {
 		return nil, err
 	}
 	c.SetAuthToken(&request.Header)
 	setListPrefixesParams(request, opts)
-	response, err := c.HttpClient.Do(request)
+	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
 	}
-	if response.StatusCode != 200 {
-		errBody, _ := ioutil.ReadAll(response.Body)
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
+		errBody, err := io.ReadAll(response.Body)
+		if err != nil {
+			return nil, err
+		}
 		return nil, fmt.Errorf("unexpected return code of %d: %s", response.StatusCode, errBody)
 	}
 	resObj := models.ListPrefixesReponse{}
-	bytes, err := ioutil.ReadAll(response.Body)
+	bytes, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -43,21 +48,25 @@ func (c *Client) CreatePrefix(prefix models.WriteablePrefix) (*models.Prefix, er
 	if err != nil {
 		return nil, err
 	}
-	request, err := http.NewRequest("POST", c.BaseUrl.String()+basePath+"prefixes/", bytes.NewBuffer(body))
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPost, c.BaseURL.String()+basePath+"prefixes/", bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
 	c.SetAuthToken(&request.Header)
-	response, err := c.HttpClient.Do(request)
+	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
 	}
-	if response.StatusCode != 201 {
-		errBody, _ := ioutil.ReadAll(response.Body)
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusCreated {
+		errBody, err := io.ReadAll(response.Body)
+		if err != nil {
+			return nil, err
+		}
 		return nil, fmt.Errorf("unexpected response code of %d: %s", response.StatusCode, errBody)
 	}
 	resObj := models.Prefix{}
-	byteses, err := ioutil.ReadAll(response.Body)
+	byteses, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -68,22 +77,26 @@ func (c *Client) CreatePrefix(prefix models.WriteablePrefix) (*models.Prefix, er
 	return &resObj, nil
 }
 
-func (c *Client) ListAvailableIps(id int) ([]models.AvailableIp, error) {
-	request, err := http.NewRequest("GET", c.BaseUrl.String()+basePath+"prefixes/"+strconv.Itoa(id)+"/available-ips/", nil)
+func (c *Client) ListAvailableIps(id int) ([]models.AvailableIP, error) {
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"prefixes/"+strconv.Itoa(id)+"/available-ips/", http.NoBody)
 	if err != nil {
 		return nil, err
 	}
 	c.SetAuthToken(&request.Header)
-	response, err := c.HttpClient.Do(request)
+	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
 	}
-	if response.StatusCode != 200 {
-		errBody, _ := ioutil.ReadAll(response.Body)
-		return nil, fmt.Errorf("unexpected reponse code of %d, %s", response.StatusCode, errBody)
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
+		errBody, err := io.ReadAll(response.Body)
+		if err != nil {
+			return nil, err
+		}
+		return nil, fmt.Errorf("unexpected response code of %d, %s", response.StatusCode, errBody)
 	}
-	var resObj []models.AvailableIp
-	byteses, err := ioutil.ReadAll(response.Body)
+	var resObj []models.AvailableIP
+	byteses, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -99,21 +112,25 @@ func (c *Client) CreateAvailablePrefix(id int, opts models.CreateAvailablePrefix
 	if err != nil {
 		return nil, err
 	}
-	request, err := http.NewRequest("POST", c.BaseUrl.String()+basePath+"prefixes/"+strconv.Itoa(id)+"/available-prefixes/", bytes.NewBuffer(body))
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPost, c.BaseURL.String()+basePath+"prefixes/"+strconv.Itoa(id)+"/available-prefixes/", bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
 	c.SetAuthToken(&request.Header)
-	response, err := c.HttpClient.Do(request)
+	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
 	}
-	if response.StatusCode != 201 {
-		errBody, _ := ioutil.ReadAll(response.Body)
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusCreated {
+		errBody, err := io.ReadAll(response.Body)
+		if err != nil {
+			return nil, err
+		}
 		return nil, fmt.Errorf("unexpected response code of %d: %s", response.StatusCode, errBody)
 	}
 	resObj := models.Prefix{}
-	byteses, err := ioutil.ReadAll(response.Body)
+	byteses, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -129,21 +146,25 @@ func (c *Client) UpdatePrefix(prefix models.WriteablePrefix) (*models.Prefix, er
 	if err != nil {
 		return nil, err
 	}
-	request, err := http.NewRequest("PUT", c.BaseUrl.String()+basePath+"prefixes/"+strconv.Itoa(prefix.Id)+"/", bytes.NewBuffer(body))
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPut, c.BaseURL.String()+basePath+"prefixes/"+strconv.Itoa(prefix.ID)+"/", bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
 	c.SetAuthToken(&request.Header)
-	response, err := c.HttpClient.Do(request)
+	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
 	}
-	if response.StatusCode != 200 {
-		errBody, _ := ioutil.ReadAll(response.Body)
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
+		errBody, err := io.ReadAll(response.Body)
+		if err != nil {
+			return nil, err
+		}
 		return nil, fmt.Errorf("unexpected response code of %d: %s", response.StatusCode, errBody)
 	}
 	resObj := models.Prefix{}
-	byteses, err := ioutil.ReadAll(response.Body)
+	byteses, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -155,17 +176,21 @@ func (c *Client) UpdatePrefix(prefix models.WriteablePrefix) (*models.Prefix, er
 }
 
 func (c *Client) DeletePrefix(id int) error {
-	request, err := http.NewRequest("DELETE", c.BaseUrl.String()+basePath+"prefixes/"+strconv.Itoa(id)+"/", nil)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodDelete, c.BaseURL.String()+basePath+"prefixes/"+strconv.Itoa(id)+"/", http.NoBody)
 	if err != nil {
 		return err
 	}
 	c.SetAuthToken(&request.Header)
-	response, err := c.HttpClient.Do(request)
+	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return err
 	}
-	if response.StatusCode != 204 {
-		errBody, _ := ioutil.ReadAll(response.Body)
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusNoContent {
+		errBody, err := io.ReadAll(response.Body)
+		if err != nil {
+			return err
+		}
 		return fmt.Errorf("unexpected return code of %d: %s", response.StatusCode, errBody)
 	}
 	return nil
@@ -186,11 +211,11 @@ func setListPrefixesParams(req *http.Request, opts models.ListPrefixesRequest) {
 	if opts.Site != "" {
 		q.Set("site", opts.Site)
 	}
-	if opts.TenantId != 0 {
-		q.Set("tenant_id", strconv.Itoa(opts.TenantId))
+	if opts.TenantID != 0 {
+		q.Set("tenant_id", strconv.Itoa(opts.TenantID))
 	}
-	if opts.VrfId != 0 {
-		q.Set("vrf_id", strconv.Itoa(opts.VrfId))
+	if opts.VrfID != 0 {
+		q.Set("vrf_id", strconv.Itoa(opts.VrfID))
 	}
 	if opts.Prefix != "" {
 		q.Set("prefix", opts.Prefix)

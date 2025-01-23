@@ -1,31 +1,36 @@
 package dcim
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 
 	"github.com/sapcc/go-netbox-go/models"
 )
 
 func (c *Client) ListDeviceTypes(opts models.ListDeviceTypesRequest) (*models.ListDeviceTypesResponse, error) {
-	request, err := http.NewRequest("GET", c.BaseUrl.String()+basePath+"device-types/", nil)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"device-types/", http.NoBody)
 	if err != nil {
 		return nil, err
 	}
 	c.SetAuthToken(&request.Header)
 	setListDeviceTypesParams(request, opts)
-	response, err := c.HttpClient.Do(request)
+	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
 	}
-	if response.StatusCode != 200 {
-		errBody, _ := ioutil.ReadAll(response.Body)
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
+		errBody, err := io.ReadAll(response.Body)
+		if err != nil {
+			return nil, err
+		}
 		return nil, fmt.Errorf("unexpected return code of %d: %s", response.StatusCode, errBody)
 	}
 	resObj := models.ListDeviceTypesResponse{}
-	byteses, err := ioutil.ReadAll(response.Body)
+	byteses, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
 	}

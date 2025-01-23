@@ -2,9 +2,10 @@ package dcim
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strconv"
 
@@ -12,20 +13,21 @@ import (
 )
 
 func (c *Client) GetCable(id int) (*models.Cable, error) {
-	request, err := http.NewRequest("GET", c.BaseUrl.String()+basePath+"cables/"+strconv.Itoa(id), nil)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"cables/"+strconv.Itoa(id), http.NoBody)
 	if err != nil {
 		return nil, err
 	}
 	c.SetAuthToken(&request.Header)
-	response, err := c.HttpClient.Do(request)
+	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
 	}
-	if response.StatusCode != 200 {
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("unexpected return code of %d", response.StatusCode)
 	}
 	resObj := models.Cable{}
-	bytes, err := ioutil.ReadAll(response.Body)
+	bytes, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -41,21 +43,25 @@ func (c *Client) CreateCable(cable models.WriteableCable) (*models.Cable, error)
 	if err != nil {
 		return nil, err
 	}
-	request, err := http.NewRequest("POST", c.BaseUrl.String()+basePath+"cables/", bytes.NewBuffer(body))
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPost, c.BaseURL.String()+basePath+"cables/", bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
 	c.SetAuthToken(&request.Header)
-	response, err := c.HttpClient.Do(request)
+	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
 	}
-	if response.StatusCode != 201 {
-		errBody, _ := ioutil.ReadAll(response.Body)
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusCreated {
+		errBody, err := io.ReadAll(response.Body)
+		if err != nil {
+			return nil, err
+		}
 		return nil, fmt.Errorf("unexpected response code of %d: %s", response.StatusCode, errBody)
 	}
 	resObj := models.Cable{}
-	byteses, err := ioutil.ReadAll(response.Body)
+	byteses, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -67,17 +73,21 @@ func (c *Client) CreateCable(cable models.WriteableCable) (*models.Cable, error)
 }
 
 func (c *Client) DeleteCable(id int) error {
-	request, err := http.NewRequest("DELETE", c.BaseUrl.String()+basePath+"cables/"+strconv.Itoa(id)+"/", nil)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodDelete, c.BaseURL.String()+basePath+"cables/"+strconv.Itoa(id)+"/", http.NoBody)
 	if err != nil {
 		return err
 	}
 	c.SetAuthToken(&request.Header)
-	response, err := c.HttpClient.Do(request)
+	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return err
 	}
-	if response.StatusCode != 204 {
-		errBody, _ := ioutil.ReadAll(response.Body)
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusNoContent {
+		errBody, err := io.ReadAll(response.Body)
+		if err != nil {
+			return err
+		}
 		return fmt.Errorf("unexpected return code of %d: %s", response.StatusCode, errBody)
 	}
 	return nil
@@ -88,21 +98,25 @@ func (c *Client) UpdateCable(cable models.WriteableCable) (*models.Cable, error)
 	if err != nil {
 		return nil, err
 	}
-	request, err := http.NewRequest("PATCH", c.BaseUrl.String()+basePath+"cables/"+strconv.Itoa(int(cable.Id))+"/", bytes.NewBuffer(body))
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPatch, c.BaseURL.String()+basePath+"cables/"+strconv.Itoa(int(cable.ID))+"/", bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
 	c.SetAuthToken(&request.Header)
-	response, err := c.HttpClient.Do(request)
+	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
 	}
-	if response.StatusCode != 200 {
-		errBody, _ := ioutil.ReadAll(response.Body)
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
+		errBody, err := io.ReadAll(response.Body)
+		if err != nil {
+			return nil, err
+		}
 		return nil, fmt.Errorf("unexpected return code of %d: %s", response.StatusCode, errBody)
 	}
 	resObj := models.Cable{}
-	byteses, err := ioutil.ReadAll(response.Body)
+	byteses, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
 	}

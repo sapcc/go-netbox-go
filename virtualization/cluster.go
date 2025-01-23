@@ -1,32 +1,38 @@
 package virtualization
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/sapcc/go-netbox-go/models"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strconv"
+
+	"github.com/sapcc/go-netbox-go/models"
 )
 
-func (c *Client) ListClusters (opts models.ListClusterRequest) (*models.ListClusterResponse, error) {
-	//request, err := http.NewRequest("GET", c.BaseUrl.String() + basePath + "clusters/", bytes2.NewBuffer([]byte{'a'}))
-	request, err := http.NewRequest("GET", c.BaseUrl.String() + basePath + "clusters/", nil)
+func (c *Client) ListClusters(opts models.ListClusterRequest) (*models.ListClusterResponse, error) {
+	// request, err := http.NewRequestWithContext(context.TODO(), "GET", c.BaseURL.String() + basePath + "clusters/", bytes2.NewBuffer([]byte{'a'}))
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"clusters/", http.NoBody)
 	if err != nil {
 		return nil, err
 	}
 	c.SetAuthToken(&request.Header)
 	setListClusterParams(request, opts)
-	response, err := c.HttpClient.Do(request)
-	if err != nil{
+	response, err := c.HTTPClient.Do(request)
+	if err != nil {
 		return nil, err
 	}
-	if response.StatusCode != 200 {
-		errorBody,_ := ioutil.ReadAll(response.Body)
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
+		errorBody, err := io.ReadAll(response.Body)
+		if err != nil {
+			return nil, err
+		}
 		return nil, fmt.Errorf("unexpected return code of %d: %s", response.StatusCode, errorBody)
 	}
 	resObj := models.ListClusterResponse{}
-	bytes, err := ioutil.ReadAll(response.Body)
+	bytes, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -38,10 +44,10 @@ func (c *Client) ListClusters (opts models.ListClusterRequest) (*models.ListClus
 }
 
 func setListClusterParams(req *http.Request, opts models.ListClusterRequest) {
-	q:= req.URL.Query()
+	q := req.URL.Query()
 	opts.SetListParams(&q)
-	if opts.Id != 0 {
-		q.Set("id", strconv.Itoa(opts.Id))
+	if opts.ID != 0 {
+		q.Set("id", strconv.Itoa(opts.ID))
 	}
 	if opts.Region != "" {
 		q.Set("region", opts.Region)

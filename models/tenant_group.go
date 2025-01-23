@@ -14,12 +14,12 @@ type TenantGroup struct {
 	Slug         string             `json:"slug"`
 	Tags         []*NestedTag       `json:"tags"`
 	TenantCount  int                `json:"tenant_count,omitempty"`
-	Url          string             `json:"url,omitempty"`
+	URL          string             `json:"url,omitempty"`
 }
 
 type NestedTenantGroup struct {
-	Id          int    `json:"id"`
-	Url         string `json:"url"`
+	ID          int    `json:"id"`
+	URL         string `json:"url"`
 	Name        string `json:"name"`
 	Slug        string `json:"slug"`
 	TenantCount string `json:"tenant_count,omitempty"`

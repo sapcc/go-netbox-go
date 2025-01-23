@@ -1,0 +1,31 @@
+# Configuration file for <https://github.com/sapcc/go-makefile-maker>
+
+metadata:
+  url: https://github.com/sapcc/go-netbox-go
+
+golang:
+  setGoModVersion: true
+
+golangciLint:
+  createConfig: false
+
+githubWorkflow:
+  ci:
+    enabled: true
+    coveralls: false
+    ignorePaths:
+      - "**.md" # all Markdown files
+
+makefile:
+  enabled: false
+  
+renovate:
+  enabled: true
+  assignees:
+    - defo89
+    - SchwarzM
+    - xsen84
+    - goerangudat
+
+dockerfile:
+  enabled: false

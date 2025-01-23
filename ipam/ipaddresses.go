@@ -2,32 +2,37 @@ package ipam
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strconv"
 
 	"github.com/sapcc/go-netbox-go/models"
 )
 
-func (c *Client) ListIpAddresses(opts models.ListIpAddressesRequest) (*models.ListIpAddressesResponse, error) {
-	request, err := http.NewRequest("GET", c.BaseUrl.String()+basePath+"ip-addresses/", nil)
+func (c *Client) ListIPAddresses(opts models.ListIPAddressesRequest) (*models.ListIPAddressesResponse, error) {
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"ip-addresses/", http.NoBody)
 	if err != nil {
 		return nil, err
 	}
 	c.SetAuthToken(&request.Header)
-	setListIpAddressesParams(request, opts)
-	response, err := c.HttpClient.Do(request)
+	setListIPAddressesParams(request, opts)
+	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
 	}
-	if response.StatusCode != 200 {
-		errBody, _ := ioutil.ReadAll(response.Body)
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
+		errBody, err := io.ReadAll(response.Body)
+		if err != nil {
+			return nil, err
+		}
 		return nil, fmt.Errorf("unexpected return code of %d: %s", response.StatusCode, errBody)
 	}
-	resObj := models.ListIpAddressesResponse{}
-	byteses, err := ioutil.ReadAll(response.Body)
+	resObj := models.ListIPAddressesResponse{}
+	byteses, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -38,21 +43,22 @@ func (c *Client) ListIpAddresses(opts models.ListIpAddressesRequest) (*models.Li
 	return &resObj, nil
 }
 
-func (c *Client) GetIpAdress(id int) (*models.IpAddress, error) {
-	request, err := http.NewRequest("GET", c.BaseUrl.String()+basePath+"ip-addresses/"+strconv.Itoa(id)+"/", nil)
+func (c *Client) GetIPAdress(id int) (*models.IPAddress, error) {
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"ip-addresses/"+strconv.Itoa(id)+"/", http.NoBody)
 	if err != nil {
 		return nil, err
 	}
 	c.SetAuthToken(&request.Header)
-	response, err := c.HttpClient.Do(request)
+	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
 	}
-	if response.StatusCode != 200 {
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("unexpected return code of %d", response.StatusCode)
 	}
-	resObj := models.IpAddress{}
-	bytes, err := ioutil.ReadAll(response.Body)
+	resObj := models.IPAddress{}
+	bytes, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, nil
 	}
@@ -63,17 +69,17 @@ func (c *Client) GetIpAdress(id int) (*models.IpAddress, error) {
 	return &resObj, nil
 }
 
-func setListIpAddressesParams(req *http.Request, opts models.ListIpAddressesRequest) {
+func setListIPAddressesParams(req *http.Request, opts models.ListIPAddressesRequest) {
 	q := req.URL.Query()
 	opts.SetListParams(&q)
-	if opts.InterfaceId != 0 {
-		q.Set("interface_id", strconv.Itoa(opts.InterfaceId))
+	if opts.InterfaceID != 0 {
+		q.Set("interface_id", strconv.Itoa(opts.InterfaceID))
 	}
-	if opts.VmInterfaceId != 0 {
-		q.Set("vminterface_id", strconv.Itoa(opts.VmInterfaceId))
+	if opts.VMInterfaceID != 0 {
+		q.Set("vminterface_id", strconv.Itoa(opts.VMInterfaceID))
 	}
-	if opts.DeviceId != 0 {
-		q.Set("device_id", strconv.Itoa(opts.DeviceId))
+	if opts.DeviceID != 0 {
+		q.Set("device_id", strconv.Itoa(opts.DeviceID))
 	}
 	if opts.Role != "" {
 		q.Set("role", opts.Role)
@@ -81,8 +87,8 @@ func setListIpAddressesParams(req *http.Request, opts models.ListIpAddressesRequ
 	if opts.Address != "" {
 		q.Set("address", opts.Address)
 	}
-	if opts.VrfId != 0 {
-		q.Set("vrf_id", strconv.Itoa(opts.VrfId))
+	if opts.VrfID != 0 {
+		q.Set("vrf_id", strconv.Itoa(opts.VrfID))
 	}
 	if opts.Parent != "" {
 		q.Set("parent", opts.Parent)
@@ -90,26 +96,30 @@ func setListIpAddressesParams(req *http.Request, opts models.ListIpAddressesRequ
 	req.URL.RawQuery = q.Encode()
 }
 
-func (c *Client) CreateIpAddress(address models.WriteableIpAddress) (*models.IpAddress, error) {
+func (c *Client) CreateIPAddress(address models.WriteableIPAddress) (*models.IPAddress, error) {
 	body, err := json.Marshal(address)
 	if err != nil {
 		return nil, err
 	}
-	request, err := http.NewRequest("POST", c.BaseUrl.String()+basePath+"ip-addresses/", bytes.NewBuffer(body))
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPost, c.BaseURL.String()+basePath+"ip-addresses/", bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
 	c.SetAuthToken(&request.Header)
-	response, err := c.HttpClient.Do(request)
+	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
 	}
-	if response.StatusCode != 201 {
-		errBody, _ := ioutil.ReadAll(response.Body)
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusCreated {
+		errBody, err := io.ReadAll(response.Body)
+		if err != nil {
+			return nil, err
+		}
 		return nil, fmt.Errorf("unexpected response code of %d:%s", response.StatusCode, errBody)
 	}
-	resObj := models.IpAddress{}
-	byteses, err := ioutil.ReadAll(response.Body)
+	resObj := models.IPAddress{}
+	byteses, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -120,26 +130,30 @@ func (c *Client) CreateIpAddress(address models.WriteableIpAddress) (*models.IpA
 	return &resObj, nil
 }
 
-func (c *Client) UpdateIpAddress(address models.WriteableIpAddress) (*models.IpAddress, error) {
+func (c *Client) UpdateIPAddress(address models.WriteableIPAddress) (*models.IPAddress, error) {
 	body, err := json.Marshal(address)
 	if err != nil {
 		return nil, err
 	}
-	request, err := http.NewRequest("PUT", c.BaseUrl.String()+basePath+"ip-addresses/"+strconv.Itoa(address.Id)+"/", bytes.NewBuffer(body))
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPut, c.BaseURL.String()+basePath+"ip-addresses/"+strconv.Itoa(address.ID)+"/", bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
 	c.SetAuthToken(&request.Header)
-	response, err := c.HttpClient.Do(request)
+	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
 	}
-	if response.StatusCode != 200 {
-		errBody, _ := ioutil.ReadAll(response.Body)
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
+		errBody, err := io.ReadAll(response.Body)
+		if err != nil {
+			return nil, err
+		}
 		return nil, fmt.Errorf("unexpected response code of %d: %s", response.StatusCode, errBody)
 	}
-	resObj := models.IpAddress{}
-	byteses, err := ioutil.ReadAll(response.Body)
+	resObj := models.IPAddress{}
+	byteses, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -150,18 +164,22 @@ func (c *Client) UpdateIpAddress(address models.WriteableIpAddress) (*models.IpA
 	return &resObj, nil
 }
 
-func (c *Client) DeleteIpAddress(id int) error {
-	request, err := http.NewRequest("DELETE", c.BaseUrl.String()+basePath+"ip-addresses/"+strconv.Itoa(id)+"/", nil)
+func (c *Client) DeleteIPAddress(id int) error {
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodDelete, c.BaseURL.String()+basePath+"ip-addresses/"+strconv.Itoa(id)+"/", http.NoBody)
 	if err != nil {
 		return err
 	}
 	c.SetAuthToken(&request.Header)
-	response, err := c.HttpClient.Do(request)
+	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return err
 	}
-	if response.StatusCode != 204 {
-		errBody, _ := ioutil.ReadAll(response.Body)
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusNoContent {
+		errBody, err := io.ReadAll(response.Body)
+		if err != nil {
+			return err
+		}
 		return fmt.Errorf("unexpected return code of %d: %s", response.StatusCode, errBody)
 	}
 	return nil

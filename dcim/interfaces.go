@@ -2,9 +2,10 @@ package dcim
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strconv"
 
@@ -12,21 +13,22 @@ import (
 )
 
 func (c *Client) ListInterfaces(opts models.ListInterfacesRequest) (*models.ListInterfacesResponse, error) {
-	request, err := http.NewRequest("GET", c.BaseUrl.String()+basePath+"interfaces/", bytes.NewBuffer([]byte{'a'}))
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"interfaces/", bytes.NewBuffer([]byte{'a'}))
 	if err != nil {
 		return nil, err
 	}
 	c.SetAuthToken(&request.Header)
 	setListInterfacesParams(request, opts)
-	response, err := c.HttpClient.Do(request)
+	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
 	}
-	if response.StatusCode != 200 {
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("unexpected return code of %d", response.StatusCode)
 	}
 	resObj := models.ListInterfacesResponse{}
-	byts, err := ioutil.ReadAll(response.Body)
+	byts, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -43,14 +45,14 @@ func setListInterfacesParams(req *http.Request, opts models.ListInterfacesReques
 	if opts.Type != "" {
 		q.Set("type", opts.Type)
 	}
-	if opts.DeviceId != 0 {
-		q.Set("device_id", strconv.Itoa(opts.DeviceId))
+	if opts.DeviceID != 0 {
+		q.Set("device_id", strconv.Itoa(opts.DeviceID))
 	}
 	if opts.MacAddress != "" {
 		q.Set("mac_address", opts.MacAddress)
 	}
-	if opts.LagId != 0 {
-		q.Set("lag_id", strconv.Itoa(opts.LagId))
+	if opts.LagID != 0 {
+		q.Set("lag_id", strconv.Itoa(opts.LagID))
 	}
 	req.URL.RawQuery = q.Encode()
 }
@@ -60,21 +62,25 @@ func (c *Client) UpdateInterface(interf models.WritableInterface, id int) (*mode
 	if err != nil {
 		return nil, err
 	}
-	request, err := http.NewRequest("PUT", c.BaseUrl.String()+basePath+"interfaces/"+strconv.Itoa(id)+"/", bytes.NewBuffer(body))
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPut, c.BaseURL.String()+basePath+"interfaces/"+strconv.Itoa(id)+"/", bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
 	c.SetAuthToken(&request.Header)
-	response, err := c.HttpClient.Do(request)
+	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
 	}
-	if response.StatusCode != 200 {
-		errBody, _ := ioutil.ReadAll(response.Body)
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
+		errBody, err := io.ReadAll(response.Body)
+		if err != nil {
+			return nil, err
+		}
 		return nil, fmt.Errorf("unexpected response code of %d: %s", response.StatusCode, errBody)
 	}
 	resObj := models.Interface{}
-	byteses, err := ioutil.ReadAll(response.Body)
+	byteses, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -90,21 +96,25 @@ func (c *Client) CreateInterface(interf models.WritableInterface) (*models.Inter
 	if err != nil {
 		return nil, err
 	}
-	request, err := http.NewRequest("POST", c.BaseUrl.String()+basePath+"interfaces/", bytes.NewBuffer(body))
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPost, c.BaseURL.String()+basePath+"interfaces/", bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
 	c.SetAuthToken(&request.Header)
-	response, err := c.HttpClient.Do(request)
+	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
 	}
-	if response.StatusCode != 201 {
-		errBody, _ := ioutil.ReadAll(response.Body)
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusCreated {
+		errBody, err := io.ReadAll(response.Body)
+		if err != nil {
+			return nil, err
+		}
 		return nil, fmt.Errorf("unexpected response code of %d: %s", response.StatusCode, errBody)
 	}
 	resObj := models.Interface{}
-	byteses, err := ioutil.ReadAll(response.Body)
+	byteses, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -116,17 +126,21 @@ func (c *Client) CreateInterface(interf models.WritableInterface) (*models.Inter
 }
 
 func (c *Client) DeleteInterface(id int) error {
-	request, err := http.NewRequest("DELETE", c.BaseUrl.String()+basePath+"interfaces/"+strconv.Itoa(id)+"/", nil)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodDelete, c.BaseURL.String()+basePath+"interfaces/"+strconv.Itoa(id)+"/", http.NoBody)
 	if err != nil {
 		return err
 	}
 	c.SetAuthToken(&request.Header)
-	response, err := c.HttpClient.Do(request)
+	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return err
 	}
-	if response.StatusCode != 204 {
-		errBody, _ := ioutil.ReadAll(response.Body)
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusNoContent {
+		errBody, err := io.ReadAll(response.Body)
+		if err != nil {
+			return err
+		}
 		return fmt.Errorf("unexpected return code of %d: %s", response.StatusCode, errBody)
 	}
 	return nil

@@ -4,9 +4,10 @@ import (
 	"os"
 	"testing"
 
-	"github.com/sapcc/go-netbox-go/models"
 	"github.com/seborama/govcr"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/sapcc/go-netbox-go/models"
 )
 
 func TestClient_ListTags(t *testing.T) {
@@ -15,9 +16,9 @@ func TestClient_ListTags(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HttpClient
+	vcrConf.Client = client.HTTPClient
 	vcr := govcr.NewVCR("ListTags", vcrConf)
-	client.HttpClient = vcr.Client
+	client.HTTPClient = vcr.Client
 	opts := models.ListTagsRequest{}
 	res, err := client.ListTags(opts)
 	if err != nil {
@@ -35,9 +36,9 @@ func TestClient_ListTags(t *testing.T) {
 // 		t.Fatal(err)
 // 	}
 // 	vcrConf := &govcr.VCRConfig{}
-// 	vcrConf.Client = client.HttpClient
+// 	vcrConf.Client = client.HTTPClient
 // 	vcr := govcr.NewVCR("CreateTag", vcrConf)
-// 	client.HttpClient = vcr.Client
+// 	client.HTTPClient = vcr.Client
 // 	opts := models.Tag{
 // 		NestedTag: models.NestedTag{
 // 			Name: "testTAG",

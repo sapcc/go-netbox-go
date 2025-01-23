@@ -2,12 +2,13 @@ package models
 
 import (
 	"github.com/go-openapi/strfmt"
+
 	"github.com/sapcc/go-netbox-go/common"
 )
 
 type NestedManufacturer struct {
-	Id              int    `json:"id"`
-	Url             string `json:"url"`
+	ID              int    `json:"id"`
+	URL             string `json:"url"`
 	Name            string `json:"name"`
 	Slug            string `json:"slug"`
 	DevicetypeCount int    `json:"devicetype_count"`
@@ -20,8 +21,8 @@ type DeviceStatus struct {
 }
 
 type NestedDevice struct {
-	Id          int    `json:"id"`
-	Url         string `json:"url"`
+	ID          int    `json:"id"`
+	URL         string `json:"url"`
 	Name        string `json:"name"`
 	DisplayName string `json:"display_name"`
 }
@@ -49,7 +50,7 @@ type Device struct {
 	DeviceType       NestedDeviceType     `json:"device_type"`
 	Display          string               `json:"display,omitempty"`
 	Face             DeviceFace           `json:"face"`
-	Id               int                  `json:"id,omitempty"`
+	ID               int                  `json:"id,omitempty"`
 	LastUpdated      strfmt.DateTime      `json:"last_updated,omitempty"`
 	LocalContextData interface{}          `json:"local_context_data"`
 	Location         NestedLocation       `json:"location,omitempty"`
@@ -57,10 +58,10 @@ type Device struct {
 	ParentDevice     NestedDevice         `json:"parent_device"`
 	Platform         NestedPlatform       `json:"platform"`
 	Position         float64              `json:"position"`
-	PrimaryIp        NestedIpAddress      `json:"primary_ip"`
-	PrimaryIp4       NestedIpAddress      `json:"primary_ip4"`
-	PrimaryIp6       NestedIpAddress      `json:"primary_ip6"`
-	OOBIp            NestedIpAddress      `json:"oob_ip"`
+	PrimaryIP        NestedIPAddress      `json:"primary_ip"`
+	PrimaryIP4       NestedIPAddress      `json:"primary_ip4"`
+	PrimaryIP6       NestedIPAddress      `json:"primary_ip6"`
+	OOBIp            NestedIPAddress      `json:"oob_ip"`
 	Rack             NestedRack           `json:"rack"`
 	Serial           string               `json:"serial"`
 	Site             NestedSite           `json:"site"`
@@ -74,13 +75,13 @@ type Device struct {
 
 type ListDevicesRequest struct {
 	common.ListParams
-	ClusterId    int
-	DeviceTypeId int
+	ClusterID    int
+	DeviceTypeID int
 	Region       string
 	Site         string
-	RackId       int
+	RackID       int
 	Serial       string
-	RoleId       int
+	RoleID       int
 }
 
 type ListDevicesResponse struct {
@@ -101,7 +102,7 @@ type WritableDeviceWithConfigContext struct {
 	DeviceType       int             `json:"device_type"`
 	Display          string          `json:"display,omitempty"`
 	Face             string          `json:"face,omitempty"`
-	Id               int             `json:"id,omitempty"`
+	ID               int             `json:"id,omitempty"`
 	LastUpdated      strfmt.DateTime `json:"last_updated,omitempty"`
 	LocalContextData interface{}     `json:"local_context_data,omitempty"`
 	Location         int             `json:"location,omitempty"`
@@ -110,8 +111,8 @@ type WritableDeviceWithConfigContext struct {
 	Platform         int             `json:"platform,omitempty"`
 	Position         float64         `json:"position,omitempty"`
 	PrimaryIP        string          `json:"primary_ip,omitempty"`
-	PrimaryIp4       int             `json:"primary_ip4,omitempty"`
-	PrimaryIp6       int             `json:"primary_ip6,omitempty"`
+	PrimaryIP4       int             `json:"primary_ip4,omitempty"`
+	PrimaryIP6       int             `json:"primary_ip6,omitempty"`
 	OOBIp            int             `json:"oob_ip,omitempty"`
 	Rack             int             `json:"rack,omitempty"`
 	Serial           string          `json:"serial,omitempty"`
@@ -119,28 +120,28 @@ type WritableDeviceWithConfigContext struct {
 	Status           string          `json:"status,omitempty"`
 	Tags             []NestedTag     `json:"tags,omitempty"`
 	Tenant           int             `json:"tenant,omitempty"`
-	Url              strfmt.URI      `json:"url,omitempty"`
+	URL              strfmt.URI      `json:"url,omitempty"`
 	VcPosition       int             `json:"vc_position,omitempty"`
 	VcPriority       int             `json:"vc_priority,omitempty"`
 	VirtualChassis   int             `json:"virtual_chassis,omitempty"`
 }
 
 func (dev *Device) Writeable() WritableDeviceWithConfigContext {
-	var clusterId int
+	var clusterID int
 	if dev.Cluster == nil {
-		clusterId = 0
+		clusterID = 0
 	} else {
-		clusterId = dev.Cluster.Id
+		clusterID = dev.Cluster.ID
 	}
 	res := WritableDeviceWithConfigContext{
-		Id:         dev.Id,
-		Cluster:    clusterId,
-		DeviceRole: dev.DeviceRole.Id,
-		DeviceType: dev.DeviceType.Id,
-		PrimaryIp4: dev.PrimaryIp4.Id,
-		OOBIp:      dev.OOBIp.Id,
+		ID:         dev.ID,
+		Cluster:    clusterID,
+		DeviceRole: dev.DeviceRole.ID,
+		DeviceType: dev.DeviceType.ID,
+		PrimaryIP4: dev.PrimaryIP4.ID,
+		OOBIp:      dev.OOBIp.ID,
 		Tags:       dev.Tags,
-		Site:       dev.Site.Id,
+		Site:       dev.Site.ID,
 	}
 	return res
 }

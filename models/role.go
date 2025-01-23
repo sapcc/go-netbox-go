@@ -3,8 +3,8 @@ package models
 import "github.com/sapcc/go-netbox-go/common"
 
 type Role struct {
-	Id          int    `json:"id"`
-	Url         string `json:"url"`
+	ID          int    `json:"id"`
+	URL         string `json:"url"`
 	Name        string `json:"name"`
 	Slug        string `json:"slug"`
 	Weight      int    `json:"weight"`

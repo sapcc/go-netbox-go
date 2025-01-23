@@ -7,8 +7,8 @@ import (
 )
 
 type NestedVirtualMachine struct {
-	Id   int    `json:"id"`
-	Url  string `json:"url"`
+	ID   int    `json:"id"`
+	URL  string `json:"url"`
 	Name string `json:"name"`
 }
 
@@ -18,9 +18,9 @@ type VirtualMachine struct {
 	Role             NestedDeviceRole     `json:"role"`
 	Tenant           NestedTenant         `json:"tenant"`
 	Platform         NestedPlatform       `json:"platform"`
-	PrimaryIp        NestedIpAddress      `json:"primary_ip"`
-	PrimaryIp4       NestedIpAddress      `json:"primary_ip4"`
-	PrimaryIp6       interface{}          `json:"primary_ip6"`
+	PrimaryIP        NestedIPAddress      `json:"primary_ip"`
+	PrimaryIP4       NestedIPAddress      `json:"primary_ip4"`
+	PrimaryIP6       interface{}          `json:"primary_ip6"`
 	VCPUs            float64              `json:"vcpus"`
 	Memory           int                  `json:"memory"`
 	Disk             int                  `json:"disk"`
@@ -42,8 +42,8 @@ type VirtualMachineStatus struct {
 }
 
 type WriteableVirtualMachine struct {
-	Id         int     `json:"id,omitempty"`
-	Url        string  `json:"url,omitempty"`
+	ID         int     `json:"id,omitempty"`
+	URL        string  `json:"url,omitempty"`
 	Name       string  `json:"name"`
 	Status     string  `json:"status,omitempty"`
 	Site       int     `json:"site,omitempty"`
@@ -52,8 +52,8 @@ type WriteableVirtualMachine struct {
 	Role       int     `json:"role,omitempty"`
 	Tenant     int     `json:"tenant,omitempty"`
 	Platform   int     `json:"platform,omitempty"`
-	PrimaryIp  string  `json:"primary_ip,omitempty"`
-	PrimaryIp4 int     `json:"primary_ip4,omitempty"`
+	PrimaryIP  string  `json:"primary_ip,omitempty"`
+	PrimaryIP4 int     `json:"primary_ip4,omitempty"`
 	Comments   string  `json:"comments,omitempty"`
 	VCPUs      float64 `json:"vcpus,omitempty"`
 	Memory     int     `json:"memory,omitempty"`
@@ -62,18 +62,18 @@ type WriteableVirtualMachine struct {
 
 func (vm *VirtualMachine) Writeable() WriteableVirtualMachine {
 	res := WriteableVirtualMachine{
-		Id:         vm.Id,
-		Url:        vm.Url,
+		ID:         vm.ID,
+		URL:        vm.URL,
 		Name:       vm.Name,
 		Status:     vm.Status.Value,
-		Site:       vm.Site.Id,
-		Cluster:    vm.Cluster.Id,
-		Device:     vm.Device.Id,
-		Role:       vm.Role.Id,
-		Tenant:     vm.Tenant.Id,
-		Platform:   vm.Platform.Id,
-		PrimaryIp:  vm.PrimaryIp.Address,
-		PrimaryIp4: vm.PrimaryIp4.Id,
+		Site:       vm.Site.ID,
+		Cluster:    vm.Cluster.ID,
+		Device:     vm.Device.ID,
+		Role:       vm.Role.ID,
+		Tenant:     vm.Tenant.ID,
+		Platform:   vm.Platform.ID,
+		PrimaryIP:  vm.PrimaryIP.Address,
+		PrimaryIP4: vm.PrimaryIP4.ID,
 		Comments:   vm.Comments,
 		VCPUs:      vm.VCPUs,
 		Memory:     vm.Memory,
@@ -84,8 +84,8 @@ func (vm *VirtualMachine) Writeable() WriteableVirtualMachine {
 
 type ListVirtualMachinesRequest struct {
 	common.ListParams
-	ClusterId int `json:"cluster_id"`
-	RoleId    int `json:"role_id"`
+	ClusterID int `json:"cluster_id"`
+	RoleID    int `json:"role_id"`
 }
 
 type ListVirtualMachinesResponse struct {
@@ -108,16 +108,16 @@ func (vm *VirtualMachine) UnmarshalJSON(b []byte) error {
 		return err
 	}
 	vm.Role = role
-	var pIp NestedIpAddress
-	if err := json.Unmarshal(tmp["primary_ip"], &pIp); err != nil {
+	var pIP NestedIPAddress
+	if err := json.Unmarshal(tmp["primary_ip"], &pIP); err != nil {
 		return err
 	}
-	vm.PrimaryIp = pIp
-	var pIp4 NestedIpAddress
-	if err := json.Unmarshal(tmp["primary_ip4"], &pIp4); err != nil {
+	vm.PrimaryIP = pIP
+	var pIP4 NestedIPAddress
+	if err := json.Unmarshal(tmp["primary_ip4"], &pIP4); err != nil {
 		return err
 	}
-	vm.PrimaryIp4 = pIp4
+	vm.PrimaryIP4 = pIP4
 	var status VirtualMachineStatus
 	if err := json.Unmarshal(tmp["status"], &status); err != nil {
 		return err
@@ -137,12 +137,12 @@ func (vm *VirtualMachine) UnmarshalJSON(b []byte) error {
 	if err := json.Unmarshal(tmp["id"], &id); err != nil {
 		return err
 	}
-	vm.Id = id
+	vm.ID = id
 	var url string
 	if err := json.Unmarshal(tmp["url"], &url); err != nil {
 		return err
 	}
-	vm.Url = url
+	vm.URL = url
 	var Name string
 	if err := json.Unmarshal(tmp["name"], &Name); err != nil {
 		return err

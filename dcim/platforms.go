@@ -1,29 +1,32 @@
 package dcim
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/sapcc/go-netbox-go/models"
-	"io/ioutil"
+	"io"
 	"net/http"
+
+	"github.com/sapcc/go-netbox-go/models"
 )
 
 func (c *Client) ListPlatforms(opts models.ListPlatformsRequest) (*models.ListPlatformsResponse, error) {
-	request, err := http.NewRequest("GET", c.BaseUrl.String() + basePath + "platforms/", nil)
-	if err != nil {
-		return nil,err
-	}
-	c.SetAuthToken(&request.Header)
-	setListPlatformParams(request, opts)
-	response, err := c.HttpClient.Do(request)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"platforms/", http.NoBody)
 	if err != nil {
 		return nil, err
 	}
-	if response.StatusCode != 200 {
+	c.SetAuthToken(&request.Header)
+	setListPlatformParams(request, opts)
+	response, err := c.HTTPClient.Do(request)
+	if err != nil {
+		return nil, err
+	}
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("unexpected return code of %d", response.StatusCode)
 	}
 	resObj := models.ListPlatformsResponse{}
-	byteses, err := ioutil.ReadAll(response.Body)
+	byteses, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
 	}

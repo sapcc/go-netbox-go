@@ -5,8 +5,8 @@ import "github.com/go-openapi/strfmt"
 type NestedASN struct {
 	Asn     int        `json:"asn"`
 	Display string     `json:"display,omitempty"`
-	Id      int        `json:"id,omitempty"`
-	Url     strfmt.URI `json:"url,omitempty"`
+	ID      int        `json:"id,omitempty"`
+	URL     strfmt.URI `json:"url,omitempty"`
 }
 
 type ASN struct {
@@ -16,7 +16,7 @@ type ASN struct {
 	CustomFields  interface{}     `json:"custom_fields,omitempty"`
 	Description   string          `json:"description,omitempty"`
 	Display       string          `json:"display,omitempty"`
-	Id            int             `json:"id,omitempty"`
+	ID            int             `json:"id,omitempty"`
 	LastUpdated   strfmt.DateTime `json:"last_updated,omitempty"`
 	ProviderCount int             `json:"provider_count,omitempty"`
 	Rir           int             `json:"rir"`

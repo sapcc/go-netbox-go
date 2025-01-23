@@ -10,8 +10,8 @@ type Status struct {
 }
 
 type Prefix struct {
-	Id           int         `json:"id"`
-	Url          string      `json:"url"`
+	ID           int         `json:"id"`
+	URL          string      `json:"url"`
 	Family       interface{} `json:"family"`
 	Prefix       string      `json:"prefix"`
 	Site         Site        `json:"site"`
@@ -29,8 +29,8 @@ type Prefix struct {
 }
 
 type WriteablePrefix struct {
-	Id           int         `json:"id,omitempty"`
-	Url          string      `json:"url"`
+	ID           int         `json:"id,omitempty"`
+	URL          string      `json:"url"`
 	Prefix       string      `json:"prefix"`
 	Site         int         `json:"site,omitempty"`
 	Vrf          int         `json:"vrf,omitempty"`
@@ -52,8 +52,8 @@ type ListPrefixesRequest struct {
 	Region        string
 	Site          string
 	Tag           string
-	TenantId      int
-	VrfId         int
+	TenantID      int
+	VrfID         int
 	Prefix        string
 	MaskLength    int
 	MaskLengthGte int

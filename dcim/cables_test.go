@@ -5,8 +5,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/sapcc/go-netbox-go/models"
 	"github.com/seborama/govcr"
+
+	"github.com/sapcc/go-netbox-go/models"
 )
 
 func TestClient_GetCable(t *testing.T) {
@@ -15,14 +16,14 @@ func TestClient_GetCable(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HttpClient
+	vcrConf.Client = client.HTTPClient
 	vcr := govcr.NewVCR("GetCable", vcrConf)
-	client.HttpClient = vcr.Client
-	res, err := client.GetCable(2026) //2026
+	client.HTTPClient = vcr.Client
+	res, err := client.GetCable(2026) // 2026
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Log("Cable ID:", res.Id)
+	t.Log("Cable ID:", res.ID)
 }
 
 func TestClient_CreateDeleteCable(t *testing.T) {
@@ -31,17 +32,17 @@ func TestClient_CreateDeleteCable(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HttpClient
+	vcrConf.Client = client.HTTPClient
 	vcr := govcr.NewVCR("CreateDeleteCable", vcrConf)
-	client.HttpClient = vcr.Client
+	client.HTTPClient = vcr.Client
 
 	wCable := models.WriteableCable{}
 	wCable.Type = "cat6"
 	aterm := models.Termination{}
-	aterm.ObjectId = 376515
+	aterm.ObjectID = 376515
 	aterm.ObjectType = "dcim.interface"
 	bterm := models.Termination{}
-	bterm.ObjectId = 376517
+	bterm.ObjectID = 376517
 	bterm.ObjectType = "dcim.interface"
 
 	wCable.Aterminations = append(wCable.Aterminations, aterm)
@@ -63,7 +64,7 @@ func TestClient_CreateDeleteCable(t *testing.T) {
 	}
 	t.Log(cab)
 
-	err = client.DeleteCable(cab.Id)
+	err = client.DeleteCable(cab.ID)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -75,14 +76,14 @@ func TestClient_UpdateCable(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HttpClient
+	vcrConf.Client = client.HTTPClient
 	vcr := govcr.NewVCR("CreateDeleteCable", vcrConf)
-	client.HttpClient = vcr.Client
+	client.HTTPClient = vcr.Client
 
 	wCable := models.WriteableCable{}
-	wCable.Id = 117102
+	wCable.ID = 117102
 	aterm := models.Termination{}
-	aterm.ObjectId = 598436
+	aterm.ObjectID = 598436
 	aterm.ObjectType = "dcim.interface"
 
 	wCable.Aterminations = append(wCable.Aterminations, aterm)

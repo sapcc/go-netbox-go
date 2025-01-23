@@ -10,8 +10,8 @@ type DeviceRole struct {
 }
 
 type NestedDeviceRole struct {
-	Id                  int    `json:"id"`
-	Url                 string `json:"url"`
+	ID                  int    `json:"id"`
+	URL                 string `json:"url"`
 	Name                string `json:"name"`
 	Slug                string `json:"slug"`
 	DeviceCount         int    `json:"device_count"`

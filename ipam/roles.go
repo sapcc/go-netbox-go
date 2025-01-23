@@ -1,29 +1,32 @@
 package ipam
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/sapcc/go-netbox-go/models"
-	"io/ioutil"
+	"io"
 	"net/http"
+
+	"github.com/sapcc/go-netbox-go/models"
 )
 
 func (c *Client) ListRoles(opts models.ListRolesRequest) (*models.ListRolesResponse, error) {
-	request, err := http.NewRequest("GET", c.BaseUrl.String()+basePath+"roles/", nil)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"roles/", http.NoBody)
 	if err != nil {
 		return nil, err
 	}
 	c.SetAuthToken(&request.Header)
 	setListRolesParams(request, opts)
-	response, err := c.HttpClient.Do(request)
+	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
 	}
-	if response.StatusCode != 200 {
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("unexpected return code of %d", response.StatusCode)
 	}
 	resObj := models.ListRolesResponse{}
-	bytes, err := ioutil.ReadAll(response.Body)
+	bytes, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
 	}

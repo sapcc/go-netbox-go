@@ -5,12 +5,13 @@ import (
 	"fmt"
 
 	"github.com/go-openapi/strfmt"
+
 	"github.com/sapcc/go-netbox-go/common"
 )
 
 type NestedCable struct {
-	Id      int        `json:"id,omitempty"`
-	Url     strfmt.URI `json:"url,omitempty"`
+	ID      int        `json:"id,omitempty"`
+	URL     strfmt.URI `json:"url,omitempty"`
 	Display string     `json:"display,omitempty"`
 	Label   string     `json:"label,omitempty"`
 }
@@ -27,7 +28,7 @@ type Cable struct {
 	CustomFields       interface{}     `json:"custom_fields,omitempty"`
 	Description        string          `json:"description,omitempty"`
 	Display            string          `json:"display,omitempty"`
-	Id                 int             `json:"id,omitempty"`
+	ID                 int             `json:"id,omitempty"`
 	Label              string          `json:"label,omitempty"`
 	LastUpdated        strfmt.DateTime `json:"last_updated,omitempty"`
 	Length             float64         `json:"length,omitempty"`
@@ -36,7 +37,7 @@ type Cable struct {
 	Tags               []NestedTag     `json:"tags,omitempty"`
 	Tenant             NestedTenant    `json:"tenant,omitempty"`
 	Type               string          `json:"type,omitempty"`
-	Url                strfmt.URI      `json:"url,omitempty"`
+	URL                strfmt.URI      `json:"url,omitempty"`
 	Aterminations      []Termination
 	Bterminations      []Termination
 	AssignedObjectType string
@@ -51,7 +52,7 @@ type WriteableCable struct {
 	CustomFields  interface{}     `json:"custom_fields,omitempty"`
 	Description   string          `json:"description,omitempty"`
 	Display       string          `json:"display,omitempty"`
-	Id            int64           `json:"id,omitempty"`
+	ID            int64           `json:"id,omitempty"`
 	Label         string          `json:"label,omitempty"`
 	LastUpdated   strfmt.DateTime `json:"last_updated,omitempty"`
 	Length        float64         `json:"length,omitempty"`
@@ -60,7 +61,7 @@ type WriteableCable struct {
 	Tags          []NestedTag     `json:"tags,omitempty"`
 	Tenant        int64           `json:"tenant,omitempty"`
 	Type          string          `json:"type,omitempty"`
-	Url           strfmt.URI      `json:"url,omitempty"`
+	URL           strfmt.URI      `json:"url,omitempty"`
 }
 
 type LengthUnit struct {
@@ -75,12 +76,12 @@ type CableStatus struct {
 
 type Termination struct {
 	Interface  NestedInterface `json:"object,omitempty"`
-	ObjectId   int             `json:"object_id"`
+	ObjectID   int             `json:"object_id"`
 	ObjectType string          `json:"object_type"`
 }
 type ListCablesRequest struct {
 	common.ListParams
-	CableId   int
+	CableID   int
 	CableType string
 }
 
@@ -95,31 +96,31 @@ func (cable *Cable) UnmarshalJSON(b []byte) error {
 		return err
 	}
 
-	var a_terminations []Termination
-	if err := json.Unmarshal(tmp["a_terminations"], &a_terminations); err != nil {
+	var aTerminations []Termination
+	if err := json.Unmarshal(tmp["a_terminations"], &aTerminations); err != nil {
 		return err
 	}
 
 	var aterm []Termination
-	for term := range a_terminations {
-		if a_terminations[term].ObjectType != "dcim.interface" {
-			return fmt.Errorf("unknown assigned object type %v", a_terminations[term].ObjectType)
+	for term := range aTerminations {
+		if aTerminations[term].ObjectType != "dcim.interface" {
+			return fmt.Errorf("unknown assigned object type %v", aTerminations[term].ObjectType)
 		}
-		aterm = append(aterm, a_terminations[term])
+		aterm = append(aterm, aTerminations[term])
 	}
 	cable.Aterminations = aterm
 
-	var b_terminations []Termination
-	if err := json.Unmarshal(tmp["b_terminations"], &b_terminations); err != nil {
+	var bTerminations []Termination
+	if err := json.Unmarshal(tmp["b_terminations"], &bTerminations); err != nil {
 		return err
 	}
 
 	var bterm []Termination
-	for term := range b_terminations {
-		if b_terminations[term].ObjectType != "dcim.interface" {
-			return fmt.Errorf("unknown assigned object type %v", b_terminations[term].ObjectType)
+	for term := range bTerminations {
+		if bTerminations[term].ObjectType != "dcim.interface" {
+			return fmt.Errorf("unknown assigned object type %v", bTerminations[term].ObjectType)
 		}
-		bterm = append(bterm, b_terminations[term])
+		bterm = append(bterm, bTerminations[term])
 	}
 	cable.Bterminations = bterm
 
@@ -135,13 +136,13 @@ func (cable *Cable) UnmarshalJSON(b []byte) error {
 	if err := json.Unmarshal(tmp["id"], &id); err != nil {
 		return err
 	}
-	cable.Id = id
+	cable.ID = id
 
 	var url strfmt.URI
 	if err := json.Unmarshal(tmp["url"], &url); err != nil {
 		return err
 	}
-	cable.Url = url
+	cable.URL = url
 
 	var display string
 	if err := json.Unmarshal(tmp["display"], &display); err != nil {

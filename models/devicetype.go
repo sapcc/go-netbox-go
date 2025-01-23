@@ -2,6 +2,7 @@ package models
 
 import (
 	"github.com/go-openapi/strfmt"
+
 	"github.com/sapcc/go-netbox-go/common"
 )
 
@@ -10,8 +11,8 @@ type DeviceType struct {
 }
 
 type NestedDeviceType struct {
-	Id           int                `json:"id"`
-	Url          strfmt.URI         `json:"url"`
+	ID           int                `json:"id"`
+	URL          strfmt.URI         `json:"url"`
 	Manufacturer NestedManufacturer `json:"manufacturer"`
 	Model        string             `json:"model"`
 	Slug         string             `json:"slug"`

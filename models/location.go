@@ -9,7 +9,7 @@ type Location struct {
 	Description  string          `json:"description,omitempty"`
 	DeviceCount  int             `json:"device_count,omitempty"`
 	Display      string          `json:"display,omitempty"`
-	Id           int             `json:"id,omitempty"`
+	ID           int             `json:"id,omitempty"`
 	LastUpdated  strfmt.DateTime `json:"last_updated,omitempty"`
 	Name         string          `json:"name"`
 	Parent       NestedLocation  `json:"parent,omitempty"`
@@ -25,7 +25,7 @@ type Location struct {
 type NestedLocation struct {
 	Depth     int        `json:"_depth,omitempty"`
 	Display   string     `json:"display,omitempty"`
-	Id        int        `json:"id,omitempty"`
+	ID        int        `json:"id,omitempty"`
 	Name      string     `json:"name"`
 	RackCount int        `json:"rack_count,omitempty"`
 	Slug      string     `json:"slug"`

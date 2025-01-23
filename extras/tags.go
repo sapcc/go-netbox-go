@@ -1,30 +1,32 @@
 package extras
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 
 	"github.com/sapcc/go-netbox-go/models"
 )
 
 func (c *Client) ListTags(opts models.ListTagsRequest) (*models.ListTagsResponse, error) {
-	request, err := http.NewRequest("GET", c.BaseUrl.String()+basePath+"tags/", nil)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"tags/", http.NoBody)
 	if err != nil {
 		return nil, err
 	}
 	c.SetAuthToken(&request.Header)
 	setListTagsParams(request, opts)
-	response, err := c.HttpClient.Do(request)
+	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
 	}
-	if response.StatusCode != 200 {
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("unexpected return code of %d", response.StatusCode)
 	}
 	resObj := models.ListTagsResponse{}
-	byteses, err := ioutil.ReadAll(response.Body)
+	byteses, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -42,13 +44,13 @@ func (c *Client) ListTags(opts models.ListTagsRequest) (*models.ListTagsResponse
 // 	if err != nil {
 // 		return err
 // 	}
-// 	request, err := http.NewRequest("POST", c.BaseUrl.String()+basePath+"tags/", bytes.NewBuffer(body))
+// 	request, err := http.NewRequestWithContext(context.TODO(), "POST", c.BaseURL.String()+basePath+"tags/", bytes.NewBuffer(body))
 // 	fmt.Println(request)
 // 	if err != nil {
 // 		return err
 // 	}
 // 	c.SetAuthToken(&request.Header)
-// 	response, err := c.HttpClient.Do(request)
+// 	response, err := c.HTTPClient.Do(request)
 // 	fmt.Println("****")
 // 	fmt.Println(response)
 // 	fmt.Println("****")

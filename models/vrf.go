@@ -3,8 +3,8 @@ package models
 import "github.com/sapcc/go-netbox-go/common"
 
 type NestedVRF struct {
-	Id          int    `json:"id"`
-	Url         string `json:"url"`
+	ID          int    `json:"id"`
+	URL         string `json:"url"`
 	Name        string `json:"name"`
 	Rd          string `json:"rd"` // Route Distinguisher
 	DisplayName string `json:"display_name"`
@@ -20,7 +20,7 @@ type VRF struct {
 	CustomFields   interface{}  `json:"custom_fields"`
 	Created        string       `json:"created"`
 	LastUpdated    string       `json:"last_updated"`
-	IpAddressCount int          `json:"ipaddress_count"`
+	IPAddressCount int          `json:"ipaddress_count"`
 	PrefixCount    int          `json:"prefix_count"`
 }
 

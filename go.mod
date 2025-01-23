@@ -1,6 +1,6 @@
 module github.com/sapcc/go-netbox-go
 
-go 1.21
+go 1.23
 
 require (
 	github.com/go-openapi/strfmt v0.21.7

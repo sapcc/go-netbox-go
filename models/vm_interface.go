@@ -4,20 +4,21 @@ import (
 	"encoding/json"
 
 	"github.com/go-openapi/strfmt"
+
 	"github.com/sapcc/go-netbox-go/common"
 )
 
 type NestedVMInterface struct {
 	Display        string                `json:"display,omitempty"`
-	Id             int                   `json:"id,omitempty"`
+	ID             int                   `json:"id,omitempty"`
 	Name           string                `json:"name"`
 	URL            strfmt.URI            `json:"url,omitempty"`
 	VirtualMachine *NestedVirtualMachine `json:"virtual_machine,omitempty"`
 }
 type VMInterface struct {
 	Enabled        *bool                `json:"enabled,omitempty"`
-	Url            string               `json:"url"`
-	Id             int                  `json:"id"`
+	URL            string               `json:"url"`
+	ID             int                  `json:"id"`
 	Name           string               `json:"name"`
 	MTU            *int                 `json:"mtu,omitempty"`
 	MacAddress     *string              `json:"mac_address,omitempty"`
@@ -30,8 +31,8 @@ type VMInterface struct {
 }
 
 type WritableVMInterface struct {
-	Id             int         `json:"id,omitempty"`
-	Url            string      `json:"url,omitempty"`
+	ID             int         `json:"id,omitempty"`
+	URL            string      `json:"url,omitempty"`
 	VirtualMachine int         `json:"virtual_machine,omitempty"`
 	Name           string      `json:"name"`
 	Enabled        bool        `json:"enabled,omitempty"`
@@ -45,11 +46,10 @@ type WritableVMInterface struct {
 }
 
 func (vmi *VMInterface) Writeable() WritableVMInterface {
-
 	res := WritableVMInterface{
-		Id:             vmi.Id,
-		Url:            vmi.Url,
-		VirtualMachine: vmi.VirtualMachine.Id,
+		ID:             vmi.ID,
+		URL:            vmi.URL,
+		VirtualMachine: vmi.VirtualMachine.ID,
 		Name:           vmi.Name,
 	}
 	if vmi.MacAddress != nil {
@@ -68,11 +68,11 @@ func (vmi *VMInterface) Writeable() WritableVMInterface {
 		res.Mode = *vmi.Mode
 	}
 	if vmi.UntaggedVlan != nil {
-		res.UntaggedVlan = &vmi.UntaggedVlan.Id
+		res.UntaggedVlan = &vmi.UntaggedVlan.ID
 	}
 	var taggedVlans = make([]int, len(vmi.TaggedVlans))
 	for _, vlan := range vmi.TaggedVlans {
-		taggedVlans = append(taggedVlans, vlan.Id)
+		taggedVlans = append(taggedVlans, vlan.ID)
 	}
 	res.TaggedVlans = taggedVlans
 	res.Tags = vmi.Tags
@@ -82,7 +82,7 @@ func (vmi *VMInterface) Writeable() WritableVMInterface {
 
 type ListVMInterfacesRequest struct {
 	common.ListParams
-	VmId int
+	VMID int
 }
 
 type ListVMInterfacesResponse struct {
@@ -90,7 +90,7 @@ type ListVMInterfacesResponse struct {
 	Results []VMInterface `json:"results"`
 }
 
-func (vmIf *VMInterface) UnmarshalJSON(b []byte) error {
+func (vmi *VMInterface) UnmarshalJSON(b []byte) error {
 	var tmp map[string]json.RawMessage
 	if err := json.Unmarshal(b, &tmp); err != nil {
 		return err
@@ -100,69 +100,69 @@ func (vmIf *VMInterface) UnmarshalJSON(b []byte) error {
 		if err := json.Unmarshal(tmp["tags"], &tags); err != nil {
 			return err
 		}
-		vmIf.Tags = tags
+		vmi.Tags = tags
 	}
 	var vm NestedVirtualMachine
 	if err := json.Unmarshal(tmp["virtual_machine"], &vm); err != nil {
 		return err
 	}
-	vmIf.VirtualMachine = vm
+	vmi.VirtualMachine = vm
 	if _, ok := tmp["tagged_vlans"]; ok {
 		var tagVlan []NestedVLAN
 		if err := json.Unmarshal(tmp["tagged_vlans"], &tagVlan); err != nil {
 			return err
 		}
-		vmIf.TaggedVlans = tagVlan
+		vmi.TaggedVlans = tagVlan
 	}
 	if _, ok := tmp["untagged_vlan"]; ok {
 		var untagVlan NestedVLAN
 		if err := json.Unmarshal(tmp["untagged_vlan"], &untagVlan); err != nil {
 			return err
 		}
-		vmIf.UntaggedVlan = &untagVlan
+		vmi.UntaggedVlan = &untagVlan
 	}
 	var id int
 	if err := json.Unmarshal(tmp["id"], &id); err != nil {
 		return err
 	}
-	vmIf.Id = id
+	vmi.ID = id
 	var url string
 	if err := json.Unmarshal(tmp["url"], &url); err != nil {
 		return err
 	}
-	vmIf.Url = url
+	vmi.URL = url
 	var Name string
 	if err := json.Unmarshal(tmp["name"], &Name); err != nil {
 		return err
 	}
-	vmIf.Name = Name
+	vmi.Name = Name
 	if _, ok := tmp["description"]; ok {
 		var descr string
 		if err := json.Unmarshal(tmp["description"], &descr); err != nil {
 			return err
 		}
-		vmIf.Description = &descr
+		vmi.Description = &descr
 	}
 	if _, ok := tmp["mac_address"]; ok {
 		var mac string
 		if err := json.Unmarshal(tmp["mac_address"], &mac); err != nil {
 			return err
 		}
-		vmIf.MacAddress = &mac
+		vmi.MacAddress = &mac
 	}
 	if _, ok := tmp["mtu"]; ok {
 		var mtu int
 		if err := json.Unmarshal(tmp["mtu"], &mtu); err != nil {
 			return err
 		}
-		vmIf.MTU = &mtu
+		vmi.MTU = &mtu
 	}
 	if _, ok := tmp["enabled"]; ok {
 		var en bool
 		if err := json.Unmarshal(tmp["enabled"], &en); err != nil {
 			return err
 		}
-		vmIf.Enabled = &en
+		vmi.Enabled = &en
 	}
 	return nil
 }

@@ -1,11 +1,13 @@
 package dcim
 
 import (
-	"github.com/sapcc/go-netbox-go/models"
-	"github.com/seborama/govcr"
-	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"
+
+	"github.com/seborama/govcr"
+	"github.com/stretchr/testify/assert"
+
+	"github.com/sapcc/go-netbox-go/models"
 )
 
 func TestClient_ListDeviceRoles(t *testing.T) {
@@ -14,9 +16,9 @@ func TestClient_ListDeviceRoles(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HttpClient
+	vcrConf.Client = client.HTTPClient
 	vcr := govcr.NewVCR("ListDeviceRoles", vcrConf)
-	client.HttpClient = vcr.Client
+	client.HTTPClient = vcr.Client
 	opts := models.ListDeviceRolesRequest{}
 	res, err := client.ListDeviceRoles(opts)
 	if err != nil {

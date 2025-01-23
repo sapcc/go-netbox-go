@@ -3,12 +3,12 @@ package models
 import "github.com/sapcc/go-netbox-go/common"
 
 type NestedInterface struct {
-	Id     int          `json:"id"`
-	Url    string       `json:"url"`
+	ID     int          `json:"id"`
+	URL    string       `json:"url"`
 	Device NestedDevice `json:"device"`
 	Name   string       `json:"name"`
 	Cable  int          `json:"cable"`
-	//ConnectionStatus interface{}  `json:"connection_status"`
+	// ConnectionStatus interface{}  `json:"connection_status"`
 }
 
 type InterfaceMode struct {
@@ -45,9 +45,9 @@ type InterfaceType struct {
 type ListInterfacesRequest struct {
 	common.ListParams
 	Type       string
-	DeviceId   int
+	DeviceID   int
 	MacAddress string
-	LagId      int
+	LagID      int
 }
 
 type ListInterfacesResponse struct {

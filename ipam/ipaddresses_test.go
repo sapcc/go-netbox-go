@@ -4,9 +4,10 @@ import (
 	"os"
 	"testing"
 
-	"github.com/sapcc/go-netbox-go/models"
 	"github.com/seborama/govcr"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/sapcc/go-netbox-go/models"
 )
 
 func TestClient_ListIpAddresses(t *testing.T) {
@@ -15,42 +16,42 @@ func TestClient_ListIpAddresses(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HttpClient
+	vcrConf.Client = client.HTTPClient
 	vcr := govcr.NewVCR("ListIpAddresses", vcrConf)
-	client.HttpClient = vcr.Client
-	opts := models.ListIpAddressesRequest{}
-	res, err := client.ListIpAddresses(opts)
+	client.HTTPClient = vcr.Client
+	opts := models.ListIPAddressesRequest{}
+	res, err := client.ListIPAddresses(opts)
 	if err != nil {
 		t.Fatal(err)
 	}
-	//t.Log(res)
+	// t.Log(res)
 	assert.NotEqual(t, 0, res.Count)
 	opts.Role = "vip"
-	res, err = client.ListIpAddresses(opts)
+	res, err = client.ListIPAddresses(opts)
 	if err != nil {
 		t.Fatal(err)
 	}
-	//t.Log(res)
+	// t.Log(res)
 	assert.NotEqual(t, 0, res.Count)
 }
 
 func TestClient_CreateDeleteIpAddress(t *testing.T) {
-	wIp := models.WriteableIpAddress{}
-	wIp.Address = "199.199.199.199/32"
+	wIP := models.WriteableIPAddress{}
+	wIP.Address = "199.199.199.199/32"
 	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HttpClient
+	vcrConf.Client = client.HTTPClient
 	vcr := govcr.NewVCR("CreateDeleteIpAddress", vcrConf)
-	client.HttpClient = vcr.Client
-	res, err := client.CreateIpAddress(wIp)
+	client.HTTPClient = vcr.Client
+	res, err := client.CreateIPAddress(wIP)
 	if err != nil {
 		t.Fatal(err)
 	}
-	assert.NotEqual(t, 0, res.Id)
-	err = client.DeleteIpAddress(res.Id)
+	assert.NotEqual(t, 0, res.ID)
+	err = client.DeleteIPAddress(res.ID)
 	if err != nil {
 		t.Fatal(err)
 	}

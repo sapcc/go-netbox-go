@@ -1,11 +1,13 @@
 package tenancy
 
 import (
-	"github.com/sapcc/go-netbox-go/models"
-	"github.com/seborama/govcr"
-	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"
+
+	"github.com/seborama/govcr"
+	"github.com/stretchr/testify/assert"
+
+	"github.com/sapcc/go-netbox-go/models"
 )
 
 func TestClient_ListTenantGroups(t *testing.T) {
@@ -14,9 +16,9 @@ func TestClient_ListTenantGroups(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HttpClient
+	vcrConf.Client = client.HTTPClient
 	vcr := govcr.NewVCR("ListTenantGroups", vcrConf)
-	client.HttpClient = vcr.Client
+	client.HTTPClient = vcr.Client
 	opts := models.ListTenantGroupsRequest{}
 	res, err := client.ListTenantGroups(opts)
 	if err != nil {

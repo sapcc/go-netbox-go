@@ -1,29 +1,32 @@
 package dcim
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/sapcc/go-netbox-go/models"
-	"io/ioutil"
+	"io"
 	"net/http"
+
+	"github.com/sapcc/go-netbox-go/models"
 )
 
-func (c *Client) ListRacks (opts models.ListRacksRequest) (*models.ListRacksResponse, error) {
-	request, err := http.NewRequest("GET", c.BaseUrl.String() + basePath + "racks/", nil)
+func (c *Client) ListRacks(opts models.ListRacksRequest) (*models.ListRacksResponse, error) {
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"racks/", http.NoBody)
 	if err != nil {
 		return nil, err
 	}
 	c.SetAuthToken(&request.Header)
 	setListRacksParams(request, opts)
-	response, err := c.HttpClient.Do(request)
+	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
 	}
-	if response.StatusCode != 200 {
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("unexpected return code of %d", response.StatusCode)
 	}
 	resObj := models.ListRacksResponse{}
-	bytes, err := ioutil.ReadAll(response.Body)
+	bytes, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
 	}

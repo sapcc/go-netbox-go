@@ -2,9 +2,10 @@ package dcim
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strconv"
 
@@ -12,21 +13,22 @@ import (
 )
 
 func (c *Client) ListDevices(opts models.ListDevicesRequest) (*models.ListDevicesResponse, error) {
-	request, err := http.NewRequest("GET", c.BaseUrl.String()+basePath+"devices/", nil)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"devices/", http.NoBody)
 	if err != nil {
 		return nil, err
 	}
 	c.SetAuthToken(&request.Header)
 	setListDevicesParams(request, opts)
-	response, err := c.HttpClient.Do(request)
+	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
 	}
-	if response.StatusCode != 200 {
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("unexpected return code of %d", response.StatusCode)
 	}
 	var resObj = models.ListDevicesResponse{}
-	bytes, err := ioutil.ReadAll(response.Body)
+	bytes, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -41,14 +43,14 @@ func setListDevicesParams(req *http.Request, opts models.ListDevicesRequest) {
 	q := req.URL.Query()
 	opts.SetListParams(&q)
 
-	if opts.Id != 0 {
-		q.Set("id", strconv.Itoa(opts.Id))
+	if opts.ID != 0 {
+		q.Set("id", strconv.Itoa(opts.ID))
 	}
-	if opts.ClusterId != 0 {
-		q.Set("cluster_id", strconv.Itoa(opts.ClusterId))
+	if opts.ClusterID != 0 {
+		q.Set("cluster_id", strconv.Itoa(opts.ClusterID))
 	}
-	if opts.DeviceTypeId != 0 {
-		q.Set("device_type_id", strconv.Itoa(opts.DeviceTypeId))
+	if opts.DeviceTypeID != 0 {
+		q.Set("device_type_id", strconv.Itoa(opts.DeviceTypeID))
 	}
 	if opts.Site != "" {
 		q.Set("site", opts.Site)
@@ -59,33 +61,34 @@ func setListDevicesParams(req *http.Request, opts models.ListDevicesRequest) {
 	if opts.Name != "" {
 		q.Set("name", opts.Name)
 	}
-	if opts.RackId != 0 {
-		q.Set("rack_id", strconv.Itoa(opts.RackId))
+	if opts.RackID != 0 {
+		q.Set("rack_id", strconv.Itoa(opts.RackID))
 	}
 	if opts.Serial != "" {
 		q.Set("serial", opts.Serial)
 	}
-	if opts.RoleId != 0 {
-		q.Set("role_id", strconv.Itoa(opts.RoleId))
+	if opts.RoleID != 0 {
+		q.Set("role_id", strconv.Itoa(opts.RoleID))
 	}
 	req.URL.RawQuery = q.Encode()
 }
 
 func (c *Client) GetDevice(id int) (*models.Device, error) {
-	request, err := http.NewRequest("GET", c.BaseUrl.String()+basePath+"devices/"+strconv.Itoa(id)+"/?exclude=config_context", nil)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"devices/"+strconv.Itoa(id)+"/?exclude=config_context", http.NoBody)
 	if err != nil {
 		return nil, err
 	}
 	c.SetAuthToken(&request.Header)
-	response, err := c.HttpClient.Do(request)
+	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
 	}
-	if response.StatusCode != 200 {
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("unexpected return code of %d", response.StatusCode)
 	}
 	var resObj = models.Device{}
-	bytes, err := ioutil.ReadAll(response.Body)
+	bytes, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -97,20 +100,21 @@ func (c *Client) GetDevice(id int) (*models.Device, error) {
 }
 
 func (c *Client) GetDeviceWithContext(id int) (*models.Device, error) {
-	request, err := http.NewRequest("GET", c.BaseUrl.String()+basePath+"devices/"+strconv.Itoa(id)+"/", nil)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"devices/"+strconv.Itoa(id)+"/", http.NoBody)
 	if err != nil {
 		return nil, err
 	}
 	c.SetAuthToken(&request.Header)
-	response, err := c.HttpClient.Do(request)
+	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
 	}
-	if response.StatusCode != 200 {
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("unexpected return code of %d", response.StatusCode)
 	}
 	var resObj = models.Device{}
-	bytes, err := ioutil.ReadAll(response.Body)
+	bytes, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -126,21 +130,25 @@ func (c *Client) CreateDevice(dev models.WritableDeviceWithConfigContext) (*mode
 	if err != nil {
 		return nil, err
 	}
-	request, err := http.NewRequest("POST", c.BaseUrl.String()+basePath+"devices/", bytes.NewBuffer(body))
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPost, c.BaseURL.String()+basePath+"devices/", bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
 	c.SetAuthToken(&request.Header)
-	response, err := c.HttpClient.Do(request)
+	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
 	}
-	if response.StatusCode != 201 {
-		errBody, _ := ioutil.ReadAll(response.Body)
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusCreated {
+		errBody, err := io.ReadAll(response.Body)
+		if err != nil {
+			return nil, err
+		}
 		return nil, fmt.Errorf("unexpected response code of %d: %s", response.StatusCode, errBody)
 	}
 	resObj := models.Device{}
-	byteses, err := ioutil.ReadAll(response.Body)
+	byteses, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -152,17 +160,21 @@ func (c *Client) CreateDevice(dev models.WritableDeviceWithConfigContext) (*mode
 }
 
 func (c *Client) DeleteDevice(id int) error {
-	request, err := http.NewRequest("DELETE", c.BaseUrl.String()+basePath+"devices/"+strconv.Itoa(id)+"/", nil)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodDelete, c.BaseURL.String()+basePath+"devices/"+strconv.Itoa(id)+"/", http.NoBody)
 	if err != nil {
 		return err
 	}
 	c.SetAuthToken(&request.Header)
-	response, err := c.HttpClient.Do(request)
+	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return err
 	}
-	if response.StatusCode != 204 {
-		errBody, _ := ioutil.ReadAll(response.Body)
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusNoContent {
+		errBody, err := io.ReadAll(response.Body)
+		if err != nil {
+			return err
+		}
 		return fmt.Errorf("unexpected return code of %d: %s", response.StatusCode, errBody)
 	}
 	return nil
@@ -173,21 +185,25 @@ func (c *Client) UpdateDevice(dev models.WritableDeviceWithConfigContext) (*mode
 	if err != nil {
 		return nil, err
 	}
-	request, err := http.NewRequest("PATCH", c.BaseUrl.String()+basePath+"devices/"+strconv.Itoa(dev.Id)+"/", bytes.NewBuffer(body))
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPatch, c.BaseURL.String()+basePath+"devices/"+strconv.Itoa(dev.ID)+"/", bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
 	c.SetAuthToken(&request.Header)
-	response, err := c.HttpClient.Do(request)
+	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
 	}
-	if response.StatusCode != 200 {
-		errBody, _ := ioutil.ReadAll(response.Body)
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
+		errBody, err := io.ReadAll(response.Body)
+		if err != nil {
+			return nil, err
+		}
 		return nil, fmt.Errorf("unexpected return code of %d: %s", response.StatusCode, errBody)
 	}
 	resObj := models.Device{}
-	byteses, err := ioutil.ReadAll(response.Body)
+	byteses, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -200,20 +216,21 @@ func (c *Client) UpdateDevice(dev models.WritableDeviceWithConfigContext) (*mode
 
 /*
 func (c *Client) ListDevicesByCluster(id int) (*models.ListDevicesResponse, error) {
-	request, err := http.NewRequest("GET", c.BaseUrl.String() + basePath + "devices/?cluster_id=" + strconv.Itoa(id), nil )
+	request, err := http.NewRequestWithContext(context.TODO(), "GET", c.BaseURL.String() + basePath + "devices/?cluster_id=" + strconv.Itoa(id), nil )
 	if err != nil {
 		return nil, err
 	}
 	c.SetAuthToken(&request.Header)
-	response, err := c.HttpClient.Do(request)
+	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
 	}
+	defer response.Body.Close()
 	if response.StatusCode != 200 {
 		return nil, fmt.Errorf("unexpected return code of %d", response.StatusCode)
 	}
 	var resObj = models.ListDevicesResponse{}
-	bytes, err := ioutil.ReadAll(response.Body)
+	bytes, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
 	}
