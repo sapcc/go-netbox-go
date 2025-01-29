@@ -38,7 +38,7 @@ type NestedTenantGroup struct {
 	URL         string `json:"url"`
 	Name        string `json:"name"`
 	Slug        string `json:"slug"`
-	TenantCount string `json:"tenant_count,omitempty"`
+	TenantCount int    `json:"tenant_count,omitempty"`
 }
 
 type ListTenantGroupsRequest struct {

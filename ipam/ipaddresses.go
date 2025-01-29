@@ -33,6 +33,7 @@ func (c *Client) ListIPAddresses(opts models.ListIPAddressesRequest) (*models.Li
 	if err != nil {
 		return nil, err
 	}
+	fmt.Println(request.URL)
 	c.SetAuthToken(&request.Header)
 	setListIPAddressesParams(request, opts)
 	response, err := c.HTTPClient.Do(request)
@@ -40,6 +41,7 @@ func (c *Client) ListIPAddresses(opts models.ListIPAddressesRequest) (*models.Li
 		return nil, err
 	}
 	defer response.Body.Close()
+	fmt.Println(response.StatusCode)
 	if response.StatusCode != http.StatusOK {
 		errBody, err := io.ReadAll(response.Body)
 		if err != nil {
@@ -76,11 +78,11 @@ func (c *Client) GetIPAdress(id int) (*models.IPAddress, error) {
 	resObj := models.IPAddress{}
 	bytes, err := io.ReadAll(response.Body)
 	if err != nil {
-		return nil, nil
+		return nil, err
 	}
 	err = json.Unmarshal(bytes, &resObj)
 	if err != nil {
-		return nil, nil
+		return nil, err
 	}
 	return &resObj, nil
 }

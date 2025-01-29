@@ -91,10 +91,19 @@ type CableStatus struct {
 }
 
 type Termination struct {
-	Interface  NestedInterface `json:"object,omitempty"`
-	ObjectID   int             `json:"object_id"`
-	ObjectType string          `json:"object_type"`
+	Object     TerminationObject `json:"object,omitempty"`
+	ObjectID   int               `json:"object_id"`
+	ObjectType string            `json:"object_type"`
 }
+
+type TerminationObject struct {
+	ID     int          `json:"id"`
+	URL    string       `json:"url"`
+	Device NestedDevice `json:"device"`
+	Name   string       `json:"name"`
+	Cable  NestedCable  `json:"cable"`
+}
+
 type ListCablesRequest struct {
 	common.ListParams
 	CableID   int

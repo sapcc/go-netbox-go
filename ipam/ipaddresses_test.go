@@ -26,6 +26,22 @@ import (
 	"github.com/sapcc/go-netbox-go/models"
 )
 
+func TestClient_GetIpAddress(t *testing.T) {
+	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	if err != nil {
+		t.Fatal(err)
+	}
+	vcrConf := &govcr.VCRConfig{}
+	vcrConf.Client = client.HTTPClient
+	vcr := govcr.NewVCR("GetIpAddresses", vcrConf)
+	client.HTTPClient = vcr.Client
+	res, err := client.GetIPAdress(41797)
+	t.Log(res)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(res)
+}
 func TestClient_ListIpAddresses(t *testing.T) {
 	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
@@ -37,10 +53,10 @@ func TestClient_ListIpAddresses(t *testing.T) {
 	client.HTTPClient = vcr.Client
 	opts := models.ListIPAddressesRequest{}
 	res, err := client.ListIPAddresses(opts)
+	t.Log(res)
 	if err != nil {
 		t.Fatal(err)
 	}
-	// t.Log(res)
 	assert.NotEqual(t, 0, res.Count)
 	opts.Role = "vip"
 	res, err = client.ListIPAddresses(opts)
