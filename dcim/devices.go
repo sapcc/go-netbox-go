@@ -29,7 +29,7 @@ import (
 )
 
 func (c *Client) ListDevices(opts models.ListDevicesRequest) (*models.ListDevicesResponse, error) {
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"devices/", http.NoBody)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"devices/?exclude=config_context", http.NoBody)
 	if err != nil {
 		return nil, err
 	}
