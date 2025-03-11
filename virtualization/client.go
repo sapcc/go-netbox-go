@@ -54,24 +54,14 @@ type Client struct {
 
 // Deprecated: Please use the new NewClient function instead.
 func New(baseURL, authToken string, insecureSkipVerify bool) (*Client, error) {
-	u, err := url.Parse(baseURL)
-	if err != nil {
-		return nil, err
-	}
-	tr := http.DefaultTransport.(*http.Transport)
-	tr.TLSClientConfig = &tls.Config{
-		InsecureSkipVerify: insecureSkipVerify, // #nosec
-	}
-	res := &Client{}
-	res.BaseURL = *u
-	res.HTTPClient = &http.Client{
-		Transport: tr,
-	}
-	res.AuthToken = authToken
-	return res, nil
+	return createClient(baseURL, authToken, insecureSkipVerify)
 }
 
 func NewClient(baseURL, authToken string, insecureSkipVerify bool) (API, error) {
+	return createClient(baseURL, authToken, insecureSkipVerify)
+}
+
+func createClient(baseURL, authToken string, insecureSkipVerify bool) (*Client, error) {
 	u, err := url.Parse(baseURL)
 	if err != nil {
 		return nil, err
