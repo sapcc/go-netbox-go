@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package tenancy
+package tenancy_test
 
 import (
 	"os"
@@ -24,10 +24,11 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"github.com/sapcc/go-netbox-go/models"
+	"github.com/sapcc/go-netbox-go/tenancy"
 )
 
 func TestClient_ListTenantGroups(t *testing.T) {
-	client, err := NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := tenancy.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}

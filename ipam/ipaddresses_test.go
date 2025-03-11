@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package ipam
+package ipam_test
 
 import (
 	"os"
@@ -23,11 +23,12 @@ import (
 	"github.com/seborama/govcr"
 	"github.com/stretchr/testify/assert"
 
+	"github.com/sapcc/go-netbox-go/ipam"
 	"github.com/sapcc/go-netbox-go/models"
 )
 
 func TestClient_GetIpAddress(t *testing.T) {
-	client, err := NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := ipam.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -43,7 +44,7 @@ func TestClient_GetIpAddress(t *testing.T) {
 	t.Log(res)
 }
 func TestClient_ListIpAddresses(t *testing.T) {
-	client, err := NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := ipam.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -70,7 +71,7 @@ func TestClient_ListIpAddresses(t *testing.T) {
 func TestClient_CreateDeleteIpAddress(t *testing.T) {
 	wIP := models.WriteableIPAddress{}
 	wIP.Address = "199.199.199.199/32"
-	client, err := NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := ipam.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}

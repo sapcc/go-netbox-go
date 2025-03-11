@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dcim
+package dcim_test
 
 import (
 	"os"
@@ -23,11 +23,12 @@ import (
 	"github.com/seborama/govcr"
 	"github.com/stretchr/testify/assert"
 
+	"github.com/sapcc/go-netbox-go/dcim"
 	"github.com/sapcc/go-netbox-go/models"
 )
 
 func TestClient_ListInterfaces(t *testing.T) {
-	client, err := NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := dcim.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -47,7 +48,7 @@ func TestClient_ListInterfaces(t *testing.T) {
 }
 
 func TestClient_CreateDeleteInterface(t *testing.T) {
-	client, err := NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := dcim.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}

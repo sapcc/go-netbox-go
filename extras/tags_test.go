@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package extras
+package extras_test
 
 import (
 	"os"
@@ -23,11 +23,12 @@ import (
 	"github.com/seborama/govcr"
 	"github.com/stretchr/testify/assert"
 
+	"github.com/sapcc/go-netbox-go/extras"
 	"github.com/sapcc/go-netbox-go/models"
 )
 
 func TestClient_ListTags(t *testing.T) {
-	client, err := NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := extras.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -47,7 +48,7 @@ func TestClient_ListTags(t *testing.T) {
 // Permission issue in netbox - not allwed to create tags
 
 // func TestClient_CreateTag(t *testing.T) {
-// 	client, err := NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+// 	client, err := extras.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 // 	if err != nil {
 // 		t.Fatal(err)
 // 	}

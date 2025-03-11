@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dcim
+package dcim_test
 
 import (
 	"fmt"
@@ -23,11 +23,12 @@ import (
 
 	"github.com/seborama/govcr"
 
+	"github.com/sapcc/go-netbox-go/dcim"
 	"github.com/sapcc/go-netbox-go/models"
 )
 
 func TestClient_GetCable(t *testing.T) {
-	client, err := NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := dcim.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -43,7 +44,7 @@ func TestClient_GetCable(t *testing.T) {
 }
 
 func TestClient_CreateDeleteCable(t *testing.T) {
-	client, err := NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := dcim.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -87,7 +88,7 @@ func TestClient_CreateDeleteCable(t *testing.T) {
 }
 
 func TestClient_UpdateCable(t *testing.T) {
-	client, err := NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := dcim.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}

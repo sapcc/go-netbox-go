@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package virtualization
+package virtualization_test
 
 import (
 	"os"
@@ -27,10 +27,11 @@ import (
 	"github.com/sapcc/go-netbox-go/ipam"
 	"github.com/sapcc/go-netbox-go/models"
 	"github.com/sapcc/go-netbox-go/tenancy"
+	"github.com/sapcc/go-netbox-go/virtualization"
 )
 
 func TestClient_GetVirtualMachine(t *testing.T) {
-	client, err := NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := virtualization.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -46,7 +47,7 @@ func TestClient_GetVirtualMachine(t *testing.T) {
 }
 
 func TestClient_ListVirtualMachines(t *testing.T) {
-	client, err := NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := virtualization.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -67,7 +68,7 @@ func TestClient_ListVirtualMachines(t *testing.T) {
 }
 
 func TestClient_CreateDeleteVirtualMachine(t *testing.T) {
-	client, err := NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := virtualization.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}

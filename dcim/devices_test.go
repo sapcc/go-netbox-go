@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dcim
+package dcim_test
 
 import (
 	"os"
@@ -23,11 +23,12 @@ import (
 	"github.com/seborama/govcr"
 	"github.com/stretchr/testify/assert"
 
+	"github.com/sapcc/go-netbox-go/dcim"
 	"github.com/sapcc/go-netbox-go/models"
 )
 
 func TestClient_GetDevice(t *testing.T) {
-	client, err := NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := dcim.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -43,7 +44,7 @@ func TestClient_GetDevice(t *testing.T) {
 }
 
 func TestClient_GetDeviceWithContext(t *testing.T) {
-	client, err := NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := dcim.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -58,7 +59,7 @@ func TestClient_GetDeviceWithContext(t *testing.T) {
 	t.Log(res.Name)
 }
 func TestClient_ListDevices(t *testing.T) {
-	client, err := NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := dcim.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -76,7 +77,7 @@ func TestClient_ListDevices(t *testing.T) {
 }
 
 func TestClient_ListDevicesByCluster(t *testing.T) {
-	client, err := NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := dcim.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -97,7 +98,7 @@ func TestClient_ListDevicesByCluster(t *testing.T) {
 }
 
 func TestClient_CreateDeleteDevice(t *testing.T) {
-	client, err := NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := dcim.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
