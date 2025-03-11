@@ -28,6 +28,8 @@ import (
 const basePath = "/api/extras/"
 
 type API interface {
+	common.Base
+
 	// tags
 	ListTags(opts models.ListTagsRequest) (*models.ListTagsResponse, error)
 }
@@ -36,7 +38,26 @@ type Client struct {
 	common.Client
 }
 
+// Deprecated: Please use the new NewClient function instead.
 func New(baseURL, authToken string, insecureSkipVerify bool) (*Client, error) {
+	u, err := url.Parse(baseURL)
+	if err != nil {
+		return nil, err
+	}
+	tr := http.DefaultTransport.(*http.Transport)
+	tr.TLSClientConfig = &tls.Config{
+		InsecureSkipVerify: insecureSkipVerify, // #nosec
+	}
+	res := &Client{}
+	res.BaseURL = *u
+	res.HTTPClient = &http.Client{
+		Transport: tr,
+	}
+	res.AuthToken = authToken
+	return res, nil
+}
+
+func NewClient(baseURL, authToken string, insecureSkipVerify bool) (API, error) {
 	u, err := url.Parse(baseURL)
 	if err != nil {
 		return nil, err
