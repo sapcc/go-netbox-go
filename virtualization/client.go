@@ -28,7 +28,7 @@ import (
 const basePath = "/api/virtualization/"
 
 type API interface {
-	common.Common
+	common.Base
 
 	// cluster
 	ListClusters(opts models.ListClusterRequest) (*models.ListClusterResponse, error)

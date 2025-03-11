@@ -28,7 +28,7 @@ import (
 const basePath = "/api/ipam/"
 
 type API interface {
-	common.Common
+	common.Base
 
 	// ip-addresses
 	ListIPAddresses(opts models.ListIPAddressesRequest) (*models.ListIPAddressesResponse, error)

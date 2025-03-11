@@ -37,7 +37,7 @@ func (c *Client) CreateVirtualMachine(vm models.WriteableVirtualMachine) (*model
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
@@ -71,7 +71,7 @@ func (c *Client) UpdateVirtualMachine(vm models.WriteableVirtualMachine) (*model
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
@@ -101,7 +101,7 @@ func (c *Client) DeleteVirtualMachine(id int) error {
 	if err != nil {
 		return err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return err
@@ -122,7 +122,7 @@ func (c *Client) GetVirtualMachine(id int) (*models.VirtualMachine, error) {
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
@@ -152,7 +152,7 @@ func (c *Client) ListVirtualMachines(opts models.ListVirtualMachinesRequest) (*m
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	setListVirtualMachinesParams(request, opts)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {

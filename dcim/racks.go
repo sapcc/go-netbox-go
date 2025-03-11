@@ -31,7 +31,7 @@ func (c *Client) ListRacks(opts models.ListRacksRequest) (*models.ListRacksRespo
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	setListRacksParams(request, opts)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {

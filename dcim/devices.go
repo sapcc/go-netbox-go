@@ -33,7 +33,7 @@ func (c *Client) ListDevices(opts models.ListDevicesRequest) (*models.ListDevice
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	setListDevicesParams(request, opts)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
@@ -94,7 +94,7 @@ func (c *Client) GetDevice(id int) (*models.Device, error) {
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
@@ -120,7 +120,7 @@ func (c *Client) GetDeviceWithContext(id int) (*models.Device, error) {
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
@@ -150,7 +150,7 @@ func (c *Client) CreateDevice(dev models.WritableDeviceWithConfigContext) (*mode
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
@@ -180,7 +180,7 @@ func (c *Client) DeleteDevice(id int) error {
 	if err != nil {
 		return err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return err
@@ -205,7 +205,7 @@ func (c *Client) UpdateDevice(dev models.WritableDeviceWithConfigContext) (*mode
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
@@ -236,7 +236,7 @@ func (c *Client) ListDevicesByCluster(id int) (*models.ListDevicesResponse, erro
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err

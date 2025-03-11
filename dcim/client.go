@@ -28,7 +28,7 @@ import (
 const basePath = "/api/dcim/"
 
 type API interface {
-	common.Common
+	common.Base
 
 	// cables
 	GetCable(id int) (*models.Cable, error)

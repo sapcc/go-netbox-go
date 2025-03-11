@@ -32,7 +32,7 @@ func (c *Client) ListVlans(opts models.ListVlanRequest) (*models.ListVlanRespons
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	setVlanParams(request, opts)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
@@ -59,7 +59,7 @@ func (c *Client) GetVlan(id int) (*models.Vlan, error) {
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err

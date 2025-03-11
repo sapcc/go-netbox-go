@@ -32,7 +32,7 @@ func (c *Client) ListSiteGroups(opts models.ListSiteGroupsRequest) (*models.List
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	setListSiteGroupsParams(request, opts)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
@@ -68,7 +68,7 @@ func (c *Client) GetSiteGroup(id int) (*models.SiteGroup, error) {
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err

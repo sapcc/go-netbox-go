@@ -32,7 +32,7 @@ func (c *Client) GetTenant(id int) (*models.Tenant, error) {
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
@@ -58,7 +58,7 @@ func (c *Client) ListTenants(opts models.ListTenantsRequest) (*models.ListTenant
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	setListTenantsParams(request, opts)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {

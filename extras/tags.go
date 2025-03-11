@@ -31,7 +31,7 @@ func (c *Client) ListTags(opts models.ListTagsRequest) (*models.ListTagsResponse
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	setListTagsParams(request, opts)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
@@ -65,7 +65,7 @@ func (c *Client) ListTags(opts models.ListTagsRequest) (*models.ListTagsResponse
 // 	if err != nil {
 // 		return err
 // 	}
-// 	c.SetAuthToken(&request.Header)
+// 	c.ApplyAuthTokenToHeader(&request.Header)
 // 	response, err := c.HTTPClient.Do(request)
 // 	fmt.Println("****")
 // 	fmt.Println(response)

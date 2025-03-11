@@ -31,7 +31,7 @@ func (c *Client) ListTenantGroups(opts models.ListTenantGroupsRequest) (*models.
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	setListTenantGroupParams(request, opts)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {

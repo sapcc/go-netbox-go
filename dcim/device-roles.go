@@ -31,7 +31,7 @@ func (c *Client) ListDeviceRoles(opts models.ListDeviceRolesRequest) (*models.Li
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	setListDeviceRolesParams(request, opts)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {

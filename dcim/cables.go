@@ -33,7 +33,7 @@ func (c *Client) GetCable(id int) (*models.Cable, error) {
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
@@ -63,7 +63,7 @@ func (c *Client) CreateCable(cable models.WriteableCable) (*models.Cable, error)
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
@@ -93,7 +93,7 @@ func (c *Client) DeleteCable(id int) error {
 	if err != nil {
 		return err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return err
@@ -118,7 +118,7 @@ func (c *Client) UpdateCable(cable models.WriteableCable) (*models.Cable, error)
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err

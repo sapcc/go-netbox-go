@@ -32,7 +32,7 @@ func (c *Client) ListSites(opts models.ListSitesRequest) (*models.ListSitesRespo
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	setListSitesParams(request, opts)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
@@ -68,7 +68,7 @@ func (c *Client) GetSite(id int) (*models.Site, error) {
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err

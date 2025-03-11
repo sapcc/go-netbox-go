@@ -28,7 +28,7 @@ import (
 const basePath = "/api/tenancy/"
 
 type API interface {
-	common.Common
+	common.Base
 
 	// tenant group
 	ListTenantGroups(opts models.ListTenantGroupsRequest) (*models.ListTenantGroupsResponse, error)

@@ -22,22 +22,15 @@ import (
 	"strconv"
 )
 
-type Common interface {
-	GetBaseURL() url.URL
+type Base interface {
 	GetHTTPClient() *http.Client
 	SetHTTPClient(httpClient *http.Client)
-	GetAuthToken() string
-	SetAuthToken(header *http.Header)
 }
 
 type Client struct {
 	HTTPClient *http.Client
 	BaseURL    url.URL
 	AuthToken  string
-}
-
-func (c *Client) GetBaseURL() url.URL {
-	return c.BaseURL
 }
 
 func (c *Client) GetHTTPClient() *http.Client {
@@ -48,11 +41,7 @@ func (c *Client) SetHTTPClient(httpClient *http.Client) {
 	c.HTTPClient = httpClient
 }
 
-func (c *Client) GetAuthToken() string {
-	return c.AuthToken
-}
-
-func (c *Client) SetAuthToken(header *http.Header) {
+func (c *Client) ApplyAuthTokenToHeader(header *http.Header) {
 	header.Add("Authorization", "Token "+c.AuthToken)
 	header.Set("Content-Type", "application/json")
 }

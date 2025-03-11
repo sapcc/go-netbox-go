@@ -33,7 +33,7 @@ func (c *Client) ListIPAddresses(opts models.ListIPAddressesRequest) (*models.Li
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	setListIPAddressesParams(request, opts)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
@@ -64,7 +64,7 @@ func (c *Client) GetIPAdress(id int) (*models.IPAddress, error) {
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
@@ -121,7 +121,7 @@ func (c *Client) CreateIPAddress(address models.WriteableIPAddress) (*models.IPA
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
@@ -155,7 +155,7 @@ func (c *Client) UpdateIPAddress(address models.WriteableIPAddress) (*models.IPA
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
@@ -185,7 +185,7 @@ func (c *Client) DeleteIPAddress(id int) error {
 	if err != nil {
 		return err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return err

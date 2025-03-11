@@ -33,7 +33,7 @@ func (c *Client) ListPrefixes(opts models.ListPrefixesRequest) (*models.ListPref
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	setListPrefixesParams(request, opts)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
@@ -68,7 +68,7 @@ func (c *Client) CreatePrefix(prefix models.WriteablePrefix) (*models.Prefix, er
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
@@ -98,7 +98,7 @@ func (c *Client) ListAvailableIps(id int) ([]models.AvailableIP, error) {
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
@@ -132,7 +132,7 @@ func (c *Client) CreateAvailablePrefix(id int, opts models.CreateAvailablePrefix
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
@@ -166,7 +166,7 @@ func (c *Client) UpdatePrefix(prefix models.WriteablePrefix) (*models.Prefix, er
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
@@ -196,7 +196,7 @@ func (c *Client) DeletePrefix(id int) error {
 	if err != nil {
 		return err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return err

@@ -33,7 +33,7 @@ func (c *Client) ListInterfaces(opts models.ListInterfacesRequest) (*models.List
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	setListInterfacesParams(request, opts)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
@@ -82,7 +82,7 @@ func (c *Client) UpdateInterface(interf models.WritableInterface, id int) (*mode
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
@@ -116,7 +116,7 @@ func (c *Client) CreateInterface(interf models.WritableInterface) (*models.Inter
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
@@ -146,7 +146,7 @@ func (c *Client) DeleteInterface(id int) error {
 	if err != nil {
 		return err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return err

@@ -32,7 +32,7 @@ func (c *Client) ListRegions(opts models.ListRegionsRequest) (*models.ListRegion
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	setListRegionsParams(request, opts)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
@@ -71,7 +71,7 @@ func (c *Client) GetRegion(id int) (*models.Region, error) {
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err

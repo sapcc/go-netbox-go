@@ -37,7 +37,7 @@ func (c *Client) CreateVMInterface(vmni models.WritableVMInterface) (*models.VMI
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
@@ -71,7 +71,7 @@ func (c *Client) UpdateVMInterface(vmi models.WritableVMInterface) (*models.VMIn
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
@@ -101,7 +101,7 @@ func (c *Client) DeleteVMInterface(id int) error {
 	if err != nil {
 		return err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return err
@@ -122,7 +122,7 @@ func (c *Client) ListVMInterfaces(opts models.ListVMInterfacesRequest) (*models.
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	setListVMInterfacesParams(request, opts)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
@@ -158,7 +158,7 @@ func (c *Client) GetVMInterface(id int) (*models.VMInterface, error) {
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return nil, err
