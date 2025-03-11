@@ -79,7 +79,6 @@ func New(baseURL, authToken string, insecureSkipVerify bool) (*Client, error) {
 	return res, nil
 }
 
-// Deprecated: Please use the new NewClient function instead.
 func NewClient(baseURL, authToken string, insecureSkipVerify bool) (API, error) {
 	u, err := url.Parse(baseURL)
 	if err != nil {
