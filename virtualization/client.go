@@ -22,9 +22,29 @@ import (
 	"net/url"
 
 	"github.com/sapcc/go-netbox-go/common"
+	"github.com/sapcc/go-netbox-go/models"
 )
 
 const basePath = "/api/virtualization/"
+
+type API interface {
+	// cluster
+	ListClusters(opts models.ListClusterRequest) (*models.ListClusterResponse, error)
+
+	// virtual machines
+	CreateVirtualMachine(vm models.WriteableVirtualMachine) (*models.VirtualMachine, error)
+	UpdateVirtualMachine(vm models.WriteableVirtualMachine) (*models.VirtualMachine, error)
+	DeleteVirtualMachine(id int) error
+	GetVirtualMachine(id int) (*models.VirtualMachine, error)
+	ListVirtualMachines(opts models.ListVirtualMachinesRequest) (*models.ListVirtualMachinesResponse, error)
+
+	// vm interfaces
+	CreateVMInterface(vmni models.WritableVMInterface) (*models.VMInterface, error)
+	UpdateVMInterface(vmi models.WritableVMInterface) (*models.VMInterface, error)
+	DeleteVMInterface(id int)
+	ListVMInterfaces(opts models.ListVMInterfacesRequest) (*models.ListVMInterfacesResponse, error)
+	GetVMInterface(id int) (*models.VMInterface, error)
+}
 
 type Client struct {
 	common.Client

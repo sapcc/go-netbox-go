@@ -22,9 +22,15 @@ import (
 	"net/url"
 
 	"github.com/sapcc/go-netbox-go/common"
+	"github.com/sapcc/go-netbox-go/models"
 )
 
 const basePath = "/api/extras/"
+
+type API interface {
+	// tags
+	ListTags(opts models.ListTagsRequest) (*models.ListTagsResponse, error)
+}
 
 type Client struct {
 	common.Client

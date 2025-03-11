@@ -22,9 +22,19 @@ import (
 	"net/url"
 
 	"github.com/sapcc/go-netbox-go/common"
+	"github.com/sapcc/go-netbox-go/models"
 )
 
 const basePath = "/api/tenancy/"
+
+type API interface {
+	// tenant group
+	ListTenantGroups(opts models.ListTenantGroupsRequest) (*models.ListTenantGroupsResponse, error)
+
+	// tenants
+	GetTenant(id int) (*models.Tenant, error)
+	ListTenants(opts models.ListTenantsRequest) (*models.ListTenantsResponse, error)
+}
 
 type Client struct {
 	common.Client

@@ -22,9 +22,37 @@ import (
 	"net/url"
 
 	"github.com/sapcc/go-netbox-go/common"
+	"github.com/sapcc/go-netbox-go/models"
 )
 
 const basePath = "/api/ipam/"
+
+type API interface {
+	// ip-addresses
+	ListIPAddresses(opts models.ListIPAddressesRequest) (*models.ListIPAddressesResponse, error)
+	GetIPAddress(id int) (*models.IPAddress, error)
+	CreateIPAddress(ip models.WriteableIPAddress) (*models.IPAddress, error)
+	UpdateIPAddress(address models.WriteableIPAddress) (*models.IPAddress, error)
+	DeleteIPAddress(id int) error
+
+	// prefixes
+	ListPrefixes(opts models.ListPrefixesRequest) (*models.ListPrefixesReponse, error)
+	CreatePrefix(prefix models.WriteablePrefix) (*models.Prefix, error)
+	ListAvailableIps(id int) ([]models.AvailableIP, error)
+	CreateAvailablePrefix(id int, opts models.CreateAvailablePrefixRequest) (*models.Prefix, error)
+	UpdatePrefix(prefix models.WriteablePrefix) (*models.Prefix, error)
+	DeletePrefix(id int) error
+
+	// roles
+	ListRoles(opts models.ListRolesRequest) (*models.ListRolesResponse, error)
+
+	// vlan
+	ListVlans(opts models.ListVlanRequest) (*models.ListVlanResponse, error)
+	GetVlan(id int) (*models.Vlan, error)
+
+	// vrfs
+	ListVRFs(opts models.ListVRFsRequest) (*models.ListVRFsResponse, error)
+}
 
 type Client struct {
 	common.Client
