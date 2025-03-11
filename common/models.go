@@ -27,6 +27,7 @@ type Common interface {
 	GetHTTPClient() *http.Client
 	SetHTTPClient(httpClient *http.Client)
 	GetAuthToken() string
+	SetAuthToken(header *http.Header)
 }
 
 type Client struct {
