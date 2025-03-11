@@ -32,9 +32,9 @@ func TestClient_GetVlan(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.GetHTTPClient()
 	vcr := govcr.NewVCR("GetVlan", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	res, err := client.GetVlan(318)
 	if err != nil {
 		t.Fatal(err)
@@ -48,9 +48,9 @@ func TestClient_ListVlans(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.GetHTTPClient()
 	vcr := govcr.NewVCR("ListVlans", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	opts := models.ListVlanRequest{}
 	opts.ID = 1661
 	res, err := client.ListVlans(opts)

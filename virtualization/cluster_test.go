@@ -32,9 +32,9 @@ func TestClient_ListClusters(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.GetHTTPClient()
 	vcr := govcr.NewVCR("ListClusters", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	opts := models.ListClusterRequest{}
 	// opts.VmID = 1060
 	opts.ID = 632
@@ -53,9 +53,9 @@ func TestClient_ListClusterByType(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = clint.HTTPClient
+	vcrConf.Client = clint.GetHTTPClient()
 	vcr := govcr.NewVCR("ListClusterByType", vcrConf)
-	clint.HTTPClient = vcr.Client
+	clint.SetHTTPClient(vcr.Client)
 	opts := models.ListClusterRequest{
 		Region: "ap-ae-1",
 		Type:   "cc-k8s-controlplane-swift",

@@ -32,9 +32,9 @@ func TestClient_ListVRFs(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.GetHTTPClient()
 	vcr := govcr.NewVCR("ListVRFs", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	opts := models.ListVRFsRequest{}
 	res, err := client.ListVRFs(opts)
 	if err != nil {

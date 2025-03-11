@@ -32,9 +32,9 @@ func TestClient_GetCable(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.GetHTTPClient()
 	vcr := govcr.NewVCR("GetCable", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	res, err := client.GetCable(2026) // 2026
 	if err != nil {
 		t.Fatal(err)
@@ -48,9 +48,9 @@ func TestClient_CreateDeleteCable(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.GetHTTPClient()
 	vcr := govcr.NewVCR("CreateDeleteCable", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 
 	wCable := models.WriteableCable{}
 	wCable.Type = "cat6"
@@ -92,9 +92,9 @@ func TestClient_UpdateCable(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.GetHTTPClient()
 	vcr := govcr.NewVCR("CreateDeleteCable", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 
 	wCable := models.WriteableCable{}
 	wCable.ID = 117102

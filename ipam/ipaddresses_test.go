@@ -32,9 +32,9 @@ func TestClient_GetIpAddress(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.GetHTTPClient()
 	vcr := govcr.NewVCR("GetIpAddresses", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	res, err := client.GetIPAdress(41797)
 	t.Log(res)
 	if err != nil {
@@ -48,9 +48,9 @@ func TestClient_ListIpAddresses(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.GetHTTPClient()
 	vcr := govcr.NewVCR("ListIpAddresses", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	opts := models.ListIPAddressesRequest{}
 	res, err := client.ListIPAddresses(opts)
 	t.Log(res)
@@ -75,9 +75,9 @@ func TestClient_CreateDeleteIpAddress(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.GetHTTPClient()
 	vcr := govcr.NewVCR("CreateDeleteIpAddress", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	res, err := client.CreateIPAddress(wIP)
 	if err != nil {
 		t.Fatal(err)

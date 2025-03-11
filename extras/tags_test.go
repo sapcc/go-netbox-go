@@ -32,9 +32,9 @@ func TestClient_ListTags(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.GetHTTPClient()
 	vcr := govcr.NewVCR("ListTags", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	opts := models.ListTagsRequest{}
 	res, err := client.ListTags(opts)
 	if err != nil {
@@ -52,9 +52,9 @@ func TestClient_ListTags(t *testing.T) {
 // 		t.Fatal(err)
 // 	}
 // 	vcrConf := &govcr.VCRConfig{}
-// 	vcrConf.Client = client.HTTPClient
+// 	vcrConf.Client = client.GetHTTPClient()
 // 	vcr := govcr.NewVCR("CreateTag", vcrConf)
-// 	client.HTTPClient = vcr.Client
+// 	client.SetHTTPClient(vcr.Client)
 // 	opts := models.Tag{
 // 		NestedTag: models.NestedTag{
 // 			Name: "testTAG",

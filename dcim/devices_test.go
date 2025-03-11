@@ -32,9 +32,9 @@ func TestClient_GetDevice(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.GetHTTPClient()
 	vcr := govcr.NewVCR("GetDevice", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	res, err := client.GetDevice(27572)
 	if err != nil {
 		t.Fatal(err)
@@ -48,9 +48,9 @@ func TestClient_GetDeviceWithContext(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.GetHTTPClient()
 	vcr := govcr.NewVCR("GetDevice", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	res, err := client.GetDeviceWithContext(27572)
 	if err != nil {
 		t.Fatal(err)
@@ -63,9 +63,9 @@ func TestClient_ListDevices(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.GetHTTPClient()
 	vcr := govcr.NewVCR("ListDevices", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	opts := models.ListDevicesRequest{}
 	// opts.ID = 12509
 	res, err := client.ListDevices(opts)
@@ -81,9 +81,9 @@ func TestClient_ListDevicesByCluster(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.GetHTTPClient()
 	vcr := govcr.NewVCR("ListDevicesByCluster", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	opts := models.ListDevicesRequest{
 		ClusterID: 831,
 	}
@@ -102,9 +102,9 @@ func TestClient_CreateDeleteDevice(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.GetHTTPClient()
 	vcr := govcr.NewVCR("CreateDeleteDevice", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 
 	wDev := models.WritableDeviceWithConfigContext{}
 	wDev.Name = "GNG Test Device"

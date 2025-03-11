@@ -22,10 +22,38 @@ import (
 	"strconv"
 )
 
+type Common interface {
+	GetBaseURL() url.URL
+	GetHTTPClient() *http.Client
+	SetHTTPClient(httpClient *http.Client)
+	GetAuthToken() string
+}
+
 type Client struct {
 	HTTPClient *http.Client
 	BaseURL    url.URL
 	AuthToken  string
+}
+
+func (c *Client) GetBaseURL() url.URL {
+	return c.BaseURL
+}
+
+func (c *Client) GetHTTPClient() *http.Client {
+	return c.HTTPClient
+}
+
+func (c *Client) SetHTTPClient(httpClient *http.Client) {
+	c.HTTPClient = httpClient
+}
+
+func (c *Client) GetAuthToken() string {
+	return c.AuthToken
+}
+
+func (c *Client) SetAuthToken(header *http.Header) {
+	header.Add("Authorization", "Token "+c.AuthToken)
+	header.Set("Content-Type", "application/json")
 }
 
 type ListParams struct {
@@ -62,9 +90,4 @@ func (p *ListParams) SetListParams(values *url.Values) {
 	if p.ExcludeConfigContext {
 		values.Set("exclude", "config_context")
 	}
-}
-
-func (c *Client) SetAuthToken(header *http.Header) {
-	header.Add("Authorization", "Token "+c.AuthToken)
-	header.Set("Content-Type", "application/json")
 }

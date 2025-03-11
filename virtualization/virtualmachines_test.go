@@ -35,9 +35,9 @@ func TestClient_GetVirtualMachine(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.GetHTTPClient()
 	vcr := govcr.NewVCR("GetVirtualMachine", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	vm, err := client.GetVirtualMachine(4773)
 	if err != nil {
 		t.Fatal(err)
@@ -51,9 +51,9 @@ func TestClient_ListVirtualMachines(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.GetHTTPClient()
 	vcr := govcr.NewVCR("ListVirtualMachines", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	opts := models.ListVirtualMachinesRequest{}
 	opts.ID = 4773
 	res, err := client.ListVirtualMachines(opts)
@@ -84,9 +84,9 @@ func TestClient_CreateDeleteVirtualMachine(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.GetHTTPClient()
 	vcr := govcr.NewVCR("CreateVirtualMachine", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	opts := models.ListClusterRequest{}
 	res, err := client.ListClusters(opts)
 	if err != nil {

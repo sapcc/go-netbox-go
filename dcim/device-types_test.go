@@ -32,9 +32,9 @@ func TestClient_ListDeviceTypes(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.GetHTTPClient()
 	vcr := govcr.NewVCR("ListDeviceTypes", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	opts := models.ListDeviceTypesRequest{}
 	res, err := client.ListDeviceTypes(opts)
 	if err != nil {

@@ -32,9 +32,9 @@ func TestClient_ListDeviceRoles(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.GetHTTPClient()
 	vcr := govcr.NewVCR("ListDeviceRoles", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	opts := models.ListDeviceRolesRequest{}
 	res, err := client.ListDeviceRoles(opts)
 	if err != nil {

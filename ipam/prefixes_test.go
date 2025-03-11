@@ -32,9 +32,9 @@ func TestClient_ListPrefixes(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.GetHTTPClient()
 	vcr := govcr.NewVCR("ListPrefixes", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	opts := models.ListPrefixesRequest{}
 	res, err := client.ListPrefixes(opts)
 	if err != nil {
@@ -64,9 +64,9 @@ func TestClient_ListAvailableIps(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.GetHTTPClient()
 	vcr := govcr.NewVCR("ListAvailableIps", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	res, err := client.ListAvailableIps(299)
 	if err != nil {
 		t.Fatal(err)
@@ -82,9 +82,9 @@ func TestClient_CreateDeletePrefix(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.GetHTTPClient()
 	vcr := govcr.NewVCR("CreateDeletePrefix", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	res, err := client.CreatePrefix(wPre)
 	if err != nil {
 		t.Fatal(err)

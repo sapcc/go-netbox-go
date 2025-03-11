@@ -28,9 +28,11 @@ import (
 const basePath = "/api/ipam/"
 
 type API interface {
+	common.Common
+
 	// ip-addresses
 	ListIPAddresses(opts models.ListIPAddressesRequest) (*models.ListIPAddressesResponse, error)
-	GetIPAddress(id int) (*models.IPAddress, error)
+	GetIPAdress(id int) (*models.IPAddress, error)
 	CreateIPAddress(ip models.WriteableIPAddress) (*models.IPAddress, error)
 	UpdateIPAddress(address models.WriteableIPAddress) (*models.IPAddress, error)
 	DeleteIPAddress(id int) error
@@ -58,7 +60,7 @@ type Client struct {
 	common.Client
 }
 
-func New(baseURL, authToken string, insecureSkipVerify bool) (*Client, error) {
+func New(baseURL, authToken string, insecureSkipVerify bool) (API, error) {
 	u, err := url.Parse(baseURL)
 	if err != nil {
 		return nil, err

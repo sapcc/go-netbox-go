@@ -28,14 +28,16 @@ import (
 const basePath = "/api/dcim/"
 
 type API interface {
+	common.Common
+
 	// cables
 	GetCable(id int) (*models.Cable, error)
 	CreateCable(cable models.WriteableCable) (*models.Cable, error)
-	DeleteCable(id int)
+	DeleteCable(id int) error
 	UpdateCable(cable models.WriteableCable) (*models.Cable, error)
 
 	// device-roles
-	ListDeviceRoles(opts models.ListDeviceRolesRequest)
+	ListDeviceRoles(opts models.ListDeviceRolesRequest) (*models.ListDeviceRolesResponse, error)
 
 	// device-types
 	ListDeviceTypes(opts models.ListDeviceTypesRequest) (*models.ListDeviceTypesResponse, error)
@@ -77,7 +79,7 @@ type Client struct {
 	common.Client
 }
 
-func New(baseURL, authToken string, insecureSkipVerify bool) (*Client, error) {
+func New(baseURL, authToken string, insecureSkipVerify bool) (API, error) {
 	u, err := url.Parse(baseURL)
 	if err != nil {
 		return nil, err

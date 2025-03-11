@@ -22,9 +22,9 @@ package dcim
 // 		t.Fatal(err)
 // 	}
 // 	vcrConf := &govcr.VCRConfig{}
-// 	vcrConf.Client = client.HTTPClient
+// 	vcrConf.Client = client.GetHTTPClient()
 // 	vcr := govcr.NewVCR("ListSiteGroups", vcrConf)
-// 	client.HTTPClient = vcr.Client
+// 	client.SetHTTPClient(vcr.Client)
 // 	opts := models.ListSiteGroupsRequest{}
 // 	res, err := client.ListSiteGroups(opts)
 // 	if err != nil {
@@ -40,9 +40,9 @@ package dcim
 // 		t.Fatal(err)
 // 	}
 // 	vcrConf := &govcr.VCRConfig{}
-// 	vcrConf.Client = client.HTTPClient
+// 	vcrConf.Client = client.GetHTTPClient()
 // 	vcr := govcr.NewVCR("GetSiteGroup", vcrConf)
-// 	client.HTTPClient = vcr.Client
+// 	client.SetHTTPClient(vcr.Client)
 // 	res, err := client.GetSiteGroup(69)
 // 	if err != nil {
 // 		t.Fatal(err)

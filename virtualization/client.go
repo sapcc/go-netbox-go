@@ -28,6 +28,8 @@ import (
 const basePath = "/api/virtualization/"
 
 type API interface {
+	common.Common
+
 	// cluster
 	ListClusters(opts models.ListClusterRequest) (*models.ListClusterResponse, error)
 
@@ -41,7 +43,7 @@ type API interface {
 	// vm interfaces
 	CreateVMInterface(vmni models.WritableVMInterface) (*models.VMInterface, error)
 	UpdateVMInterface(vmi models.WritableVMInterface) (*models.VMInterface, error)
-	DeleteVMInterface(id int)
+	DeleteVMInterface(id int) error
 	ListVMInterfaces(opts models.ListVMInterfacesRequest) (*models.ListVMInterfacesResponse, error)
 	GetVMInterface(id int) (*models.VMInterface, error)
 }
@@ -50,7 +52,7 @@ type Client struct {
 	common.Client
 }
 
-func New(baseURL, authToken string, insecureSkipVerify bool) (*Client, error) {
+func New(baseURL, authToken string, insecureSkipVerify bool) (API, error) {
 	u, err := url.Parse(baseURL)
 	if err != nil {
 		return nil, err

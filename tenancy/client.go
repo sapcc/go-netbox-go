@@ -28,6 +28,8 @@ import (
 const basePath = "/api/tenancy/"
 
 type API interface {
+	common.Common
+
 	// tenant group
 	ListTenantGroups(opts models.ListTenantGroupsRequest) (*models.ListTenantGroupsResponse, error)
 
@@ -40,7 +42,7 @@ type Client struct {
 	common.Client
 }
 
-func New(baseURL, authToken string, insecureSkipVerify bool) (*Client, error) {
+func New(baseURL, authToken string, insecureSkipVerify bool) (API, error) {
 	u, err := url.Parse(baseURL)
 	if err != nil {
 		return nil, err

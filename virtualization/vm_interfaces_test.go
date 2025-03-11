@@ -32,9 +32,9 @@ func TestClient_CreateDeleteVLANVMInterface(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.GetHTTPClient()
 	vcr := govcr.NewVCR("CreateVLANVMInterface", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	vlans := []int{1678, 1679, 1680}
 	vmi := models.WritableVMInterface{
 		VirtualMachine: 740,
@@ -62,9 +62,9 @@ func TestClient_CreateDeleteTaggedVMInterface(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.GetHTTPClient()
 	vcr := govcr.NewVCR("CreateTaggedVMInterface", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	tag1 := models.NestedTag{
 		Name: "CC-APOD",
 		Slug: "cc-apod",
@@ -102,9 +102,9 @@ func TestClient_CreateDeleteVMInterface(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.GetHTTPClient()
 	vcr := govcr.NewVCR("CreateVMInterface", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	vmi := models.WritableVMInterface{
 		VirtualMachine: 1107,
 		Name:           "test-interface",
@@ -135,9 +135,9 @@ func TestClient_ListVMInterfaces(t *testing.T) {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.GetHTTPClient()
 	vcr := govcr.NewVCR("ListVMInterfaces", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	opts := models.ListVMInterfacesRequest{}
 	// opts.VmID = 804
 	// opts.ID = 971
