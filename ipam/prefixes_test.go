@@ -28,7 +28,7 @@ import (
 )
 
 func TestClient_ListPrefixes(t *testing.T) {
-	client, err := ipam.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := ipam.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -60,7 +60,7 @@ func TestClient_ListPrefixes(t *testing.T) {
 }
 
 func TestClient_ListAvailableIps(t *testing.T) {
-	client, err := ipam.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := ipam.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -78,7 +78,7 @@ func TestClient_ListAvailableIps(t *testing.T) {
 func TestClient_CreateDeletePrefix(t *testing.T) {
 	wPre := models.WriteablePrefix{}
 	wPre.Prefix = "10.0.0.0/8"
-	client, err := ipam.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := ipam.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}

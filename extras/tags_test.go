@@ -28,7 +28,7 @@ import (
 )
 
 func TestClient_ListTags(t *testing.T) {
-	client, err := extras.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := extras.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -48,7 +48,7 @@ func TestClient_ListTags(t *testing.T) {
 // Permission issue in netbox - not allwed to create tags
 
 // func TestClient_CreateTag(t *testing.T) {
-// 	client, err := extras.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+// 	client, err := extras.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 // 	if err != nil {
 // 		t.Fatal(err)
 // 	}

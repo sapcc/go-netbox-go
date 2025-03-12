@@ -22,7 +22,7 @@ import (
 	"strconv"
 )
 
-type Base interface {
+type API interface {
 	GetHTTPClient() *http.Client
 	SetHTTPClient(httpClient *http.Client)
 }

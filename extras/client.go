@@ -28,7 +28,7 @@ import (
 const basePath = "/api/extras/"
 
 type API interface {
-	common.Base
+	common.API
 
 	// tags
 	ListTags(opts models.ListTagsRequest) (*models.ListTagsResponse, error)
@@ -38,16 +38,7 @@ type Client struct {
 	common.Client
 }
 
-// Deprecated: Please use the new NewClient function instead.
-func New(baseURL, authToken string, insecureSkipVerify bool) (*Client, error) {
-	return createClient(baseURL, authToken, insecureSkipVerify)
-}
-
-func NewClient(baseURL, authToken string, insecureSkipVerify bool) (API, error) {
-	return createClient(baseURL, authToken, insecureSkipVerify)
-}
-
-func createClient(baseURL, authToken string, insecureSkipVerify bool) (*Client, error) {
+func New(baseURL, authToken string, insecureSkipVerify bool) (API, error) {
 	u, err := url.Parse(baseURL)
 	if err != nil {
 		return nil, err
