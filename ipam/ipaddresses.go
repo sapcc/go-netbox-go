@@ -29,13 +29,13 @@ import (
 )
 
 func (c *Client) ListIPAddresses(opts models.ListIPAddressesRequest) (*models.ListIPAddressesResponse, error) {
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"ip-addresses/", http.NoBody)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL().String()+basePath+"ip-addresses/", http.NoBody)
 	if err != nil {
 		return nil, err
 	}
 	c.ApplyAuthTokenToHeader(&request.Header)
 	setListIPAddressesParams(request, opts)
-	response, err := c.HTTPClient.Do(request)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}
@@ -60,12 +60,12 @@ func (c *Client) ListIPAddresses(opts models.ListIPAddressesRequest) (*models.Li
 }
 
 func (c *Client) GetIPAdress(id int) (*models.IPAddress, error) {
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"ip-addresses/"+strconv.Itoa(id)+"/", http.NoBody)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL().String()+basePath+"ip-addresses/"+strconv.Itoa(id)+"/", http.NoBody)
 	if err != nil {
 		return nil, err
 	}
 	c.ApplyAuthTokenToHeader(&request.Header)
-	response, err := c.HTTPClient.Do(request)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}
@@ -117,12 +117,12 @@ func (c *Client) CreateIPAddress(address models.WriteableIPAddress) (*models.IPA
 	if err != nil {
 		return nil, err
 	}
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPost, c.BaseURL.String()+basePath+"ip-addresses/", bytes.NewBuffer(body))
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPost, c.BaseURL().String()+basePath+"ip-addresses/", bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
 	c.ApplyAuthTokenToHeader(&request.Header)
-	response, err := c.HTTPClient.Do(request)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}
@@ -151,12 +151,12 @@ func (c *Client) UpdateIPAddress(address models.WriteableIPAddress) (*models.IPA
 	if err != nil {
 		return nil, err
 	}
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPut, c.BaseURL.String()+basePath+"ip-addresses/"+strconv.Itoa(address.ID)+"/", bytes.NewBuffer(body))
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPut, c.BaseURL().String()+basePath+"ip-addresses/"+strconv.Itoa(address.ID)+"/", bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
 	c.ApplyAuthTokenToHeader(&request.Header)
-	response, err := c.HTTPClient.Do(request)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}
@@ -181,12 +181,12 @@ func (c *Client) UpdateIPAddress(address models.WriteableIPAddress) (*models.IPA
 }
 
 func (c *Client) DeleteIPAddress(id int) error {
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodDelete, c.BaseURL.String()+basePath+"ip-addresses/"+strconv.Itoa(id)+"/", http.NoBody)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodDelete, c.BaseURL().String()+basePath+"ip-addresses/"+strconv.Itoa(id)+"/", http.NoBody)
 	if err != nil {
 		return err
 	}
 	c.ApplyAuthTokenToHeader(&request.Header)
-	response, err := c.HTTPClient.Do(request)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return err
 	}

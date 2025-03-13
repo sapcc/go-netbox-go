@@ -28,12 +28,12 @@ import (
 )
 
 func TestClient_ListTenantGroups(t *testing.T) {
-	client, err := tenancy.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := tenancy.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.GetHTTPClient()
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("ListTenantGroups", vcrConf)
 	client.SetHTTPClient(vcr.Client)
 	opts := models.ListTenantGroupsRequest{}

@@ -27,13 +27,13 @@ import (
 )
 
 func (c *Client) ListDeviceRoles(opts models.ListDeviceRolesRequest) (*models.ListDeviceRolesResponse, error) {
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"device-roles/", http.NoBody)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL().String()+basePath+"device-roles/", http.NoBody)
 	if err != nil {
 		return nil, err
 	}
 	c.ApplyAuthTokenToHeader(&request.Header)
 	setListDeviceRolesParams(request, opts)
-	response, err := c.HTTPClient.Do(request)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}

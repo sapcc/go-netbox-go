@@ -17,18 +17,14 @@
 package virtualization
 
 import (
-	"crypto/tls"
-	"net/http"
-	"net/url"
-
 	"github.com/sapcc/go-netbox-go/common"
 	"github.com/sapcc/go-netbox-go/models"
 )
 
 const basePath = "/api/virtualization/"
 
-type API interface {
-	common.API
+type NetboxAPI interface {
+	common.HTTPConnectable
 
 	// cluster
 	ListClusters(opts models.ListClusterRequest) (*models.ListClusterResponse, error)
@@ -52,21 +48,13 @@ type Client struct {
 	common.Client
 }
 
-// Deprecated: Please use the new NewClient function instead.
-func New(baseURL, authToken string, insecureSkipVerify bool) (API, error) {
-	u, err := url.Parse(baseURL)
-	if err != nil {
-		return nil, err
-	}
-	tr := http.DefaultTransport.(*http.Transport)
-	tr.TLSClientConfig = &tls.Config{
-		InsecureSkipVerify: insecureSkipVerify, // #nosec
-	}
-	res := &Client{}
-	res.BaseURL = *u
-	res.HTTPClient = &http.Client{
-		Transport: tr,
-	}
-	res.AuthToken = authToken
-	return res, nil
+// Deprecated: Use NewClient() function instead.
+func New(baseURL, authToken string, insecureSkipVerify bool) (*Client, error) {
+	client := &Client{}
+	return client, common.Initialize(client, baseURL, authToken, insecureSkipVerify)
+}
+
+func NewClient(baseURL, authToken string, insecureSkipVerify bool) (NetboxAPI, error) {
+	client := &Client{}
+	return client, common.Initialize(client, baseURL, authToken, insecureSkipVerify)
 }

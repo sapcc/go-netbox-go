@@ -28,12 +28,12 @@ import (
 )
 
 func TestClient_ListSites(t *testing.T) {
-	client, err := dcim.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := dcim.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.GetHTTPClient()
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("ListSites", vcrConf)
 	client.SetHTTPClient(vcr.Client)
 	opts := models.ListSitesRequest{}
@@ -46,12 +46,12 @@ func TestClient_ListSites(t *testing.T) {
 }
 
 func TestClient_GetSite(t *testing.T) {
-	client, err := dcim.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := dcim.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.GetHTTPClient()
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("GetSite", vcrConf)
 	client.SetHTTPClient(vcr.Client)
 	res, err := client.GetSite(1)

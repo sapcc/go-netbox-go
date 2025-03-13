@@ -33,12 +33,12 @@ func (c *Client) CreateVirtualMachine(vm models.WriteableVirtualMachine) (*model
 	if err != nil {
 		return nil, err
 	}
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPost, c.BaseURL.String()+basePath+"virtual-machines/", bytes.NewBuffer(body))
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPost, c.BaseURL().String()+basePath+"virtual-machines/", bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
 	c.ApplyAuthTokenToHeader(&request.Header)
-	response, err := c.HTTPClient.Do(request)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}
@@ -67,12 +67,12 @@ func (c *Client) UpdateVirtualMachine(vm models.WriteableVirtualMachine) (*model
 	if err != nil {
 		return nil, err
 	}
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPatch, c.BaseURL.String()+basePath+"virtual-machines/"+strconv.Itoa(vm.ID)+"/", bytes.NewBuffer(body))
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPatch, c.BaseURL().String()+basePath+"virtual-machines/"+strconv.Itoa(vm.ID)+"/", bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
 	c.ApplyAuthTokenToHeader(&request.Header)
-	response, err := c.HTTPClient.Do(request)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}
@@ -97,12 +97,12 @@ func (c *Client) UpdateVirtualMachine(vm models.WriteableVirtualMachine) (*model
 }
 
 func (c *Client) DeleteVirtualMachine(id int) error {
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodDelete, c.BaseURL.String()+basePath+"virtual-machines/"+strconv.Itoa(id)+"/", http.NoBody)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodDelete, c.BaseURL().String()+basePath+"virtual-machines/"+strconv.Itoa(id)+"/", http.NoBody)
 	if err != nil {
 		return err
 	}
 	c.ApplyAuthTokenToHeader(&request.Header)
-	response, err := c.HTTPClient.Do(request)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return err
 	}
@@ -118,12 +118,12 @@ func (c *Client) DeleteVirtualMachine(id int) error {
 }
 
 func (c *Client) GetVirtualMachine(id int) (*models.VirtualMachine, error) {
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"virtual-machines/"+strconv.Itoa(id)+"/", http.NoBody)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL().String()+basePath+"virtual-machines/"+strconv.Itoa(id)+"/", http.NoBody)
 	if err != nil {
 		return nil, err
 	}
 	c.ApplyAuthTokenToHeader(&request.Header)
-	response, err := c.HTTPClient.Do(request)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}
@@ -148,13 +148,13 @@ func (c *Client) GetVirtualMachine(id int) (*models.VirtualMachine, error) {
 }
 
 func (c *Client) ListVirtualMachines(opts models.ListVirtualMachinesRequest) (*models.ListVirtualMachinesResponse, error) {
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"virtual-machines/", http.NoBody)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL().String()+basePath+"virtual-machines/", http.NoBody)
 	if err != nil {
 		return nil, err
 	}
 	c.ApplyAuthTokenToHeader(&request.Header)
 	setListVirtualMachinesParams(request, opts)
-	response, err := c.HTTPClient.Do(request)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}

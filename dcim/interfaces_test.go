@@ -28,12 +28,12 @@ import (
 )
 
 func TestClient_ListInterfaces(t *testing.T) {
-	client, err := dcim.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := dcim.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.GetHTTPClient()
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("ListInterfaces", vcrConf)
 	client.SetHTTPClient(vcr.Client)
 	opts := models.ListInterfacesRequest{}
@@ -48,12 +48,12 @@ func TestClient_ListInterfaces(t *testing.T) {
 }
 
 func TestClient_CreateDeleteInterface(t *testing.T) {
-	client, err := dcim.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := dcim.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.GetHTTPClient()
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("CreateDeleteInterface", vcrConf)
 	client.SetHTTPClient(vcr.Client)
 	wInt := models.WritableInterface{}

@@ -28,12 +28,12 @@ import (
 )
 
 func TestClient_CreateDeleteVLANVMInterface(t *testing.T) {
-	client, err := virtualization.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := virtualization.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.GetHTTPClient()
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("CreateVLANVMInterface", vcrConf)
 	client.SetHTTPClient(vcr.Client)
 	vlans := []int{1678, 1679, 1680}
@@ -58,12 +58,12 @@ func TestClient_CreateDeleteVLANVMInterface(t *testing.T) {
 }
 
 func TestClient_CreateDeleteTaggedVMInterface(t *testing.T) {
-	client, err := virtualization.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := virtualization.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.GetHTTPClient()
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("CreateTaggedVMInterface", vcrConf)
 	client.SetHTTPClient(vcr.Client)
 	tag1 := models.NestedTag{
@@ -98,12 +98,12 @@ func TestClient_CreateDeleteTaggedVMInterface(t *testing.T) {
 }
 
 func TestClient_CreateDeleteVMInterface(t *testing.T) {
-	client, err := virtualization.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := virtualization.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.GetHTTPClient()
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("CreateVMInterface", vcrConf)
 	client.SetHTTPClient(vcr.Client)
 	vmi := models.WritableVMInterface{
@@ -131,12 +131,12 @@ func TestClient_CreateDeleteVMInterface(t *testing.T) {
 }
 
 func TestClient_ListVMInterfaces(t *testing.T) {
-	client, err := virtualization.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := virtualization.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.GetHTTPClient()
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("ListVMInterfaces", vcrConf)
 	client.SetHTTPClient(vcr.Client)
 	opts := models.ListVMInterfacesRequest{}

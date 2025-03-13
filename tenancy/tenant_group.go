@@ -27,13 +27,13 @@ import (
 )
 
 func (c *Client) ListTenantGroups(opts models.ListTenantGroupsRequest) (*models.ListTenantGroupsResponse, error) {
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"tenant-groups/", http.NoBody)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL().String()+basePath+"tenant-groups/", http.NoBody)
 	if err != nil {
 		return nil, err
 	}
 	c.ApplyAuthTokenToHeader(&request.Header)
 	setListTenantGroupParams(request, opts)
-	response, err := c.HTTPClient.Do(request)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}

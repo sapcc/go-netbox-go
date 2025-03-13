@@ -28,12 +28,12 @@ import (
 )
 
 func TestClient_ListVRFs(t *testing.T) {
-	client, err := ipam.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := ipam.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.GetHTTPClient()
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("ListVRFs", vcrConf)
 	client.SetHTTPClient(vcr.Client)
 	opts := models.ListVRFsRequest{}

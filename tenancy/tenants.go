@@ -28,12 +28,12 @@ import (
 )
 
 func (c *Client) GetTenant(id int) (*models.Tenant, error) {
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"tenants/"+strconv.Itoa(id), http.NoBody)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL().String()+basePath+"tenants/"+strconv.Itoa(id), http.NoBody)
 	if err != nil {
 		return nil, err
 	}
 	c.ApplyAuthTokenToHeader(&request.Header)
-	response, err := c.HTTPClient.Do(request)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}
@@ -54,13 +54,13 @@ func (c *Client) GetTenant(id int) (*models.Tenant, error) {
 }
 
 func (c *Client) ListTenants(opts models.ListTenantsRequest) (*models.ListTenantsResponse, error) {
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"tenants/", http.NoBody)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL().String()+basePath+"tenants/", http.NoBody)
 	if err != nil {
 		return nil, err
 	}
 	c.ApplyAuthTokenToHeader(&request.Header)
 	setListTenantsParams(request, opts)
-	response, err := c.HTTPClient.Do(request)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}

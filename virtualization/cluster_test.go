@@ -28,12 +28,12 @@ import (
 )
 
 func TestClient_ListClusters(t *testing.T) {
-	client, err := virtualization.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := virtualization.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.GetHTTPClient()
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("ListClusters", vcrConf)
 	client.SetHTTPClient(vcr.Client)
 	opts := models.ListClusterRequest{}
@@ -49,12 +49,12 @@ func TestClient_ListClusters(t *testing.T) {
 }
 
 func TestClient_ListClusterByType(t *testing.T) {
-	clint, err := virtualization.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	clint, err := virtualization.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = clint.GetHTTPClient()
+	vcrConf.Client = clint.HTTPClient()
 	vcr := govcr.NewVCR("ListClusterByType", vcrConf)
 	clint.SetHTTPClient(vcr.Client)
 	opts := models.ListClusterRequest{

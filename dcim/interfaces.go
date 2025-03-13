@@ -29,13 +29,13 @@ import (
 )
 
 func (c *Client) ListInterfaces(opts models.ListInterfacesRequest) (*models.ListInterfacesResponse, error) {
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"interfaces/", bytes.NewBuffer([]byte{'a'}))
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL().String()+basePath+"interfaces/", bytes.NewBuffer([]byte{'a'}))
 	if err != nil {
 		return nil, err
 	}
 	c.ApplyAuthTokenToHeader(&request.Header)
 	setListInterfacesParams(request, opts)
-	response, err := c.HTTPClient.Do(request)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}
@@ -78,12 +78,12 @@ func (c *Client) UpdateInterface(interf models.WritableInterface, id int) (*mode
 	if err != nil {
 		return nil, err
 	}
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPut, c.BaseURL.String()+basePath+"interfaces/"+strconv.Itoa(id)+"/", bytes.NewBuffer(body))
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPut, c.BaseURL().String()+basePath+"interfaces/"+strconv.Itoa(id)+"/", bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
 	c.ApplyAuthTokenToHeader(&request.Header)
-	response, err := c.HTTPClient.Do(request)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}
@@ -112,12 +112,12 @@ func (c *Client) CreateInterface(interf models.WritableInterface) (*models.Inter
 	if err != nil {
 		return nil, err
 	}
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPost, c.BaseURL.String()+basePath+"interfaces/", bytes.NewBuffer(body))
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPost, c.BaseURL().String()+basePath+"interfaces/", bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
 	c.ApplyAuthTokenToHeader(&request.Header)
-	response, err := c.HTTPClient.Do(request)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}
@@ -142,12 +142,12 @@ func (c *Client) CreateInterface(interf models.WritableInterface) (*models.Inter
 }
 
 func (c *Client) DeleteInterface(id int) error {
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodDelete, c.BaseURL.String()+basePath+"interfaces/"+strconv.Itoa(id)+"/", http.NoBody)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodDelete, c.BaseURL().String()+basePath+"interfaces/"+strconv.Itoa(id)+"/", http.NoBody)
 	if err != nil {
 		return err
 	}
 	c.ApplyAuthTokenToHeader(&request.Header)
-	response, err := c.HTTPClient.Do(request)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return err
 	}

@@ -28,12 +28,12 @@ import (
 )
 
 func TestClient_ListRegions(t *testing.T) {
-	client, err := dcim.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := dcim.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.GetHTTPClient()
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("ListRegions", vcrConf)
 	client.SetHTTPClient(vcr.Client)
 	opts := models.ListRegionsRequest{}
@@ -50,12 +50,12 @@ func TestClient_ListRegions(t *testing.T) {
 }
 
 func TestClient_GetRegion(t *testing.T) {
-	client, err := dcim.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := dcim.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.GetHTTPClient()
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("GetRegion", vcrConf)
 	client.SetHTTPClient(vcr.Client)
 	res, err := client.GetRegion(1)

@@ -28,12 +28,12 @@ import (
 )
 
 func TestClient_ListPrefixes(t *testing.T) {
-	client, err := ipam.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := ipam.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.GetHTTPClient()
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("ListPrefixes", vcrConf)
 	client.SetHTTPClient(vcr.Client)
 	opts := models.ListPrefixesRequest{}
@@ -60,12 +60,12 @@ func TestClient_ListPrefixes(t *testing.T) {
 }
 
 func TestClient_ListAvailableIps(t *testing.T) {
-	client, err := ipam.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := ipam.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.GetHTTPClient()
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("ListAvailableIps", vcrConf)
 	client.SetHTTPClient(vcr.Client)
 	res, err := client.ListAvailableIps(299)
@@ -78,12 +78,12 @@ func TestClient_ListAvailableIps(t *testing.T) {
 func TestClient_CreateDeletePrefix(t *testing.T) {
 	wPre := models.WriteablePrefix{}
 	wPre.Prefix = "10.0.0.0/8"
-	client, err := ipam.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := ipam.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.GetHTTPClient()
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("CreateDeletePrefix", vcrConf)
 	client.SetHTTPClient(vcr.Client)
 	res, err := client.CreatePrefix(wPre)

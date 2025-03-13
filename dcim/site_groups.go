@@ -28,13 +28,13 @@ import (
 )
 
 func (c *Client) ListSiteGroups(opts models.ListSiteGroupsRequest) (*models.ListSiteGroupsResponse, error) {
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"site-groups/", http.NoBody)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL().String()+basePath+"site-groups/", http.NoBody)
 	if err != nil {
 		return nil, err
 	}
 	c.ApplyAuthTokenToHeader(&request.Header)
 	setListSiteGroupsParams(request, opts)
-	response, err := c.HTTPClient.Do(request)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}
@@ -64,12 +64,12 @@ func setListSiteGroupsParams(req *http.Request, opts models.ListSiteGroupsReques
 }
 
 func (c *Client) GetSiteGroup(id int) (*models.SiteGroup, error) {
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"site-groups/"+strconv.Itoa(id)+"/", http.NoBody)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL().String()+basePath+"site-groups/"+strconv.Itoa(id)+"/", http.NoBody)
 	if err != nil {
 		return nil, err
 	}
 	c.ApplyAuthTokenToHeader(&request.Header)
-	response, err := c.HTTPClient.Do(request)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}

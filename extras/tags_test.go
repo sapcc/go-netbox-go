@@ -28,12 +28,12 @@ import (
 )
 
 func TestClient_ListTags(t *testing.T) {
-	client, err := extras.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := extras.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.GetHTTPClient()
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("ListTags", vcrConf)
 	client.SetHTTPClient(vcr.Client)
 	opts := models.ListTagsRequest{}
@@ -48,12 +48,12 @@ func TestClient_ListTags(t *testing.T) {
 // Permission issue in netbox - not allwed to create tags
 
 // func TestClient_CreateTag(t *testing.T) {
-// 	client, err := extras.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+// 	client, err := extras.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 // 	if err != nil {
 // 		t.Fatal(err)
 // 	}
 // 	vcrConf := &govcr.VCRConfig{}
-// 	vcrConf.Client = client.GetHTTPClient()
+// 	vcrConf.Client = client.HTTPClient()
 // 	vcr := govcr.NewVCR("CreateTag", vcrConf)
 // 	client.SetHTTPClient(vcr.Client)
 // 	opts := models.Tag{

@@ -17,32 +17,70 @@
 package common
 
 import (
+	"crypto/tls"
 	"net/http"
 	"net/url"
 	"strconv"
 )
 
-type API interface {
-	GetHTTPClient() *http.Client
+type HTTPConnectable interface {
+	HTTPClient() *http.Client
 	SetHTTPClient(httpClient *http.Client)
+
+	BaseURL() *url.URL
+	SetBaseURL(url *url.URL)
+
+	AuthToken() string
+	SetAuthToken(authToken string)
 }
 
 type Client struct {
-	HTTPClient *http.Client
-	BaseURL    url.URL
-	AuthToken  string
+	httpClient *http.Client
+	baseURL    *url.URL
+	authToken  string
 }
 
-func (c *Client) GetHTTPClient() *http.Client {
-	return c.HTTPClient
+func Initialize(httpConnect HTTPConnectable, baseURL, authToken string, insecureSkipVerify bool) error {
+	u, err := url.Parse(baseURL)
+	if err != nil {
+		return err
+	}
+	httpConnect.SetBaseURL(u)
+	tr := http.DefaultTransport.(*http.Transport)
+	tr.TLSClientConfig = &tls.Config{
+		InsecureSkipVerify: insecureSkipVerify, // #nosec
+	}
+	httpConnect.SetHTTPClient(&http.Client{Transport: tr})
+	httpConnect.SetAuthToken(authToken)
+	return nil
+}
+
+func (c *Client) HTTPClient() *http.Client {
+	return c.httpClient
 }
 
 func (c *Client) SetHTTPClient(httpClient *http.Client) {
-	c.HTTPClient = httpClient
+	c.httpClient = httpClient
+}
+
+func (c *Client) BaseURL() *url.URL {
+	return c.baseURL
+}
+
+func (c *Client) SetBaseURL(url *url.URL) {
+	c.baseURL = url
+}
+
+func (c *Client) AuthToken() string {
+	return c.authToken
+}
+
+func (c *Client) SetAuthToken(authToken string) {
+	c.authToken = authToken
 }
 
 func (c *Client) ApplyAuthTokenToHeader(header *http.Header) {
-	header.Add("Authorization", "Token "+c.AuthToken)
+	header.Add("Authorization", "Token "+c.authToken)
 	header.Set("Content-Type", "application/json")
 }
 

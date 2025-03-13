@@ -28,12 +28,12 @@ import (
 )
 
 func TestClient_GetVlan(t *testing.T) {
-	client, err := ipam.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := ipam.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.GetHTTPClient()
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("GetVlan", vcrConf)
 	client.SetHTTPClient(vcr.Client)
 	res, err := client.GetVlan(318)
@@ -44,12 +44,12 @@ func TestClient_GetVlan(t *testing.T) {
 }
 
 func TestClient_ListVlans(t *testing.T) {
-	client, err := ipam.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := ipam.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.GetHTTPClient()
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("ListVlans", vcrConf)
 	client.SetHTTPClient(vcr.Client)
 	opts := models.ListVlanRequest{}

@@ -17,12 +17,12 @@
 package dcim_test
 
 // func TestClient_ListSiteGroups(t *testing.T) {
-// 	client, err := dcim.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+// 	client, err := dcim.NewClientClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 // 	if err != nil {
 // 		t.Fatal(err)
 // 	}
 // 	vcrConf := &govcr.VCRConfig{}
-// 	vcrConf.Client = client.GetHTTPClient()
+// 	vcrConf.Client = client.HTTPClient()
 // 	vcr := govcr.NewVCR("ListSiteGroups", vcrConf)
 // 	client.SetHTTPClient(vcr.Client)
 // 	opts := models.ListSiteGroupsRequest{}
@@ -35,12 +35,12 @@ package dcim_test
 // }
 
 // func TestClient_GetSiteGroup(t *testing.T) {
-// 	client, err := dcim.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+// 	client, err := dcim.NewClientClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 // 	if err != nil {
 // 		t.Fatal(err)
 // 	}
 // 	vcrConf := &govcr.VCRConfig{}
-// 	vcrConf.Client = client.GetHTTPClient()
+// 	vcrConf.Client = client.HTTPClient()
 // 	vcr := govcr.NewVCR("GetSiteGroup", vcrConf)
 // 	client.SetHTTPClient(vcr.Client)
 // 	res, err := client.GetSiteGroup(69)

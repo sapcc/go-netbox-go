@@ -28,12 +28,12 @@ import (
 )
 
 func TestClient_GetIpAddress(t *testing.T) {
-	client, err := ipam.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := ipam.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.GetHTTPClient()
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("GetIpAddresses", vcrConf)
 	client.SetHTTPClient(vcr.Client)
 	res, err := client.GetIPAdress(41797)
@@ -44,12 +44,12 @@ func TestClient_GetIpAddress(t *testing.T) {
 	t.Log(res)
 }
 func TestClient_ListIpAddresses(t *testing.T) {
-	client, err := ipam.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := ipam.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.GetHTTPClient()
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("ListIpAddresses", vcrConf)
 	client.SetHTTPClient(vcr.Client)
 	opts := models.ListIPAddressesRequest{}
@@ -71,12 +71,12 @@ func TestClient_ListIpAddresses(t *testing.T) {
 func TestClient_CreateDeleteIpAddress(t *testing.T) {
 	wIP := models.WriteableIPAddress{}
 	wIP.Address = "199.199.199.199/32"
-	client, err := ipam.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := ipam.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.GetHTTPClient()
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("CreateDeleteIpAddress", vcrConf)
 	client.SetHTTPClient(vcr.Client)
 	res, err := client.CreateIPAddress(wIP)

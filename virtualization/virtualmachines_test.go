@@ -31,12 +31,12 @@ import (
 )
 
 func TestClient_GetVirtualMachine(t *testing.T) {
-	client, err := virtualization.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := virtualization.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.GetHTTPClient()
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("GetVirtualMachine", vcrConf)
 	client.SetHTTPClient(vcr.Client)
 	vm, err := client.GetVirtualMachine(4773)
@@ -47,12 +47,12 @@ func TestClient_GetVirtualMachine(t *testing.T) {
 }
 
 func TestClient_ListVirtualMachines(t *testing.T) {
-	client, err := virtualization.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := virtualization.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.GetHTTPClient()
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("ListVirtualMachines", vcrConf)
 	client.SetHTTPClient(vcr.Client)
 	opts := models.ListVirtualMachinesRequest{}
@@ -68,24 +68,24 @@ func TestClient_ListVirtualMachines(t *testing.T) {
 }
 
 func TestClient_CreateDeleteVirtualMachine(t *testing.T) {
-	client, err := virtualization.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := virtualization.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
-	ipamClient, err := ipam.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	ipamClient, err := ipam.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
-	tenantClient, err := tenancy.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	tenantClient, err := tenancy.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
-	dcimClient, err := dcim.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	dcimClient, err := dcim.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.GetHTTPClient()
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("CreateVirtualMachine", vcrConf)
 	client.SetHTTPClient(vcr.Client)
 	opts := models.ListClusterRequest{}
