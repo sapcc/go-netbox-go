@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package virtualization
+package virtualization_test
 
 import (
 	"os"
@@ -24,17 +24,18 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"github.com/sapcc/go-netbox-go/models"
+	"github.com/sapcc/go-netbox-go/virtualization"
 )
 
 func TestClient_CreateDeleteVLANVMInterface(t *testing.T) {
-	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := virtualization.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("CreateVLANVMInterface", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	vlans := []int{1678, 1679, 1680}
 	vmi := models.WritableVMInterface{
 		VirtualMachine: 740,
@@ -57,14 +58,14 @@ func TestClient_CreateDeleteVLANVMInterface(t *testing.T) {
 }
 
 func TestClient_CreateDeleteTaggedVMInterface(t *testing.T) {
-	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := virtualization.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("CreateTaggedVMInterface", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	tag1 := models.NestedTag{
 		Name: "CC-APOD",
 		Slug: "cc-apod",
@@ -97,14 +98,14 @@ func TestClient_CreateDeleteTaggedVMInterface(t *testing.T) {
 }
 
 func TestClient_CreateDeleteVMInterface(t *testing.T) {
-	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := virtualization.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("CreateVMInterface", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	vmi := models.WritableVMInterface{
 		VirtualMachine: 1107,
 		Name:           "test-interface",
@@ -130,14 +131,14 @@ func TestClient_CreateDeleteVMInterface(t *testing.T) {
 }
 
 func TestClient_ListVMInterfaces(t *testing.T) {
-	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := virtualization.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("ListVMInterfaces", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	opts := models.ListVMInterfacesRequest{}
 	// opts.VmID = 804
 	// opts.ID = 971

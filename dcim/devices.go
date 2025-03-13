@@ -29,13 +29,13 @@ import (
 )
 
 func (c *Client) ListDevices(opts models.ListDevicesRequest) (*models.ListDevicesResponse, error) {
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"devices/?exclude=config_context", http.NoBody)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL().String()+basePath+"devices/?exclude=config_context", http.NoBody)
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	setListDevicesParams(request, opts)
-	response, err := c.HTTPClient.Do(request)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}
@@ -90,12 +90,12 @@ func setListDevicesParams(req *http.Request, opts models.ListDevicesRequest) {
 }
 
 func (c *Client) GetDevice(id int) (*models.Device, error) {
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"devices/"+strconv.Itoa(id)+"/?exclude=config_context", http.NoBody)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL().String()+basePath+"devices/"+strconv.Itoa(id)+"/?exclude=config_context", http.NoBody)
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
-	response, err := c.HTTPClient.Do(request)
+	c.ApplyAuthTokenToHeader(&request.Header)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}
@@ -116,12 +116,12 @@ func (c *Client) GetDevice(id int) (*models.Device, error) {
 }
 
 func (c *Client) GetDeviceWithContext(id int) (*models.Device, error) {
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"devices/"+strconv.Itoa(id)+"/", http.NoBody)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL().String()+basePath+"devices/"+strconv.Itoa(id)+"/", http.NoBody)
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
-	response, err := c.HTTPClient.Do(request)
+	c.ApplyAuthTokenToHeader(&request.Header)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}
@@ -146,12 +146,12 @@ func (c *Client) CreateDevice(dev models.WritableDeviceWithConfigContext) (*mode
 	if err != nil {
 		return nil, err
 	}
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPost, c.BaseURL.String()+basePath+"devices/", bytes.NewBuffer(body))
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPost, c.BaseURL().String()+basePath+"devices/", bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
-	response, err := c.HTTPClient.Do(request)
+	c.ApplyAuthTokenToHeader(&request.Header)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}
@@ -176,12 +176,12 @@ func (c *Client) CreateDevice(dev models.WritableDeviceWithConfigContext) (*mode
 }
 
 func (c *Client) DeleteDevice(id int) error {
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodDelete, c.BaseURL.String()+basePath+"devices/"+strconv.Itoa(id)+"/", http.NoBody)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodDelete, c.BaseURL().String()+basePath+"devices/"+strconv.Itoa(id)+"/", http.NoBody)
 	if err != nil {
 		return err
 	}
-	c.SetAuthToken(&request.Header)
-	response, err := c.HTTPClient.Do(request)
+	c.ApplyAuthTokenToHeader(&request.Header)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return err
 	}
@@ -201,12 +201,12 @@ func (c *Client) UpdateDevice(dev models.WritableDeviceWithConfigContext) (*mode
 	if err != nil {
 		return nil, err
 	}
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPatch, c.BaseURL.String()+basePath+"devices/"+strconv.Itoa(dev.ID)+"/", bytes.NewBuffer(body))
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPatch, c.BaseURL().String()+basePath+"devices/"+strconv.Itoa(dev.ID)+"/", bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
-	response, err := c.HTTPClient.Do(request)
+	c.ApplyAuthTokenToHeader(&request.Header)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}
@@ -232,12 +232,12 @@ func (c *Client) UpdateDevice(dev models.WritableDeviceWithConfigContext) (*mode
 
 /*
 func (c *Client) ListDevicesByCluster(id int) (*models.ListDevicesResponse, error) {
-	request, err := http.NewRequestWithContext(context.TODO(), "GET", c.BaseURL.String() + basePath + "devices/?cluster_id=" + strconv.Itoa(id), nil )
+	request, err := http.NewRequestWithContext(context.TODO(), "GET", c.BaseURL().String() + basePath + "devices/?cluster_id=" + strconv.Itoa(id), nil )
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
-	response, err := c.HTTPClient.Do(request)
+	c.ApplyAuthTokenToHeader(&request.Header)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}

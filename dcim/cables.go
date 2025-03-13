@@ -29,12 +29,12 @@ import (
 )
 
 func (c *Client) GetCable(id int) (*models.Cable, error) {
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"cables/"+strconv.Itoa(id), http.NoBody)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL().String()+basePath+"cables/"+strconv.Itoa(id), http.NoBody)
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
-	response, err := c.HTTPClient.Do(request)
+	c.ApplyAuthTokenToHeader(&request.Header)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}
@@ -59,12 +59,12 @@ func (c *Client) CreateCable(cable models.WriteableCable) (*models.Cable, error)
 	if err != nil {
 		return nil, err
 	}
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPost, c.BaseURL.String()+basePath+"cables/", bytes.NewBuffer(body))
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPost, c.BaseURL().String()+basePath+"cables/", bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
-	response, err := c.HTTPClient.Do(request)
+	c.ApplyAuthTokenToHeader(&request.Header)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}
@@ -89,12 +89,12 @@ func (c *Client) CreateCable(cable models.WriteableCable) (*models.Cable, error)
 }
 
 func (c *Client) DeleteCable(id int) error {
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodDelete, c.BaseURL.String()+basePath+"cables/"+strconv.Itoa(id)+"/", http.NoBody)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodDelete, c.BaseURL().String()+basePath+"cables/"+strconv.Itoa(id)+"/", http.NoBody)
 	if err != nil {
 		return err
 	}
-	c.SetAuthToken(&request.Header)
-	response, err := c.HTTPClient.Do(request)
+	c.ApplyAuthTokenToHeader(&request.Header)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return err
 	}
@@ -114,12 +114,12 @@ func (c *Client) UpdateCable(cable models.WriteableCable) (*models.Cable, error)
 	if err != nil {
 		return nil, err
 	}
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPatch, c.BaseURL.String()+basePath+"cables/"+strconv.Itoa(int(cable.ID))+"/", bytes.NewBuffer(body))
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPatch, c.BaseURL().String()+basePath+"cables/"+strconv.Itoa(int(cable.ID))+"/", bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
-	response, err := c.HTTPClient.Do(request)
+	c.ApplyAuthTokenToHeader(&request.Header)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}

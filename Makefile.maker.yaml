@@ -18,7 +18,7 @@ githubWorkflow:
 
 makefile:
   enabled: true
-  
+
 renovate:
   enabled: true
   assignees:

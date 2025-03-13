@@ -27,13 +27,13 @@ import (
 )
 
 func (c *Client) ListDeviceTypes(opts models.ListDeviceTypesRequest) (*models.ListDeviceTypesResponse, error) {
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"device-types/", http.NoBody)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL().String()+basePath+"device-types/", http.NoBody)
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	setListDeviceTypesParams(request, opts)
-	response, err := c.HTTPClient.Do(request)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}

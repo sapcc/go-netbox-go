@@ -27,13 +27,13 @@ import (
 )
 
 func (c *Client) ListTags(opts models.ListTagsRequest) (*models.ListTagsResponse, error) {
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"tags/", http.NoBody)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL().String()+basePath+"tags/", http.NoBody)
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	setListTagsParams(request, opts)
-	response, err := c.HTTPClient.Do(request)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}
@@ -60,13 +60,13 @@ func (c *Client) ListTags(opts models.ListTagsRequest) (*models.ListTagsResponse
 // 	if err != nil {
 // 		return err
 // 	}
-// 	request, err := http.NewRequestWithContext(context.TODO(), "POST", c.BaseURL.String()+basePath+"tags/", bytes.NewBuffer(body))
+// 	request, err := http.NewRequestWithContext(context.TODO(), "POST", c.BaseURL().String()+basePath+"tags/", bytes.NewBuffer(body))
 // 	fmt.Println(request)
 // 	if err != nil {
 // 		return err
 // 	}
-// 	c.SetAuthToken(&request.Header)
-// 	response, err := c.HTTPClient.Do(request)
+// 	c.ApplyAuthTokenToHeader(&request.Header)
+// 	response, err := c.HTTPClient().Do(request)
 // 	fmt.Println("****")
 // 	fmt.Println(response)
 // 	fmt.Println("****")

@@ -33,12 +33,12 @@ func (c *Client) CreateVMInterface(vmni models.WritableVMInterface) (*models.VMI
 	if err != nil {
 		return nil, err
 	}
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPost, c.BaseURL.String()+basePath+"interfaces/", bytes.NewBuffer(body))
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPost, c.BaseURL().String()+basePath+"interfaces/", bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
-	response, err := c.HTTPClient.Do(request)
+	c.ApplyAuthTokenToHeader(&request.Header)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}
@@ -67,12 +67,12 @@ func (c *Client) UpdateVMInterface(vmi models.WritableVMInterface) (*models.VMIn
 	if err != nil {
 		return nil, err
 	}
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPatch, c.BaseURL.String()+basePath+"interfaces/"+strconv.Itoa(vmi.ID)+"/", bytes.NewBuffer(body))
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPatch, c.BaseURL().String()+basePath+"interfaces/"+strconv.Itoa(vmi.ID)+"/", bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
-	response, err := c.HTTPClient.Do(request)
+	c.ApplyAuthTokenToHeader(&request.Header)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}
@@ -97,12 +97,12 @@ func (c *Client) UpdateVMInterface(vmi models.WritableVMInterface) (*models.VMIn
 }
 
 func (c *Client) DeleteVMInterface(id int) error {
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodDelete, c.BaseURL.String()+basePath+"interfaces/"+strconv.Itoa(id)+"/", http.NoBody)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodDelete, c.BaseURL().String()+basePath+"interfaces/"+strconv.Itoa(id)+"/", http.NoBody)
 	if err != nil {
 		return err
 	}
-	c.SetAuthToken(&request.Header)
-	response, err := c.HTTPClient.Do(request)
+	c.ApplyAuthTokenToHeader(&request.Header)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return err
 	}
@@ -118,13 +118,13 @@ func (c *Client) DeleteVMInterface(id int) error {
 }
 
 func (c *Client) ListVMInterfaces(opts models.ListVMInterfacesRequest) (*models.ListVMInterfacesResponse, error) {
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"interfaces/", http.NoBody)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL().String()+basePath+"interfaces/", http.NoBody)
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	setListVMInterfacesParams(request, opts)
-	response, err := c.HTTPClient.Do(request)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}
@@ -154,12 +154,12 @@ func setListVMInterfacesParams(req *http.Request, opts models.ListVMInterfacesRe
 }
 
 func (c *Client) GetVMInterface(id int) (*models.VMInterface, error) {
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"interfaces/"+strconv.Itoa(id)+"/", http.NoBody)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL().String()+basePath+"interfaces/"+strconv.Itoa(id)+"/", http.NoBody)
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
-	response, err := c.HTTPClient.Do(request)
+	c.ApplyAuthTokenToHeader(&request.Header)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}

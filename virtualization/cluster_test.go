@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package virtualization
+package virtualization_test
 
 import (
 	"os"
@@ -24,17 +24,18 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"github.com/sapcc/go-netbox-go/models"
+	"github.com/sapcc/go-netbox-go/virtualization"
 )
 
 func TestClient_ListClusters(t *testing.T) {
-	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := virtualization.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("ListClusters", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	opts := models.ListClusterRequest{}
 	// opts.VmID = 1060
 	opts.ID = 632
@@ -48,14 +49,14 @@ func TestClient_ListClusters(t *testing.T) {
 }
 
 func TestClient_ListClusterByType(t *testing.T) {
-	clint, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	clint, err := virtualization.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = clint.HTTPClient
+	vcrConf.Client = clint.HTTPClient()
 	vcr := govcr.NewVCR("ListClusterByType", vcrConf)
-	clint.HTTPClient = vcr.Client
+	clint.SetHTTPClient(vcr.Client)
 	opts := models.ListClusterRequest{
 		Region: "ap-ae-1",
 		Type:   "cc-k8s-controlplane-swift",

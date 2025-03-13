@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dcim
+package dcim_test
 
 import (
 	"fmt"
@@ -23,18 +23,19 @@ import (
 
 	"github.com/seborama/govcr"
 
+	"github.com/sapcc/go-netbox-go/dcim"
 	"github.com/sapcc/go-netbox-go/models"
 )
 
 func TestClient_GetCable(t *testing.T) {
-	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := dcim.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("GetCable", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	res, err := client.GetCable(2026) // 2026
 	if err != nil {
 		t.Fatal(err)
@@ -43,14 +44,14 @@ func TestClient_GetCable(t *testing.T) {
 }
 
 func TestClient_CreateDeleteCable(t *testing.T) {
-	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := dcim.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("CreateDeleteCable", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 
 	wCable := models.WriteableCable{}
 	wCable.Type = "cat6"
@@ -87,14 +88,14 @@ func TestClient_CreateDeleteCable(t *testing.T) {
 }
 
 func TestClient_UpdateCable(t *testing.T) {
-	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := dcim.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("CreateDeleteCable", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 
 	wCable := models.WriteableCable{}
 	wCable.ID = 117102

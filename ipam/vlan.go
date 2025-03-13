@@ -28,13 +28,13 @@ import (
 )
 
 func (c *Client) ListVlans(opts models.ListVlanRequest) (*models.ListVlanResponse, error) {
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"vlans/", http.NoBody)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL().String()+basePath+"vlans/", http.NoBody)
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	setVlanParams(request, opts)
-	response, err := c.HTTPClient.Do(request)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}
@@ -55,12 +55,12 @@ func (c *Client) ListVlans(opts models.ListVlanRequest) (*models.ListVlanRespons
 }
 
 func (c *Client) GetVlan(id int) (*models.Vlan, error) {
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"vlans/"+strconv.Itoa(id)+"/", http.NoBody)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL().String()+basePath+"vlans/"+strconv.Itoa(id)+"/", http.NoBody)
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
-	response, err := c.HTTPClient.Do(request)
+	c.ApplyAuthTokenToHeader(&request.Header)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}

@@ -28,14 +28,14 @@ import (
 )
 
 func (c *Client) ListClusters(opts models.ListClusterRequest) (*models.ListClusterResponse, error) {
-	// request, err := http.NewRequestWithContext(context.TODO(), "GET", c.BaseURL.String() + basePath + "clusters/", bytes2.NewBuffer([]byte{'a'}))
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"clusters/", http.NoBody)
+	// request, err := http.NewRequestWithContext(context.TODO(), "GET", c.BaseURL().String() + basePath + "clusters/", bytes2.NewBuffer([]byte{'a'}))
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL().String()+basePath+"clusters/", http.NoBody)
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	setListClusterParams(request, opts)
-	response, err := c.HTTPClient.Do(request)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}

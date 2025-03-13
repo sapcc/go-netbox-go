@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package virtualization
+package virtualization_test
 
 import (
 	"os"
@@ -27,17 +27,18 @@ import (
 	"github.com/sapcc/go-netbox-go/ipam"
 	"github.com/sapcc/go-netbox-go/models"
 	"github.com/sapcc/go-netbox-go/tenancy"
+	"github.com/sapcc/go-netbox-go/virtualization"
 )
 
 func TestClient_GetVirtualMachine(t *testing.T) {
-	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := virtualization.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("GetVirtualMachine", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	vm, err := client.GetVirtualMachine(4773)
 	if err != nil {
 		t.Fatal(err)
@@ -46,14 +47,14 @@ func TestClient_GetVirtualMachine(t *testing.T) {
 }
 
 func TestClient_ListVirtualMachines(t *testing.T) {
-	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := virtualization.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("ListVirtualMachines", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	opts := models.ListVirtualMachinesRequest{}
 	opts.ID = 4773
 	res, err := client.ListVirtualMachines(opts)
@@ -67,26 +68,26 @@ func TestClient_ListVirtualMachines(t *testing.T) {
 }
 
 func TestClient_CreateDeleteVirtualMachine(t *testing.T) {
-	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := virtualization.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
-	ipamClient, err := ipam.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	ipamClient, err := ipam.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
-	tenantClient, err := tenancy.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	tenantClient, err := tenancy.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
-	dcimClient, err := dcim.New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	dcimClient, err := dcim.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("CreateVirtualMachine", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	opts := models.ListClusterRequest{}
 	res, err := client.ListClusters(opts)
 	if err != nil {

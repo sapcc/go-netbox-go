@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dcim
+package dcim_test
 
 import (
 	"os"
@@ -23,18 +23,19 @@ import (
 	"github.com/seborama/govcr"
 	"github.com/stretchr/testify/assert"
 
+	"github.com/sapcc/go-netbox-go/dcim"
 	"github.com/sapcc/go-netbox-go/models"
 )
 
 func TestClient_GetDevice(t *testing.T) {
-	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := dcim.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("GetDevice", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	res, err := client.GetDevice(27572)
 	if err != nil {
 		t.Fatal(err)
@@ -43,14 +44,14 @@ func TestClient_GetDevice(t *testing.T) {
 }
 
 func TestClient_GetDeviceWithContext(t *testing.T) {
-	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := dcim.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("GetDevice", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	res, err := client.GetDeviceWithContext(27572)
 	if err != nil {
 		t.Fatal(err)
@@ -58,14 +59,14 @@ func TestClient_GetDeviceWithContext(t *testing.T) {
 	t.Log(res.Name)
 }
 func TestClient_ListDevices(t *testing.T) {
-	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := dcim.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("ListDevices", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	opts := models.ListDevicesRequest{}
 	// opts.ID = 12509
 	res, err := client.ListDevices(opts)
@@ -76,14 +77,14 @@ func TestClient_ListDevices(t *testing.T) {
 }
 
 func TestClient_ListDevicesByCluster(t *testing.T) {
-	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := dcim.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("ListDevicesByCluster", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	opts := models.ListDevicesRequest{
 		ClusterID: 831,
 	}
@@ -97,14 +98,14 @@ func TestClient_ListDevicesByCluster(t *testing.T) {
 }
 
 func TestClient_CreateDeleteDevice(t *testing.T) {
-	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := dcim.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("CreateDeleteDevice", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 
 	wDev := models.WritableDeviceWithConfigContext{}
 	wDev.Name = "GNG Test Device"

@@ -28,13 +28,13 @@ import (
 )
 
 func (c *Client) ListSites(opts models.ListSitesRequest) (*models.ListSitesResponse, error) {
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"sites/", http.NoBody)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL().String()+basePath+"sites/", http.NoBody)
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
+	c.ApplyAuthTokenToHeader(&request.Header)
 	setListSitesParams(request, opts)
-	response, err := c.HTTPClient.Do(request)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}
@@ -64,12 +64,12 @@ func setListSitesParams(req *http.Request, opts models.ListSitesRequest) {
 }
 
 func (c *Client) GetSite(id int) (*models.Site, error) {
-	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL.String()+basePath+"sites/"+strconv.Itoa(id)+"/", http.NoBody)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL().String()+basePath+"sites/"+strconv.Itoa(id)+"/", http.NoBody)
 	if err != nil {
 		return nil, err
 	}
-	c.SetAuthToken(&request.Header)
-	response, err := c.HTTPClient.Do(request)
+	c.ApplyAuthTokenToHeader(&request.Header)
+	response, err := c.HTTPClient().Do(request)
 	if err != nil {
 		return nil, err
 	}

@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package ipam
+package ipam_test
 
 import (
 	"os"
@@ -23,18 +23,19 @@ import (
 	"github.com/seborama/govcr"
 	"github.com/stretchr/testify/assert"
 
+	"github.com/sapcc/go-netbox-go/ipam"
 	"github.com/sapcc/go-netbox-go/models"
 )
 
 func TestClient_GetVlan(t *testing.T) {
-	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := ipam.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("GetVlan", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	res, err := client.GetVlan(318)
 	if err != nil {
 		t.Fatal(err)
@@ -43,14 +44,14 @@ func TestClient_GetVlan(t *testing.T) {
 }
 
 func TestClient_ListVlans(t *testing.T) {
-	client, err := New(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	client, err := ipam.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	vcrConf := &govcr.VCRConfig{}
-	vcrConf.Client = client.HTTPClient
+	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("ListVlans", vcrConf)
-	client.HTTPClient = vcr.Client
+	client.SetHTTPClient(vcr.Client)
 	opts := models.ListVlanRequest{}
 	opts.ID = 1661
 	res, err := client.ListVlans(opts)
