@@ -23,6 +23,7 @@ import (
 	"github.com/seborama/govcr"
 	"github.com/stretchr/testify/assert"
 
+	"github.com/sapcc/go-netbox-go/common"
 	"github.com/sapcc/go-netbox-go/models"
 	"github.com/sapcc/go-netbox-go/virtualization"
 )
@@ -60,6 +61,28 @@ func TestClient_ListClusterByType(t *testing.T) {
 	opts := models.ListClusterRequest{
 		Region: "ap-ae-1",
 		Type:   "cc-k8s-controlplane-swift",
+	}
+	res, err := clint.ListClusters(opts)
+	if err != nil {
+		t.Fatal(err)
+	}
+	assert.NotEqual(t, 0, res.Count)
+	t.Log(res.Results[0].Name)
+}
+
+func TestClient_ListClusterByName(t *testing.T) {
+	clint, err := virtualization.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	if err != nil {
+		t.Fatal(err)
+	}
+	vcrConf := &govcr.VCRConfig{}
+	vcrConf.Client = clint.HTTPClient()
+	vcr := govcr.NewVCR("ListClusterByType", vcrConf)
+	clint.SetHTTPClient(vcr.Client)
+	opts := models.ListClusterRequest{
+		ListParams: common.ListParams{
+			Name: "qa-de-1-admin-controlplane",
+		},
 	}
 	res, err := clint.ListClusters(opts)
 	if err != nil {
