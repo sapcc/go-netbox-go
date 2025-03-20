@@ -65,6 +65,9 @@ func setListClusterParams(req *http.Request, opts models.ListClusterRequest) {
 	if opts.ID != 0 {
 		q.Set("id", strconv.Itoa(opts.ID))
 	}
+	if opts.Name != "" {
+		q.Set("name", opts.Name)
+	}
 	if opts.Region != "" {
 		q.Set("region", opts.Region)
 	}
