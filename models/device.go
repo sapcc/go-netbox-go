@@ -95,6 +95,7 @@ type ListDevicesRequest struct {
 	DeviceTypeID int
 	Region       string
 	Site         string
+	SiteId       int
 	RackID       int
 	Serial       string
 	RoleID       int
