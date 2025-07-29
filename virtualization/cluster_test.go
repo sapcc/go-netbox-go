@@ -68,7 +68,7 @@ func TestClient_ListClusterByName(t *testing.T) {
 	clint.SetHTTPClient(vcr.Client)
 	opts := models.ListClusterRequest{
 		ListParams: common.ListParams{
-			Name: "qa-de-1-admin-controlplane",
+			Name: "ap-ae-1a-controlplane",
 		},
 	}
 	res, err := clint.ListClusters(opts)

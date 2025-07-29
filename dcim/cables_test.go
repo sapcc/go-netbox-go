@@ -40,13 +40,14 @@ func TestClient_CreateDeleteCable(t *testing.T) {
 	vcr := govcr.NewVCR("CreateDeleteCable", vcrConf)
 	client.SetHTTPClient(vcr.Client)
 
+	// test cable creation/deletion against test server TestServer-Go-Netbox-Go in Netbox
 	wCable := models.WriteableCable{}
 	wCable.Type = "cat6"
 	aterm := models.Termination{}
-	aterm.ObjectID = 376515
+	aterm.ObjectID = 1040790
 	aterm.ObjectType = "dcim.interface"
 	bterm := models.Termination{}
-	bterm.ObjectID = 376517
+	bterm.ObjectID = 1040791
 	bterm.ObjectType = "dcim.interface"
 
 	wCable.Aterminations = append(wCable.Aterminations, aterm)

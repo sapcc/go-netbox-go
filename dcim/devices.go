@@ -58,6 +58,9 @@ func setListDevicesParams(req *http.Request, opts models.ListDevicesRequest) {
 	if opts.Site != "" {
 		q.Set("site", opts.Site)
 	}
+	if opts.SiteID != 0 {
+		q.Set("site_id", strconv.Itoa(opts.SiteID))
+	}
 	if opts.Region != "" {
 		q.Set("region", opts.Region)
 	}
