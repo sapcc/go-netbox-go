@@ -84,6 +84,27 @@ func TestClient_ListDevicesByCluster(t *testing.T) {
 	t.Log(res.Results[0])
 }
 
+func TestClient_ListDevicesBySiteId(t *testing.T) {
+	client, err := dcim.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
+	if err != nil {
+		t.Fatal(err)
+	}
+	vcrConf := &govcr.VCRConfig{}
+	vcrConf.Client = client.HTTPClient()
+	vcr := govcr.NewVCR("ListDevicesByCluster", vcrConf)
+	client.SetHTTPClient(vcr.Client)
+	opts := models.ListDevicesRequest{
+		SiteID: 20,
+	}
+	res, err := client.ListDevices(opts)
+	if err != nil {
+		t.Fatal(err)
+	}
+	// t.Log(res)
+	assert.NotEqual(t, 0, res.Count)
+	t.Log(res.Results[0].Name)
+}
+
 func TestClient_CreateDeleteDevice(t *testing.T) {
 	client, err := dcim.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
