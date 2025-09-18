@@ -11,6 +11,7 @@ mkShell {
     go-licence-detector
     go_1_25
     gotools # goimports
+    renovate
     reuse
     # keep this line if you use bash
     bashInteractive
