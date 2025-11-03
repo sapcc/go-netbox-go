@@ -12,7 +12,6 @@ golangciLint:
 githubWorkflow:
   ci:
     enabled: false
-    coveralls: false
     ignorePaths:
       - "**.md" # all Markdown files
 
