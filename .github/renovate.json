@@ -4,8 +4,7 @@
     "config:recommended",
     "default:pinDigestsDisabled",
     "mergeConfidence:all-badges",
-    "docker:disable",
-    "github-actions:disable"
+    "docker:disable"
   ],
   "assignees": [
     "defo89",
@@ -61,6 +60,16 @@
         "major"
       ],
       "dependencyDashboardApproval": true
+    },
+    {
+      "matchDepTypes": [
+        "action"
+      ],
+      "matchFileNames": [
+        ".github/workflows/checks.yaml",
+        ".github/workflows/codeql.yaml"
+      ],
+      "enabled": false
     }
   ],
   "prHourlyLimit": 0,
