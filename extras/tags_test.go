@@ -32,7 +32,7 @@ func TestClient_ListTags(t *testing.T) {
 	t.Log(res.Results[0].Name)
 }
 
-// Permission issue in netbox - not allwed to create tags
+// Permission issue in netbox - not allowed to create tags
 
 // func TestClient_CreateTag(t *testing.T) {
 // 	client, err := extras.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)

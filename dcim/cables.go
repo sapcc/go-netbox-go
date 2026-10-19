@@ -41,7 +41,7 @@ func (c *Client) GetCable(id int) (*models.Cable, error) {
 	return &resObj, nil
 }
 
-func (c *Client) CreateCable(cable models.WriteableCable) (*models.Cable, error) {
+func (c *Client) CreateCable(cable models.WritableCable) (*models.Cable, error) {
 	body, err := json.Marshal(cable)
 	if err != nil {
 		return nil, err
@@ -96,7 +96,7 @@ func (c *Client) DeleteCable(id int) error {
 	return nil
 }
 
-func (c *Client) UpdateCable(cable models.WriteableCable) (*models.Cable, error) {
+func (c *Client) UpdateCable(cable models.WritableCable) (*models.Cable, error) {
 	body, err := json.Marshal(cable)
 	if err != nil {
 		return nil, err

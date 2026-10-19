@@ -33,7 +33,7 @@ type IPAddressStatus struct {
 	Value string `json:"value"`
 }
 
-type WriteableIPAddress struct {
+type WritableIPAddress struct {
 	NestedIPAddress
 	Vrf                int         `json:"vrf,omitempty"`
 	Tenant             int         `json:"tenant,omitempty"`

@@ -15,7 +15,7 @@ type Tag struct {
 
 type NestedTag struct {
 	ID int `json:"id,omitempty"`
-	// URL   strfmt.URI `json:"url,omitempty"` //commented this aout as we get error when updating devices with tag: "Error: unexpected return code of 400: {"tags":[["Cannot resolve keyword 'url' into field. Choices are:"
+	// URL   strfmt.URI `json:"url,omitempty"` //commented this about as we get error when updating devices with tag: "Error: unexpected return code of 400: {"tags":[["Cannot resolve keyword 'url' into field. Choices are:"
 	Name  string `json:"name"`
 	Slug  string `json:"slug"`
 	Color string `json:"color,omitempty"`

@@ -15,17 +15,17 @@ type NetboxAPI interface {
 
 	// ip-addresses
 	ListIPAddresses(opts models.ListIPAddressesRequest) (*models.ListIPAddressesResponse, error)
-	GetIPAdress(id int) (*models.IPAddress, error)
-	CreateIPAddress(ip models.WriteableIPAddress) (*models.IPAddress, error)
-	UpdateIPAddress(address models.WriteableIPAddress) (*models.IPAddress, error)
+	GetIPAddress(id int) (*models.IPAddress, error)
+	CreateIPAddress(ip models.WritableIPAddress) (*models.IPAddress, error)
+	UpdateIPAddress(address models.WritableIPAddress) (*models.IPAddress, error)
 	DeleteIPAddress(id int) error
 
 	// prefixes
-	ListPrefixes(opts models.ListPrefixesRequest) (*models.ListPrefixesReponse, error)
-	CreatePrefix(prefix models.WriteablePrefix) (*models.Prefix, error)
+	ListPrefixes(opts models.ListPrefixesRequest) (*models.ListPrefixesResponse, error)
+	CreatePrefix(prefix models.WritablePrefix) (*models.Prefix, error)
 	ListAvailableIps(id int) ([]models.AvailableIP, error)
 	CreateAvailablePrefix(id int, opts models.CreateAvailablePrefixRequest) (*models.Prefix, error)
-	UpdatePrefix(prefix models.WriteablePrefix) (*models.Prefix, error)
+	UpdatePrefix(prefix models.WritablePrefix) (*models.Prefix, error)
 	DeletePrefix(id int) error
 
 	// roles

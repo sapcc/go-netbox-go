@@ -23,7 +23,7 @@ func TestClient_GetIpAddress(t *testing.T) {
 	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("GetIpAddresses", vcrConf)
 	client.SetHTTPClient(vcr.Client)
-	res, err := client.GetIPAdress(41797)
+	res, err := client.GetIPAddress(41797)
 	t.Log(res)
 	if err != nil {
 		t.Fatal(err)
@@ -56,7 +56,7 @@ func TestClient_ListIpAddresses(t *testing.T) {
 }
 
 func TestClient_CreateDeleteIpAddress(t *testing.T) {
-	wIP := models.WriteableIPAddress{}
+	wIP := models.WritableIPAddress{}
 	wIP.Address = "199.199.199.199/32"
 	client, err := ipam.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {

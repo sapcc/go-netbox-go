@@ -41,7 +41,7 @@ func TestClient_CreateDeleteCable(t *testing.T) {
 	client.SetHTTPClient(vcr.Client)
 
 	// test cable creation/deletion against test server TestServer-Go-Netbox-Go in Netbox
-	wCable := models.WriteableCable{}
+	wCable := models.WritableCable{}
 	wCable.Type = "cat6"
 	aterm := models.Termination{}
 	aterm.ObjectID = 1040790
@@ -85,7 +85,7 @@ func TestClient_UpdateCable(t *testing.T) {
 	vcr := govcr.NewVCR("CreateDeleteCable", vcrConf)
 	client.SetHTTPClient(vcr.Client)
 
-	wCable := models.WriteableCable{}
+	wCable := models.WritableCable{}
 	wCable.ID = 117102
 	aterm := models.Termination{}
 	aterm.ObjectID = 598436

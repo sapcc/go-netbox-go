@@ -48,7 +48,7 @@ type WritableVMInterface struct {
 	Tags           []NestedTag `json:"tags,omitempty"`
 }
 
-func (vmi *VMInterface) Writeable() WritableVMInterface {
+func (vmi *VMInterface) Writable() WritableVMInterface {
 	res := WritableVMInterface{
 		ID:             vmi.ID,
 		URL:            vmi.URL,

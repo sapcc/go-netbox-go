@@ -46,7 +46,7 @@ type Cable struct {
 	AssignedObjectType string
 }
 
-type WriteableCable struct {
+type WritableCable struct {
 	Aterminations []Termination   `json:"a_terminations,omitempty"`
 	Bterminations []Termination   `json:"b_terminations,omitempty"`
 	Color         string          `json:"color,omitempty"`

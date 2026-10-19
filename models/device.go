@@ -130,7 +130,7 @@ type WritableDeviceWithConfigContext struct {
 	VirtualChassis   int             `json:"virtual_chassis,omitempty"`
 }
 
-func (dev *Device) Writeable() WritableDeviceWithConfigContext {
+func (dev *Device) Writable() WritableDeviceWithConfigContext {
 	var clusterID int
 	if dev.Cluster == nil {
 		clusterID = 0

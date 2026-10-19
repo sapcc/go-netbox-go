@@ -95,7 +95,7 @@ func TestClient_CreateDeleteVirtualMachine(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	vm := models.WriteableVirtualMachine{
+	vm := models.WritableVirtualMachine{
 		Name:     "test.cc.qa-de-1.cloud.sap",
 		Cluster:  res.Results[0].ID,
 		Status:   "active",

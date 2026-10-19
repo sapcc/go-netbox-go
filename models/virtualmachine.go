@@ -44,7 +44,7 @@ type VirtualMachineStatus struct {
 	Label string `json:"label"`
 }
 
-type WriteableVirtualMachine struct {
+type WritableVirtualMachine struct {
 	ID         int     `json:"id,omitempty"`
 	URL        string  `json:"url,omitempty"`
 	Name       string  `json:"name"`
@@ -63,8 +63,8 @@ type WriteableVirtualMachine struct {
 	Disk       int     `json:"disk,omitempty"`
 }
 
-func (vm *VirtualMachine) Writeable() WriteableVirtualMachine {
-	res := WriteableVirtualMachine{
+func (vm *VirtualMachine) Writable() WritableVirtualMachine {
+	res := WritableVirtualMachine{
 		ID:         vm.ID,
 		URL:        vm.URL,
 		Name:       vm.Name,

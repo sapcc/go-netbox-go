@@ -31,7 +31,7 @@ type Prefix struct {
 	LastUpdated  string      `json:"last_updated"`
 }
 
-type WriteablePrefix struct {
+type WritablePrefix struct {
 	ID           int         `json:"id,omitempty"`
 	URL          string      `json:"url"`
 	Prefix       string      `json:"prefix"`
@@ -67,7 +67,7 @@ type ListPrefixesRequest struct {
 	Children      *int
 }
 
-type ListPrefixesReponse struct {
+type ListPrefixesResponse struct {
 	common.ReturnValues
 	Results []Prefix `json:"results"`
 }
