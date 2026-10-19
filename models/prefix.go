@@ -15,7 +15,7 @@ type Status struct {
 type Prefix struct {
 	ID           int         `json:"id"`
 	URL          string      `json:"url"`
-	Family       interface{} `json:"family"`
+	Family       any         `json:"family"`
 	Prefix       string      `json:"prefix"`
 	Site         Site        `json:"site"`
 	Vrf          NestedVRF   `json:"vrf"`
@@ -26,12 +26,12 @@ type Prefix struct {
 	IsPool       bool        `json:"is_pool"`
 	Description  string      `json:"description"`
 	Tags         []NestedTag `json:"tags"`
-	CustomFields interface{} `json:"custom_fields"`
+	CustomFields any         `json:"custom_fields"`
 	Created      string      `json:"created"`
 	LastUpdated  string      `json:"last_updated"`
 }
 
-type WriteablePrefix struct {
+type WritablePrefix struct {
 	ID           int         `json:"id,omitempty"`
 	URL          string      `json:"url"`
 	Prefix       string      `json:"prefix"`
@@ -44,10 +44,13 @@ type WriteablePrefix struct {
 	IsPool       bool        `json:"is_pool"`
 	Description  string      `json:"description"`
 	Tags         []NestedTag `json:"tags,omitempty"`
-	CustomFields interface{} `json:"custom_fields,omitempty"`
+	CustomFields any         `json:"custom_fields,omitempty"`
 	Created      string      `json:"created"`
 	LastUpdated  string      `json:"last_updated"`
 }
+
+// Deprecated: use [WritablePrefix]. WriteablePrefix is a misspelling kept for backwards compatibility and will be removed in a future major version.
+type WriteablePrefix = WritablePrefix
 
 type ListPrefixesRequest struct {
 	common.ListParams
@@ -67,10 +70,13 @@ type ListPrefixesRequest struct {
 	Children      *int
 }
 
-type ListPrefixesReponse struct {
+type ListPrefixesResponse struct {
 	common.ReturnValues
 	Results []Prefix `json:"results"`
 }
+
+// Deprecated: use [ListPrefixesResponse]. ListPrefixesReponse is a misspelling kept for backwards compatibility and will be removed in a future major version.
+type ListPrefixesReponse = ListPrefixesResponse
 
 type CreateAvailablePrefixRequest struct {
 	PrefixLength int `json:"prefix_length"`

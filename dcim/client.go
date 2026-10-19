@@ -15,9 +15,9 @@ type NetboxAPI interface {
 
 	// cables
 	GetCable(id int) (*models.Cable, error)
-	CreateCable(cable models.WriteableCable) (*models.Cable, error)
+	CreateCable(cable models.WritableCable) (*models.Cable, error)
 	DeleteCable(id int) error
-	UpdateCable(cable models.WriteableCable) (*models.Cable, error)
+	UpdateCable(cable models.WritableCable) (*models.Cable, error)
 
 	// device-roles
 	ListDeviceRoles(opts models.ListDeviceRolesRequest) (*models.ListDeviceRolesResponse, error)

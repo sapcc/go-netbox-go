@@ -23,9 +23,9 @@ func TestClient_ListInterfaces(t *testing.T) {
 	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("ListInterfaces", vcrConf)
 	client.SetHTTPClient(vcr.Client)
-	opts := models.ListInterfacesRequest{}
-	opts.DeviceID = 10867
-	opts.Name = "bond2"
+	opts := models.ListInterfacesRequest{
+		DeviceID: 10867,
+		Name:     "bond2"}
 	res, err := client.ListInterfaces(opts)
 	if err != nil {
 		t.Fatal(err)
@@ -43,11 +43,11 @@ func TestClient_CreateDeleteInterface(t *testing.T) {
 	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("CreateDeleteInterface", vcrConf)
 	client.SetHTTPClient(vcr.Client)
-	wInt := models.WritableInterface{}
-	wInt.MacAddress = "aaaa:bbbb:cccc"
-	wInt.Name = "Test Interface"
-	wInt.Device = 10867
-	wInt.Type = "1000base-t"
+	wInt := models.WritableInterface{
+		MacAddress: "aaaa:bbbb:cccc",
+		Name:       "Test Interface",
+		Device:     10867,
+		Type:       "1000base-t"}
 	interf, err := client.CreateInterface(wInt)
 	if err != nil {
 		t.Fatal(err)

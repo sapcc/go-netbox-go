@@ -23,15 +23,15 @@ type VirtualMachine struct {
 	Platform         NestedPlatform       `json:"platform"`
 	PrimaryIP        NestedIPAddress      `json:"primary_ip"`
 	PrimaryIP4       NestedIPAddress      `json:"primary_ip4"`
-	PrimaryIP6       interface{}          `json:"primary_ip6"`
+	PrimaryIP6       any                  `json:"primary_ip6"`
 	VCPUs            float64              `json:"vcpus"`
 	Memory           int                  `json:"memory"`
 	Disk             int                  `json:"disk"`
 	Comments         string               `json:"comments"`
 	LocalContextData string               `json:"local_context_data"`
-	Tags             interface{}          `json:"tags"`
-	CustomFields     interface{}          `json:"custom_fields"`
-	ConfigContext    interface{}          `json:"config_context"`
+	Tags             any                  `json:"tags"`
+	CustomFields     any                  `json:"custom_fields"`
+	ConfigContext    any                  `json:"config_context"`
 	Created          string               `json:"created"`
 	LastUpdated      string               `json:"last_updated"`
 	Cluster          NestedCluster
@@ -44,7 +44,7 @@ type VirtualMachineStatus struct {
 	Label string `json:"label"`
 }
 
-type WriteableVirtualMachine struct {
+type WritableVirtualMachine struct {
 	ID         int     `json:"id,omitempty"`
 	URL        string  `json:"url,omitempty"`
 	Name       string  `json:"name"`
@@ -63,8 +63,12 @@ type WriteableVirtualMachine struct {
 	Disk       int     `json:"disk,omitempty"`
 }
 
-func (vm *VirtualMachine) Writeable() WriteableVirtualMachine {
-	res := WriteableVirtualMachine{
+// Deprecated: use [WritableVirtualMachine]. WriteableVirtualMachine is a misspelling kept for backwards compatibility and will be removed in a future major version.
+type WriteableVirtualMachine = WritableVirtualMachine
+
+// Writable builds the writable representation of a VirtualMachine.
+func (vm *VirtualMachine) Writable() WritableVirtualMachine {
+	res := WritableVirtualMachine{
 		ID:         vm.ID,
 		URL:        vm.URL,
 		Name:       vm.Name,
@@ -83,6 +87,11 @@ func (vm *VirtualMachine) Writeable() WriteableVirtualMachine {
 		Disk:       vm.Disk,
 	}
 	return res
+}
+
+// Deprecated: use [VirtualMachine.Writable]. Writeable is a misspelling kept for backwards compatibility and will be removed in a future major version.
+func (vm *VirtualMachine) Writeable() WritableVirtualMachine {
+	return vm.Writable()
 }
 
 type ListVirtualMachinesRequest struct {

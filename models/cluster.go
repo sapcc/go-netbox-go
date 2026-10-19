@@ -40,19 +40,19 @@ type ClusterStatus struct {
 
 type Cluster struct {
 	Comments            string             `json:"comments,omitempty"`
-	Created             strfmt.DateTime    `json:"created,omitempty"`
-	CustomFields        interface{}        `json:"custom_fields,omitempty"`
+	Created             strfmt.DateTime    `json:"created"`
+	CustomFields        any                `json:"custom_fields,omitempty"`
 	Description         string             `json:"description,omitempty"`
 	DeviceCount         int                `json:"device_count,omitempty"`
 	Display             string             `json:"display,omitempty"`
-	Group               NestedClusterGroup `json:"group,omitempty"`
+	Group               NestedClusterGroup `json:"group"`
 	ID                  int                `json:"id,omitempty"`
-	LastUpdated         strfmt.DateTime    `json:"last_updated,omitempty"`
+	LastUpdated         strfmt.DateTime    `json:"last_updated"`
 	Name                string             `json:"name"`
-	Site                NestedSite         `json:"site,omitempty"`
-	Status              ClusterStatus      `json:"status,omitempty"`
+	Site                NestedSite         `json:"site"`
+	Status              ClusterStatus      `json:"status"`
 	Tags                []NestedTag        `json:"tags,omitempty"`
-	Tenant              NestedTenant       `json:"tenant,omitempty"`
+	Tenant              NestedTenant       `json:"tenant"`
 	Type                NestedClusterType  `json:"type"`
 	URL                 strfmt.URI         `json:"url,omitempty"`
 	VirtualmachineCount int                `json:"virtualmachine_count,omitempty"`

@@ -11,16 +11,16 @@ import (
 )
 
 type NestedIPAddress struct {
-	ID      int         `json:"id,omitempty"`
-	URL     string      `json:"url,omitempty"`
-	Family  interface{} `json:"family,omitempty"`
-	Address string      `json:"address"`
+	ID      int    `json:"id,omitempty"`
+	URL     string `json:"url,omitempty"`
+	Family  any    `json:"family,omitempty"`
+	Address string `json:"address"`
 }
 
 type AvailableIP struct {
-	Family  int         `json:"family"`
-	Address string      `json:"address"`
-	Vrf     interface{} `json:"vrf"`
+	Family  int    `json:"family"`
+	Address string `json:"address"`
+	Vrf     any    `json:"vrf"`
 }
 
 type IpamRole struct {
@@ -33,7 +33,7 @@ type IPAddressStatus struct {
 	Value string `json:"value"`
 }
 
-type WriteableIPAddress struct {
+type WritableIPAddress struct {
 	NestedIPAddress
 	Vrf                int         `json:"vrf,omitempty"`
 	Tenant             int         `json:"tenant,omitempty"`
@@ -46,23 +46,26 @@ type WriteableIPAddress struct {
 	DNSName            string      `json:"dns_name,omitempty"`
 	Description        string      `json:"description,omitempty"`
 	Tags               []NestedTag `json:"tags,omitempty"`
-	CustomFields       interface{} `json:"custom_fields,omitempty"`
+	CustomFields       any         `json:"custom_fields,omitempty"`
 	Created            string      `json:"created,omitempty"`
 	LastUpdated        string      `json:"last_updated,omitempty"`
 }
 
+// Deprecated: use [WritableIPAddress]. WriteableIPAddress is a misspelling kept for backwards compatibility and will be removed in a future major version.
+type WriteableIPAddress = WritableIPAddress
+
 type IPAddress struct {
 	NestedIPAddress
-	Vrf                 interface{}     `json:"vrf"`
+	Vrf                 any             `json:"vrf"`
 	Tenant              Tenant          `json:"tenant"`
 	Status              IPAddressStatus `json:"status"`
 	Role                IpamRole        `json:"role"`
-	NatInside           interface{}     `json:"nat_inside"`
-	NatOutside          interface{}     `json:"nat_outside"`
+	NatInside           any             `json:"nat_inside"`
+	NatOutside          any             `json:"nat_outside"`
 	DNSName             string          `json:"dns_name"`
 	Description         string          `json:"description"`
 	Tags                []NestedTag     `json:"tags"`
-	CustomFields        interface{}     `json:"custom_fields"`
+	CustomFields        any             `json:"custom_fields"`
 	Created             string          `json:"created"`
 	LastUpdated         string          `json:"last_updated"`
 	AssignedInterface   NestedInterface

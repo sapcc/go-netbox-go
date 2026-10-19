@@ -15,16 +15,16 @@ type NestedASN struct {
 type ASN struct {
 	Asn           int             `json:"asn"`
 	Comments      string          `json:"comments,omitempty"`
-	Created       strfmt.DateTime `json:"created,omitempty"`
-	CustomFields  interface{}     `json:"custom_fields,omitempty"`
+	Created       strfmt.DateTime `json:"created"`
+	CustomFields  any             `json:"custom_fields,omitempty"`
 	Description   string          `json:"description,omitempty"`
 	Display       string          `json:"display,omitempty"`
 	ID            int             `json:"id,omitempty"`
-	LastUpdated   strfmt.DateTime `json:"last_updated,omitempty"`
+	LastUpdated   strfmt.DateTime `json:"last_updated"`
 	ProviderCount int             `json:"provider_count,omitempty"`
 	Rir           int             `json:"rir"`
 	SiteCount     int             `json:"site_count,omitempty"`
 	Tags          []NestedTag     `json:"tags,omitempty"`
-	Tenant        NestedTenant    `json:"tenant,omitempty"`
+	Tenant        NestedTenant    `json:"tenant"`
 	URL           strfmt.URI      `json:"url,omitempty"`
 }

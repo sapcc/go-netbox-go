@@ -20,7 +20,7 @@ type VRF struct {
 	EnforceUnique  bool         `json:"enforce_unique"`
 	Description    string       `json:"description"`
 	Tags           []NestedTag  `json:"tags"`
-	CustomFields   interface{}  `json:"custom_fields"`
+	CustomFields   any          `json:"custom_fields"`
 	Created        string       `json:"created"`
 	LastUpdated    string       `json:"last_updated"`
 	IPAddressCount int          `json:"ipaddress_count"`

@@ -23,8 +23,8 @@ func TestClient_ListRegions(t *testing.T) {
 	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("ListRegions", vcrConf)
 	client.SetHTTPClient(vcr.Client)
-	opts := models.ListRegionsRequest{}
-	opts.Slug = "qa-de-1"
+	opts := models.ListRegionsRequest{
+		Slug: "qa-de-1"}
 	res, err := client.ListRegions(opts)
 	if err != nil {
 		t.Fatal(err)
