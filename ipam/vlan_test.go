@@ -39,8 +39,8 @@ func TestClient_ListVlans(t *testing.T) {
 	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("ListVlans", vcrConf)
 	client.SetHTTPClient(vcr.Client)
-	opts := models.ListVlanRequest{}
-	opts.ID = 1661
+	opts := models.ListVlanRequest{
+		ID: 1661}
 	res, err := client.ListVlans(opts)
 	if err != nil {
 		t.Fatal(err)

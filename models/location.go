@@ -7,21 +7,21 @@ import "github.com/go-openapi/strfmt"
 
 type Location struct {
 	Depth        int             `json:"_depth,omitempty"`
-	Created      strfmt.DateTime `json:"created,omitempty"`
-	CustomFields interface{}     `json:"custom_fields,omitempty"`
+	Created      strfmt.DateTime `json:"created"`
+	CustomFields any             `json:"custom_fields,omitempty"`
 	Description  string          `json:"description,omitempty"`
 	DeviceCount  int             `json:"device_count,omitempty"`
 	Display      string          `json:"display,omitempty"`
 	ID           int             `json:"id,omitempty"`
-	LastUpdated  strfmt.DateTime `json:"last_updated,omitempty"`
+	LastUpdated  strfmt.DateTime `json:"last_updated"`
 	Name         string          `json:"name"`
-	Parent       NestedLocation  `json:"parent,omitempty"`
+	Parent       NestedLocation  `json:"parent"`
 	RackCount    int             `json:"rack_count,omitempty"`
 	Site         NestedSite      `json:"site"`
 	Slug         string          `json:"slug"`
-	Status       LocationStatus  `json:"status,omitempty"`
+	Status       LocationStatus  `json:"status"`
 	Tags         []NestedTag     `json:"tags,omitempty"`
-	Tenant       NestedTenant    `json:"tenant,omitempty"`
+	Tenant       NestedTenant    `json:"tenant"`
 	URL          strfmt.URI      `json:"url,omitempty"`
 }
 

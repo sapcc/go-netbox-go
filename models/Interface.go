@@ -21,23 +21,23 @@ type InterfaceMode struct {
 
 type Interface struct {
 	NestedInterface
-	Cable              NestedCable       `json:"cable,omitempty"`
+	Cable              NestedCable       `json:"cable"`
 	ConnectedEndpoints []NestedInterface `json:"connected_endpoints"`
 	CountIpaddresses   int               `json:"count_ipaddresses,omitempty"`
 	Description        string            `json:"description,omitempty"`
 	Enabled            bool              `json:"enabled,omitempty"`
 	Label              string            `json:"label,omitempty"`
-	Lag                NestedInterface   `json:"lag,omitempty"`
+	Lag                NestedInterface   `json:"lag"`
 	MacAddress         string            `json:"mac_address,omitempty"`
 	MgmtOnly           bool              `json:"mgmt_only,omitempty"`
-	Mode               InterfaceMode     `json:"mode,omitempty"`
+	Mode               InterfaceMode     `json:"mode"`
 	Mtu                int               `json:"mtu,omitempty"`
 	Name               string            `json:"name"`
 	Occupied           bool              `json:"_occupied,omitempty"`
 	TaggedVlans        []NestedVLAN      `json:"tagged_vlans"`
 	Tags               []NestedTag       `json:"tags,omitempty"`
 	Type               InterfaceType     `json:"type"`
-	UntaggedVlan       NestedVLAN        `json:"untagged_vlan,omitempty"`
+	UntaggedVlan       NestedVLAN        `json:"untagged_vlan"`
 }
 
 type InterfaceType struct {
@@ -59,8 +59,8 @@ type ListInterfacesResponse struct {
 }
 
 type WritableInterface struct {
-	Cable         NestedCable `json:"cable,omitempty"`
-	CustomFields  interface{} `json:"custom_fields,omitempty"`
+	Cable         NestedCable `json:"cable"`
+	CustomFields  any         `json:"custom_fields,omitempty"`
 	Description   string      `json:"description,omitempty"`
 	Device        int         `json:"device"`
 	Enabled       bool        `json:"enabled,omitempty"`

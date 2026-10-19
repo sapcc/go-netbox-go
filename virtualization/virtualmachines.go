@@ -15,7 +15,7 @@ import (
 	"github.com/sapcc/go-netbox-go/models"
 )
 
-func (c *Client) CreateVirtualMachine(vm models.WriteableVirtualMachine) (*models.VirtualMachine, error) {
+func (c *Client) CreateVirtualMachine(vm models.WritableVirtualMachine) (*models.VirtualMachine, error) {
 	body, err := json.Marshal(vm)
 	if err != nil {
 		return nil, err
@@ -49,7 +49,7 @@ func (c *Client) CreateVirtualMachine(vm models.WriteableVirtualMachine) (*model
 	return &resObj, nil
 }
 
-func (c *Client) UpdateVirtualMachine(vm models.WriteableVirtualMachine) (*models.VirtualMachine, error) {
+func (c *Client) UpdateVirtualMachine(vm models.WritableVirtualMachine) (*models.VirtualMachine, error) {
 	body, err := json.Marshal(vm)
 	if err != nil {
 		return nil, err

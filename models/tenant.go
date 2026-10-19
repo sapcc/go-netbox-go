@@ -14,8 +14,8 @@ type Tenant struct {
 	Group               NestedTenantGroup `json:"group"`
 	Description         string            `json:"description"`
 	Comments            string            `json:"comments"`
-	Tags                interface{}       `json:"tags"`
-	CustomFields        interface{}       `json:"custom_fields"`
+	Tags                any               `json:"tags"`
+	CustomFields        any               `json:"custom_fields"`
 	Created             string            `json:"created"`
 	LastUpdated         string            `json:"last_updated"`
 	CircuitCount        int               `json:"circuit_count"`

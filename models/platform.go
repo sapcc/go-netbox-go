@@ -7,10 +7,10 @@ import "github.com/sapcc/go-netbox-go/common"
 
 type Platform struct {
 	NestedPlatform
-	Manufacturer interface{} `json:"manufacturer"`
-	NapalmDriver string      `json:"napalm_driver"`
-	NapalmArgs   string      `json:"napalm_args"`
-	Description  string      `json:"description"`
+	Manufacturer any    `json:"manufacturer"`
+	NapalmDriver string `json:"napalm_driver"`
+	NapalmArgs   string `json:"napalm_args"`
+	Description  string `json:"description"`
 }
 
 type NestedPlatform struct {

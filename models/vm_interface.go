@@ -48,7 +48,8 @@ type WritableVMInterface struct {
 	Tags           []NestedTag `json:"tags,omitempty"`
 }
 
-func (vmi *VMInterface) Writeable() WritableVMInterface {
+// Writable builds the writable representation of a VMInterface.
+func (vmi *VMInterface) Writable() WritableVMInterface {
 	res := WritableVMInterface{
 		ID:             vmi.ID,
 		URL:            vmi.URL,
@@ -81,6 +82,11 @@ func (vmi *VMInterface) Writeable() WritableVMInterface {
 	res.Tags = vmi.Tags
 
 	return res
+}
+
+// Deprecated: use [VMInterface.Writable]. Writeable is a misspelling kept for backwards compatibility and will be removed in a future major version.
+func (vmi *VMInterface) Writeable() WritableVMInterface {
+	return vmi.Writable()
 }
 
 type ListVMInterfacesRequest struct {
