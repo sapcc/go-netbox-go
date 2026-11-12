@@ -15,7 +15,7 @@ import (
 	"github.com/sapcc/go-netbox-go/models"
 )
 
-func (c *Client) ListPrefixes(opts models.ListPrefixesRequest) (*models.ListPrefixesReponse, error) {
+func (c *Client) ListPrefixes(opts models.ListPrefixesRequest) (*models.ListPrefixesResponse, error) {
 	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL().String()+basePath+"prefixes/", http.NoBody)
 	if err != nil {
 		return nil, err
@@ -34,7 +34,7 @@ func (c *Client) ListPrefixes(opts models.ListPrefixesRequest) (*models.ListPref
 		}
 		return nil, fmt.Errorf("unexpected return code of %d: %s", response.StatusCode, errBody)
 	}
-	resObj := models.ListPrefixesReponse{}
+	resObj := models.ListPrefixesResponse{}
 	bytes, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
@@ -46,7 +46,7 @@ func (c *Client) ListPrefixes(opts models.ListPrefixesRequest) (*models.ListPref
 	return &resObj, nil
 }
 
-func (c *Client) CreatePrefix(prefix models.WriteablePrefix) (*models.Prefix, error) {
+func (c *Client) CreatePrefix(prefix models.WritablePrefix) (*models.Prefix, error) {
 	body, err := json.Marshal(prefix)
 	if err != nil {
 		return nil, err
@@ -144,7 +144,7 @@ func (c *Client) CreateAvailablePrefix(id int, opts models.CreateAvailablePrefix
 	return &resObj, nil
 }
 
-func (c *Client) UpdatePrefix(prefix models.WriteablePrefix) (*models.Prefix, error) {
+func (c *Client) UpdatePrefix(prefix models.WritablePrefix) (*models.Prefix, error) {
 	body, err := json.Marshal(prefix)
 	if err != nil {
 		return nil, err

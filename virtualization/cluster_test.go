@@ -10,7 +10,6 @@ import (
 	"github.com/seborama/govcr"
 	"github.com/stretchr/testify/assert"
 
-	"github.com/sapcc/go-netbox-go/common"
 	"github.com/sapcc/go-netbox-go/models"
 	"github.com/sapcc/go-netbox-go/virtualization"
 )
@@ -24,9 +23,9 @@ func TestClient_ListClusters(t *testing.T) {
 	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("ListClusters", vcrConf)
 	client.SetHTTPClient(vcr.Client)
-	opts := models.ListClusterRequest{}
-	// opts.VmID = 1060
-	opts.ID = 632
+	opts := models.ListClusterRequest{
+		// opts.VmID = 1060
+		ID: 632}
 	res, err := client.ListClusters(opts)
 	if err != nil {
 		t.Fatal(err)
@@ -67,9 +66,7 @@ func TestClient_ListClusterByName(t *testing.T) {
 	vcr := govcr.NewVCR("ListClusterByType", vcrConf)
 	clint.SetHTTPClient(vcr.Client)
 	opts := models.ListClusterRequest{
-		ListParams: common.ListParams{
-			Name: "ap-ae-1a-controlplane",
-		},
+		Name: "ap-ae-1a-controlplane",
 	}
 	res, err := clint.ListClusters(opts)
 	if err != nil {

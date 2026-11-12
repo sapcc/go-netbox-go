@@ -27,18 +27,18 @@ type CableLengthUnit struct {
 type Cable struct {
 	Color              string          `json:"color,omitempty"`
 	Comments           string          `json:"comments,omitempty"`
-	Created            strfmt.DateTime `json:"created,omitempty"`
-	CustomFields       interface{}     `json:"custom_fields,omitempty"`
+	Created            strfmt.DateTime `json:"created"`
+	CustomFields       any             `json:"custom_fields,omitempty"`
 	Description        string          `json:"description,omitempty"`
 	Display            string          `json:"display,omitempty"`
 	ID                 int             `json:"id,omitempty"`
 	Label              string          `json:"label,omitempty"`
-	LastUpdated        strfmt.DateTime `json:"last_updated,omitempty"`
+	LastUpdated        strfmt.DateTime `json:"last_updated"`
 	Length             float64         `json:"length,omitempty"`
-	LengthUnit         CableLengthUnit `json:"length_unit,omitempty"`
-	Status             CableStatus     `json:"status,omitempty"`
+	LengthUnit         CableLengthUnit `json:"length_unit"`
+	Status             CableStatus     `json:"status"`
 	Tags               []NestedTag     `json:"tags,omitempty"`
-	Tenant             NestedTenant    `json:"tenant,omitempty"`
+	Tenant             NestedTenant    `json:"tenant"`
 	Type               string          `json:"type,omitempty"`
 	URL                strfmt.URI      `json:"url,omitempty"`
 	Aterminations      []Termination
@@ -46,18 +46,18 @@ type Cable struct {
 	AssignedObjectType string
 }
 
-type WriteableCable struct {
+type WritableCable struct {
 	Aterminations []Termination   `json:"a_terminations,omitempty"`
 	Bterminations []Termination   `json:"b_terminations,omitempty"`
 	Color         string          `json:"color,omitempty"`
 	Comments      string          `json:"comments,omitempty"`
-	Created       strfmt.DateTime `json:"created,omitempty"`
-	CustomFields  interface{}     `json:"custom_fields,omitempty"`
+	Created       strfmt.DateTime `json:"created"`
+	CustomFields  any             `json:"custom_fields,omitempty"`
 	Description   string          `json:"description,omitempty"`
 	Display       string          `json:"display,omitempty"`
 	ID            int64           `json:"id,omitempty"`
 	Label         string          `json:"label,omitempty"`
-	LastUpdated   strfmt.DateTime `json:"last_updated,omitempty"`
+	LastUpdated   strfmt.DateTime `json:"last_updated"`
 	Length        float64         `json:"length,omitempty"`
 	LengthUnit    string          `json:"length_unit,omitempty"`
 	Status        string          `json:"status,omitempty"`
@@ -66,6 +66,9 @@ type WriteableCable struct {
 	Type          string          `json:"type,omitempty"`
 	URL           strfmt.URI      `json:"url,omitempty"`
 }
+
+// Deprecated: use [WritableCable]. WriteableCable is a misspelling kept for backwards compatibility and will be removed in a future major version.
+type WriteableCable = WritableCable
 
 type LengthUnit struct {
 	Label string `json:"label"`
@@ -78,7 +81,7 @@ type CableStatus struct {
 }
 
 type Termination struct {
-	Object     TerminationObject `json:"object,omitempty"`
+	Object     TerminationObject `json:"object"`
 	ObjectID   int               `json:"object_id"`
 	ObjectType string            `json:"object_type"`
 }

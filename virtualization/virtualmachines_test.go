@@ -42,8 +42,8 @@ func TestClient_ListVirtualMachines(t *testing.T) {
 	vcrConf.Client = client.HTTPClient()
 	vcr := govcr.NewVCR("ListVirtualMachines", vcrConf)
 	client.SetHTTPClient(vcr.Client)
-	opts := models.ListVirtualMachinesRequest{}
-	opts.ID = 4773
+	opts := models.ListVirtualMachinesRequest{
+		ID: 4773}
 	res, err := client.ListVirtualMachines(opts)
 	if err != nil {
 		t.Fatal(err)
@@ -95,7 +95,7 @@ func TestClient_CreateDeleteVirtualMachine(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	vm := models.WriteableVirtualMachine{
+	vm := models.WritableVirtualMachine{
 		Name:     "test.cc.qa-de-1.cloud.sap",
 		Cluster:  res.Results[0].ID,
 		Status:   "active",

@@ -45,18 +45,18 @@ type Device struct {
 	AssetTag         string               `json:"asset_tag,omitempty"`
 	Cluster          *NestedCluster       `json:"cluster,omitempty"`
 	Comments         string               `json:"comments,omitempty"`
-	ConfigContext    interface{}          `json:"config_context"`
-	Created          strfmt.DateTime      `json:"created,omitempty"`
-	CustomFields     interface{}          `json:"custom_fields,omitempty"`
+	ConfigContext    any                  `json:"config_context"`
+	Created          strfmt.DateTime      `json:"created"`
+	CustomFields     any                  `json:"custom_fields,omitempty"`
 	Description      string               `json:"description,omitempty"`
 	DeviceRole       NestedDeviceRole     `json:"role"`
 	DeviceType       NestedDeviceType     `json:"device_type"`
 	Display          string               `json:"display,omitempty"`
 	Face             DeviceFace           `json:"face"`
 	ID               int                  `json:"id,omitempty"`
-	LastUpdated      strfmt.DateTime      `json:"last_updated,omitempty"`
-	LocalContextData interface{}          `json:"local_context_data"`
-	Location         NestedLocation       `json:"location,omitempty"`
+	LastUpdated      strfmt.DateTime      `json:"last_updated"`
+	LocalContextData any                  `json:"local_context_data"`
+	Location         NestedLocation       `json:"location"`
 	Name             string               `json:"name,omitempty"`
 	ParentDevice     NestedDevice         `json:"parent_device"`
 	Platform         NestedPlatform       `json:"platform"`
@@ -98,17 +98,17 @@ type WritableDeviceWithConfigContext struct {
 	AssetTag         string          `json:"asset_tag,omitempty"`
 	Cluster          int             `json:"cluster,omitempty"`
 	Comments         string          `json:"comments,omitempty"`
-	ConfigContext    interface{}     `json:"config_context,omitempty"`
-	Created          strfmt.DateTime `json:"created,omitempty"`
-	CustomFields     interface{}     `json:"custom_fields,omitempty"`
+	ConfigContext    any             `json:"config_context,omitempty"`
+	Created          strfmt.DateTime `json:"created"`
+	CustomFields     any             `json:"custom_fields,omitempty"`
 	Description      string          `json:"description,omitempty"`
 	DeviceRole       int             `json:"role"`
 	DeviceType       int             `json:"device_type"`
 	Display          string          `json:"display,omitempty"`
 	Face             string          `json:"face,omitempty"`
 	ID               int             `json:"id,omitempty"`
-	LastUpdated      strfmt.DateTime `json:"last_updated,omitempty"`
-	LocalContextData interface{}     `json:"local_context_data,omitempty"`
+	LastUpdated      strfmt.DateTime `json:"last_updated"`
+	LocalContextData any             `json:"local_context_data,omitempty"`
 	Location         int             `json:"location,omitempty"`
 	Name             string          `json:"name,omitempty"`
 	ParentDevice     *NestedDevice   `json:"parent_device,omitempty"`
@@ -130,7 +130,8 @@ type WritableDeviceWithConfigContext struct {
 	VirtualChassis   int             `json:"virtual_chassis,omitempty"`
 }
 
-func (dev *Device) Writeable() WritableDeviceWithConfigContext {
+// Writable builds the writable representation of a Device.
+func (dev *Device) Writable() WritableDeviceWithConfigContext {
 	var clusterID int
 	if dev.Cluster == nil {
 		clusterID = 0
@@ -148,4 +149,9 @@ func (dev *Device) Writeable() WritableDeviceWithConfigContext {
 		Site:       dev.Site.ID,
 	}
 	return res
+}
+
+// Deprecated: use [Device.Writable]. Writeable is a misspelling kept for backwards compatibility and will be removed in a future major version.
+func (dev *Device) Writeable() WritableDeviceWithConfigContext {
+	return dev.Writable()
 }

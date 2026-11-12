@@ -21,14 +21,14 @@ type NestedRegion struct {
 
 type Region struct {
 	Depth        int             `json:"_depth,omitempty"`
-	Created      strfmt.DateTime `json:"created,omitempty"`
-	CustomFields interface{}     `json:"custom_fields,omitempty"`
+	Created      strfmt.DateTime `json:"created"`
+	CustomFields any             `json:"custom_fields,omitempty"`
 	Description  string          `json:"description,omitempty"`
 	Display      string          `json:"display,omitempty"`
 	ID           int             `json:"id,omitempty"`
-	LastUpdated  strfmt.DateTime `json:"last_updated,omitempty"`
+	LastUpdated  strfmt.DateTime `json:"last_updated"`
 	Name         string          `json:"name"`
-	Parent       NestedRegion    `json:"parent,omitempty"`
+	Parent       NestedRegion    `json:"parent"`
 	SiteCount    int             `json:"site_count,omitempty"`
 	Slug         string          `json:"slug"`
 	Tags         []NestedTag     `json:"tags,omitempty"`

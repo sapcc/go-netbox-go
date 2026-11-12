@@ -18,14 +18,14 @@ type NestedSiteGroup struct {
 
 type SiteGroup struct {
 	Created      strfmt.DateTime `json:"created"`
-	CustomFields interface{}     `json:"custom_fields"`
+	CustomFields any             `json:"custom_fields"`
 	Depth        int             `json:"_depth"`
 	Description  string          `json:"description"`
 	Display      string          `json:"display,omitempty"`
 	ID           int             `json:"id"`
 	LastUpdated  strfmt.DateTime `json:"last_updated"`
 	Name         string          `json:"name"`
-	Parent       NestedSiteGroup `json:"parent,omitempty"`
+	Parent       NestedSiteGroup `json:"parent"`
 	SiteCount    int             `json:"site_count"`
 	Slug         string          `json:"slug"`
 	Tags         []NestedTag     `json:"tags"`

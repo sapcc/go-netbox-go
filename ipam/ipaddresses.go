@@ -46,7 +46,7 @@ func (c *Client) ListIPAddresses(opts models.ListIPAddressesRequest) (*models.Li
 	return &resObj, nil
 }
 
-func (c *Client) GetIPAdress(id int) (*models.IPAddress, error) {
+func (c *Client) GetIPAddress(id int) (*models.IPAddress, error) {
 	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, c.BaseURL().String()+basePath+"ip-addresses/"+strconv.Itoa(id)+"/", http.NoBody)
 	if err != nil {
 		return nil, err
@@ -70,6 +70,11 @@ func (c *Client) GetIPAdress(id int) (*models.IPAddress, error) {
 		return nil, err
 	}
 	return &resObj, nil
+}
+
+// Deprecated: use [Client.GetIPAddress]. GetIPAdress is a misspelling kept for backwards compatibility and will be removed in a future major version.
+func (c *Client) GetIPAdress(id int) (*models.IPAddress, error) {
+	return c.GetIPAddress(id)
 }
 
 func setListIPAddressesParams(req *http.Request, opts models.ListIPAddressesRequest) {
@@ -99,7 +104,7 @@ func setListIPAddressesParams(req *http.Request, opts models.ListIPAddressesRequ
 	req.URL.RawQuery = q.Encode()
 }
 
-func (c *Client) CreateIPAddress(address models.WriteableIPAddress) (*models.IPAddress, error) {
+func (c *Client) CreateIPAddress(address models.WritableIPAddress) (*models.IPAddress, error) {
 	body, err := json.Marshal(address)
 	if err != nil {
 		return nil, err
@@ -133,7 +138,7 @@ func (c *Client) CreateIPAddress(address models.WriteableIPAddress) (*models.IPA
 	return &resObj, nil
 }
 
-func (c *Client) UpdateIPAddress(address models.WriteableIPAddress) (*models.IPAddress, error) {
+func (c *Client) UpdateIPAddress(address models.WritableIPAddress) (*models.IPAddress, error) {
 	body, err := json.Marshal(address)
 	if err != nil {
 		return nil, err

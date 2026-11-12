@@ -5,6 +5,18 @@
 [default.extend-words]
 
 
+# Exported identifiers with misspellings kept for API compatibility (see FIXMEs at their
+# definitions). Rename on the next major version instead of breaking downstream importers.
+[default.extend-identifiers]
+Writeable = "Writeable"
+WriteableVirtualMachine = "WriteableVirtualMachine"
+WriteableCable = "WriteableCable"
+WriteablePrefix = "WriteablePrefix"
+WriteableIPAddress = "WriteableIPAddress"
+ListPrefixesReponse = "ListPrefixesReponse"
+GetIPAdress = "GetIPAdress"
+
+
 [files]
 extend-exclude = [
   "go.mod",

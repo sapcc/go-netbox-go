@@ -15,17 +15,17 @@ type NestedVLAN struct {
 
 type Vlan struct {
 	NestedVLAN
-	Group        interface{} `json:"group"`
-	Description  string      `json:"description"`
-	Tags         interface{} `json:"tags"`
-	CustomFields interface{} `json:"custom_fields"`
-	Created      string      `json:"created"`
-	LastUpdated  string      `json:"last_updated"`
-	PrefixCount  int         `json:"prefix_count"`
-	Role         Role        `json:"role"`
-	Site         Site        `json:"site"`
-	Status       interface{} `json:"status"`
-	Tenant       Tenant      `json:"tenant"`
+	Group        any    `json:"group"`
+	Description  string `json:"description"`
+	Tags         any    `json:"tags"`
+	CustomFields any    `json:"custom_fields"`
+	Created      string `json:"created"`
+	LastUpdated  string `json:"last_updated"`
+	PrefixCount  int    `json:"prefix_count"`
+	Role         Role   `json:"role"`
+	Site         Site   `json:"site"`
+	Status       any    `json:"status"`
+	Tenant       Tenant `json:"tenant"`
 }
 
 type ListVlanRequest struct {

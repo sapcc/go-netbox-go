@@ -41,23 +41,23 @@ func TestClient_CreateDeleteCable(t *testing.T) {
 	client.SetHTTPClient(vcr.Client)
 
 	// test cable creation/deletion against test server TestServer-Go-Netbox-Go in Netbox
-	wCable := models.WriteableCable{}
-	wCable.Type = "cat6"
-	aterm := models.Termination{}
-	aterm.ObjectID = 1040790
-	aterm.ObjectType = "dcim.interface"
-	bterm := models.Termination{}
-	bterm.ObjectID = 1040791
-	bterm.ObjectType = "dcim.interface"
+	wCable := models.WritableCable{
+		Type: "cat6"}
+	aterm := models.Termination{
+		ObjectID:   1040790,
+		ObjectType: "dcim.interface"}
+	bterm := models.Termination{
+		ObjectID:   1040791,
+		ObjectType: "dcim.interface"}
 
 	wCable.Aterminations = append(wCable.Aterminations, aterm)
 	wCable.Bterminations = append(wCable.Bterminations, bterm)
 
 	wCable.Label = "GNG Test Cable"
 
-	wTag := models.NestedTag{}
-	wTag.Name = "apod"
-	wTag.Slug = "apod"
+	wTag := models.NestedTag{
+		Name: "apod",
+		Slug: "apod"}
 
 	wCable.Tags = append(wCable.Tags, wTag)
 
@@ -85,11 +85,11 @@ func TestClient_UpdateCable(t *testing.T) {
 	vcr := govcr.NewVCR("CreateDeleteCable", vcrConf)
 	client.SetHTTPClient(vcr.Client)
 
-	wCable := models.WriteableCable{}
-	wCable.ID = 117102
-	aterm := models.Termination{}
-	aterm.ObjectID = 598436
-	aterm.ObjectType = "dcim.interface"
+	wCable := models.WritableCable{
+		ID: 117102}
+	aterm := models.Termination{
+		ObjectID:   598436,
+		ObjectType: "dcim.interface"}
 
 	wCable.Aterminations = append(wCable.Aterminations, aterm)
 

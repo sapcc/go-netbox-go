@@ -26,7 +26,7 @@ type Site struct {
 	CircuitCount        int             `json:"circuit_count"`
 	Comments            string          `json:"comments"`
 	Created             strfmt.DateTime `json:"created"`
-	CustomFields        interface{}     `json:"custom_fields"`
+	CustomFields        any             `json:"custom_fields"`
 	Description         string          `json:"description"`
 	DeviceCount         int             `json:"device_count"`
 	Facility            string          `json:"facility"`

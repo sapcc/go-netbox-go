@@ -17,8 +17,8 @@ type NetboxAPI interface {
 	ListClusters(opts models.ListClusterRequest) (*models.ListClusterResponse, error)
 
 	// virtual machines
-	CreateVirtualMachine(vm models.WriteableVirtualMachine) (*models.VirtualMachine, error)
-	UpdateVirtualMachine(vm models.WriteableVirtualMachine) (*models.VirtualMachine, error)
+	CreateVirtualMachine(vm models.WritableVirtualMachine) (*models.VirtualMachine, error)
+	UpdateVirtualMachine(vm models.WritableVirtualMachine) (*models.VirtualMachine, error)
 	DeleteVirtualMachine(id int) error
 	GetVirtualMachine(id int) (*models.VirtualMachine, error)
 	ListVirtualMachines(opts models.ListVirtualMachinesRequest) (*models.ListVirtualMachinesResponse, error)

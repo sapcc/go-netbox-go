@@ -63,8 +63,8 @@ func TestClient_ListAvailableIps(t *testing.T) {
 }
 
 func TestClient_CreateDeletePrefix(t *testing.T) {
-	wPre := models.WriteablePrefix{}
-	wPre.Prefix = "10.0.0.0/8"
+	wPre := models.WritablePrefix{
+		Prefix: "10.0.0.0/8"}
 	client, err := ipam.NewClient(os.Getenv("NETBOX_URL"), os.Getenv("NETBOX_TOKEN"), true)
 	if err != nil {
 		t.Fatal(err)

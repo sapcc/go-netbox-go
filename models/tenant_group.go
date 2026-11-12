@@ -9,7 +9,7 @@ type TenantGroup struct {
 	NestedTenantGroup
 	Description  string             `json:"description"`
 	Comments     string             `json:"comments"`
-	CustomFields interface{}        `json:"custom_fields"`
+	CustomFields any                `json:"custom_fields"`
 	Created      string             `json:"created"`
 	LastUpdated  string             `json:"last_updated"`
 	Name         string             `json:"name"`
